@@ -10,10 +10,20 @@ import UIKit
 final class NetworkingService {
     
     init () {
-        getDataFromLocalJSONFile(forName: "stockProfiles")
+        getDataFromLocalJSONFile(name: "stockProfiles")
+    }
+
+    func fetchCompanyLogo (url: URL) async throws -> UIImage? {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch {
+            print("failed to fetch an image for a company logo")
+            return nil
+        }
     }
     
-    func getDataFromLocalJSONFile (forName name: String) {
+    func getDataFromLocalJSONFile (name: String) {
         do {
             if let filePath = Bundle.main.path(forResource: name, ofType: "json") {
                 let fileUrl = URL(fileURLWithPath: filePath)

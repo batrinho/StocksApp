@@ -10,7 +10,6 @@ import UIKit
 class StocksViewController: UIViewController {
     
     private var stocksTableView = StocksTableView()
-    let networkingService = NetworkingService()
     
     override func viewDidLoad () {
         super.viewDidLoad()
@@ -24,8 +23,8 @@ class StocksViewController: UIViewController {
         NSLayoutConstraint.activate([
             stocksTableView.topAnchor.constraint(equalTo: view.topAnchor),
             stocksTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stocksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stocksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            stocksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stocksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
