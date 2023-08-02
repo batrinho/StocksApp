@@ -12,7 +12,7 @@ class StocksTableView: UITableView {
         super.init(frame: frame, style: style)
         self.delegate = self
         self.dataSource = self
-        self.register(StocksTableViewCell.self, forCellReuseIdentifier: Data().stocksCellIndentifier)
+        self.register(StocksTableViewCell.self, forCellReuseIdentifier: StockData().stocksCellIndentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -22,14 +22,14 @@ class StocksTableView: UITableView {
 
 extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Data().companies.count
+        return StockData.companies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Data().stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockData().stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
             return UITableViewCell()
         }
-        cell.updateView(newCompanyTitle: Data().companies[indexPath.row])
+        cell.updateView(newCompanyTitle: StockData.companies[indexPath.row].name)
         return cell
     }
     

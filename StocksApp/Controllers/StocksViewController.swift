@@ -10,6 +10,7 @@ import UIKit
 class StocksViewController: UIViewController {
     
     private var stocksTableView = StocksTableView()
+    let networkingService = NetworkingService()
     
     override func viewDidLoad () {
         super.viewDidLoad()

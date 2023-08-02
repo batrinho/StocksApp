@@ -16,7 +16,7 @@ class StocksTableViewCell: UITableViewCell {
     } ()
 
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: Data().stocksCellIndentifier)
+        super.init(style: style, reuseIdentifier: StockData().stocksCellIndentifier)
         setupView()
     }
     
