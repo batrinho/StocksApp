@@ -15,6 +15,10 @@ class StocksTableView: UITableView {
         self.delegate = self
         self.dataSource = self
         self.register(StocksTableViewCell.self, forCellReuseIdentifier: StockData().stocksCellIndentifier)
+        
+        Task {
+            await print(StockData.newCompanies.count)
+        }
     }
     
     required init?(coder: NSCoder) {

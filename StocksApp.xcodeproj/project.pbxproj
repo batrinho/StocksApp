@@ -67,7 +67,6 @@
 				8902CC132A78FED100EFFE5F /* Model */,
 				8902CC122A78FEBF00EFFE5F /* Views */,
 				8902CC0F2A78FDE700EFFE5F /* Controllers */,
-				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
 				8902CC042A78FB4D00EFFE5F /* Assets.xcassets */,
 				8902CC092A78FB4D00EFFE5F /* Info.plist */,
 			);
@@ -96,6 +95,7 @@
 			children = (
 				89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */,
 				8902CC162A78FF5400EFFE5F /* StockData.swift */,
+				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

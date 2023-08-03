@@ -31,8 +31,29 @@ final class NetworkingService {
                 do {
                     let decodedData = try JSONDecoder().decode([StockProfileData].self, from: data)
                     StockData.companies = decodedData
+                    Task {
+                        await updateCompanyArray(decodedData: decodedData)
+                    }
                 } catch {
                     print("error: \(error)")
+                }
+            }
+        } catch {
+            print("error: \(error)")
+        }
+    }
+    
+    func updateCompanyArray (decodedData: [StockProfileData]) async {
+        do {
+            for decodedDatum in decodedData {
+                guard let imageUrl = URL(string: decodedDatum.logo),
+                      let fetchedImage = try await fetchCompanyLogo(url: imageUrl) else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    print("tipa append")
+                    StockData.newCompanies.append(StockProfile(name: decodedDatum.name, symbol: decodedDatum.ticker, logo: fetchedImage))
                 }
             }
         } catch {
