@@ -9,8 +9,8 @@ import UIKit
 
 struct StockData {
     let stocksCellIndentifier = "stocksCell"
-    static var companies = [StockProfileData]()
-    static var newCompanies = [StockProfile]()
+    static var stockCompanies = [StockProfileData]()
+    static var usedLogos: [String: UIImage] = [:]
 }
 
 struct StockProfileData: Codable {
@@ -23,5 +23,6 @@ struct StockProfile {
     let name: String
     let symbol: String
     let logo: UIImage
+    let backgroundColor: UIColor
 }
 

@@ -12,11 +12,10 @@ class StocksTableView: UITableView {
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        self.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.delegate = self
         self.dataSource = self
         self.register(StocksTableViewCell.self, forCellReuseIdentifier: StockData().stocksCellIndentifier)
-        
-        print(StockData.newCompanies.count)
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +25,7 @@ class StocksTableView: UITableView {
 
 extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StockData.companies.count
+        return StockData.stockCompanies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,23 +33,21 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        Task {
-            do {
-                guard let imageUrl = URL(string: StockData.companies[indexPath.row].logo),
-                      let fetchedImage = try await networkingService.fetchCompanyLogo(url: imageUrl) else { return }
-                
-                let backgroundColor: UIColor?
-                if indexPath.row % 2 == 0 {
-                    backgroundColor = .systemBackground
-                } else {
-                    backgroundColor = .lightGray
-                }
-                
-                DispatchQueue.main.async {
-                    cell.updateView(newCompanySymbol: StockData.companies[indexPath.row].ticker, newCompanyTitle: StockData.companies[indexPath.row].name, newCompanyLogo: fetchedImage, cellBackgroundColor: backgroundColor!)
-                }
-            } catch {
-                print("failed to update UI")
+        let newCell = StockData.stockCompanies[indexPath.row]
+        cell.updateLabels(newCompanySymbol: newCell.ticker, newCompanyTitle: newCell.name, cellBackgroundColor: indexPath.row % 2 == 0 ? UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1): .systemBackground)
+        
+        if let newImage = StockData.usedLogos[newCell.logo] {
+            cell.updateLogo(newCompanyLogo: newImage)
+        } else {
+            Task {
+                do {
+                    guard let imageUrl = URL(string: newCell.logo),
+                          let fetchedImage = try await networkingService.fetchCompanyLogo(url: imageUrl) else { return }
+                    DispatchQueue.main.async {
+                        cell.updateLogo(newCompanyLogo: fetchedImage)
+                        StockData.usedLogos[newCell.logo] = fetchedImage
+                    }
+                } catch {}
             }
         }
         

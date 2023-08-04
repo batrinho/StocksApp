@@ -7,12 +7,17 @@
 
 import UIKit
 
-final class NetworkingService {
-    
-    init () {
-        getDataFromLocalJSONFile(name: "stockProfiles")
-    }
+protocol NetworkingServiceProtocol {
+    func getDataFromLocalJSONFile (name: String) async
+}
 
+final class NetworkingService: NetworkingServiceProtocol {
+    init () {
+        Task {
+            await getDataFromLocalJSONFile(name: "stockProfiles")
+        }
+    }
+    
     func fetchCompanyLogo (url: URL) async throws -> UIImage? {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -23,42 +28,17 @@ final class NetworkingService {
         }
     }
     
-    func getDataFromLocalJSONFile (name: String) {
+    func getDataFromLocalJSONFile (name: String) async {
         do {
             if let filePath = Bundle.main.path(forResource: name, ofType: "json") {
                 let fileUrl = URL(fileURLWithPath: filePath)
                 let data = try Data(contentsOf: fileUrl)
+                let decoder = JSONDecoder()
                 do {
-                    let decodedData = try JSONDecoder().decode([StockProfileData].self, from: data)
-                    StockData.companies = decodedData
-                    Task {
-                        await updateCompanyArray(decodedData: decodedData)
-                    }
-                } catch {
-                    print("error: \(error)")
-                }
+                    let decodedData = try decoder.decode([StockProfileData].self, from: data)
+                    StockData.stockCompanies = decodedData
+                } catch {}
             }
-        } catch {
-            print("error: \(error)")
-        }
+        } catch {}
     }
-    
-    func updateCompanyArray (decodedData: [StockProfileData]) async {
-        do {
-            for decodedDatum in decodedData {
-                guard let imageUrl = URL(string: decodedDatum.logo),
-                      let fetchedImage = try await fetchCompanyLogo(url: imageUrl) else {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    print("tipa append")
-                    StockData.newCompanies.append(StockProfile(name: decodedDatum.name, symbol: decodedDatum.ticker, logo: fetchedImage))
-                }
-            }
-        } catch {
-            print("error: \(error)")
-        }
-    }
-    
 }

@@ -8,7 +8,6 @@
 import UIKit
 
 class StocksViewController: UIViewController {
-    
     private var stocksTableView = StocksTableView()
     
     override func viewDidLoad () {
@@ -27,8 +26,4 @@ class StocksViewController: UIViewController {
             stocksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
-    
-    
-    
 }
-
