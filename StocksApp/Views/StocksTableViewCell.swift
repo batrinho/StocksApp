@@ -230,7 +230,7 @@ final class StocksTableViewCell: UITableViewCell {
     func updatePrices (currentPrice: Double, priceChange: Double) {
         currentPriceLabel.text = "$\(currentPrice)"
         if priceChange < 0 {
-            priceChangeLabel.text = "-$\(priceChange)"
+            priceChangeLabel.text = "-$\(priceChange * -1)"
             priceChangeLabel.textColor = .systemRed
         } else {
             priceChangeLabel.text = "+$\(priceChange)"
