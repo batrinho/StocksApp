@@ -9,6 +9,7 @@ import UIKit
 
 class StocksTableView: UITableView {
     private let networkingService = NetworkingService()
+    private let stockDataManager = StockDataManager()
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -52,6 +53,20 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         cell.updateLogo(newCompanyLogo: fetchedImage)
                         StockData.usedLogos[newCell.logo] = fetchedImage
+                    }
+                } catch {}
+            }
+        }
+        
+        if let newPrice = StockData.prices[newCell.ticker] {
+            cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
+        } else {
+            Task {
+                do {
+                    guard let fetchedPrice = try await stockDataManager.fetchPrice(stockSymbol: newCell.ticker) else { return }
+                    DispatchQueue.main.async {
+                        cell.updatePrices(currentPrice: fetchedPrice.c, priceChange: fetchedPrice.d)
+                        StockData.prices[newCell.ticker] = fetchedPrice
                     }
                 } catch {}
             }

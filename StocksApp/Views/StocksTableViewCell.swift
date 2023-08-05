@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StocksTableViewCell: UITableViewCell {
+final class StocksTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     
@@ -95,6 +95,7 @@ class StocksTableViewCell: UITableViewCell {
         
         stackView.axis = .vertical
         stackView.spacing = 10
+        stackView.alignment = .trailing
         
         return stackView
     } ()
@@ -187,6 +188,8 @@ class StocksTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             cellStackView.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
             cellStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10),
@@ -207,7 +210,8 @@ class StocksTableViewCell: UITableViewCell {
             favoriteButton.heightAnchor.constraint(equalToConstant: 20),
             
             priceStackView.topAnchor.constraint(equalTo: cellStackView.topAnchor, constant: 5),
-            priceStackView.bottomAnchor.constraint(equalTo: cellStackView.bottomAnchor, constant: -5)
+            priceStackView.bottomAnchor.constraint(equalTo: cellStackView.bottomAnchor, constant: -5),
+            //priceStackView.trailingAnchor.constraint(equalTo: cellStackView.trailingAnchor)
         ])
     }
     
@@ -221,6 +225,17 @@ class StocksTableViewCell: UITableViewCell {
     
     func updateLogo (newCompanyLogo: UIImage) {
         companyLogo.image = newCompanyLogo
+    }
+    
+    func updatePrices (currentPrice: Double, priceChange: Double) {
+        currentPriceLabel.text = "$\(currentPrice)"
+        if priceChange < 0 {
+            priceChangeLabel.text = "-$\(priceChange)"
+            priceChangeLabel.textColor = .systemRed
+        } else {
+            priceChangeLabel.text = "+$\(priceChange)"
+            priceChangeLabel.textColor = .systemGreen
+        }
     }
     
     func setImageButton (newImage: UIImage) {

@@ -12,12 +12,18 @@ struct StockData {
     static var stockCompanies = [StockProfileData]()
     static var usedLogos: [String: UIImage] = [:]
     static var favorites: [String: Bool] = [:]
+    static var prices: [String: StockPriceData] = [:]
 }
 
 struct StockProfileData: Codable {
     let name: String
     let logo: String
     let ticker: String
+}
+
+struct StockPriceData: Codable {
+    let c: Double
+    let d: Double
 }
 
 struct StockProfile {
