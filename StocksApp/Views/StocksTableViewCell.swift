@@ -142,7 +142,7 @@ final class StocksTableViewCell: UITableViewCell {
     // MARK: - Internal Methods
     
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: StockData().stocksCellIndentifier)
+        super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
         setupView()
     }
     

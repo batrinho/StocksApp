@@ -8,15 +8,15 @@
 import UIKit
 
 class StocksTableView: UITableView {
-    private let networkingService = NetworkingService()
-    private let stockDataManager = StockDataManager()
+    private let networkingService: NetworkingServiceProtocol = NetworkingService()
+    private let stockDataManager: StockDataManagerProtocol = StockDataManager()
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.delegate = self
         self.dataSource = self
-        self.register(StocksTableViewCell.self, forCellReuseIdentifier: StockData().stocksCellIndentifier)
+        self.register(StocksTableViewCell.self, forCellReuseIdentifier: StockData.stocksCellIndentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -30,18 +30,16 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockData().stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockData.stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
             return UITableViewCell()
         }
         
         let newCell = StockData.stockCompanies[indexPath.row]
-        cell.updateLabels(newCompanySymbol: newCell.ticker, newCompanyTitle: newCell.name, cellBackgroundColor: indexPath.row % 2 == 0 ? UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1): .systemBackground)
+        let cellBackground = indexPath.row % 2 == 0 ? UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1): .systemBackground
+        cell.updateLabels(newCompanySymbol: newCell.ticker, newCompanyTitle: newCell.name, cellBackgroundColor: cellBackground)
         
-        if StockData.favorites[newCell.ticker] == true {
-            cell.setImageButton(newImage: UIImage(named: "Image")!)
-        } else {
-            cell.setImageButton(newImage: UIImage(named: "Image-1")!)
-        }
+        let setImage = StockData.favorites[newCell.ticker] == true ? UIImage(named: "Image")! : UIImage(named: "Image-1")!
+        cell.setImageButton(newImage: setImage)
         
         if let newImage = StockData.usedLogos[newCell.logo] {
             cell.updateLogo(newCompanyLogo: newImage)

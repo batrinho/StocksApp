@@ -8,7 +8,10 @@
 import UIKit
 
 struct StockData {
-    let stocksCellIndentifier = "stocksCell"
+    static let stocksCellIndentifier = "stocksCell"
+    static let localJsonFile = "stockProfiles"
+    static let baseUrlString = "https://finnhub.io/api/v1/quote"
+    static let apikey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
     static var stockCompanies = [StockProfileData]()
     static var usedLogos: [String: UIImage] = [:]
     static var favorites: [String: Bool] = [:]

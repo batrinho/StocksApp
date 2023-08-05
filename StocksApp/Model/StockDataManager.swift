@@ -7,17 +7,19 @@
 
 import UIKit
 
-final class StockDataManager {
+protocol StockDataManagerProtocol {
+    func fetchPrice (stockSymbol: String) async throws -> StockPriceData?
+}
+
+final class StockDataManager: StockDataManagerProtocol {
     func fetchPrice (stockSymbol: String) async throws -> StockPriceData? {
         do {
-            let baseUrlString = "https://finnhub.io/api/v1/quote"
-            let apikey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
             let queryParameters = [
                 "symbol": stockSymbol,
-                "token": apikey
+                "token": StockData.apikey
             ]
             
-            var urlComponents = URLComponents(string: baseUrlString)
+            var urlComponents = URLComponents(string: StockData.baseUrlString)
             urlComponents?.queryItems = queryParameters.map { key, value in
                 URLQueryItem(name: key, value: value)
             }

@@ -8,13 +8,13 @@
 import UIKit
 
 protocol NetworkingServiceProtocol {
-    func getDataFromLocalJSONFile (name: String) async
+    func fetchCompanyLogo (url: URL) async throws -> UIImage?
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
     init () {
         Task {
-            await getDataFromLocalJSONFile(name: "stockProfiles")
+            await getDataFromLocalJSONFile(name: StockData.localJsonFile)
         }
     }
     
