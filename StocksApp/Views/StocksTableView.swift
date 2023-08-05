@@ -36,6 +36,12 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
         let newCell = StockData.stockCompanies[indexPath.row]
         cell.updateLabels(newCompanySymbol: newCell.ticker, newCompanyTitle: newCell.name, cellBackgroundColor: indexPath.row % 2 == 0 ? UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1): .systemBackground)
         
+        if StockData.favorites[newCell.ticker] == true {
+            cell.setImageButton(newImage: UIImage(named: "Image")!)
+        } else {
+            cell.setImageButton(newImage: UIImage(named: "Image-1")!)
+        }
+        
         if let newImage = StockData.usedLogos[newCell.logo] {
             cell.updateLogo(newCompanyLogo: newImage)
         } else {
@@ -55,6 +61,6 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
 }

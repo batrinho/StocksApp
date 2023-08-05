@@ -131,6 +131,13 @@ class StocksTableViewCell: UITableViewCell {
         return stackView
     } ()
     
+    private let cellView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    } ()
+    
     // MARK: - Internal Methods
     
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -153,9 +160,11 @@ class StocksTableViewCell: UITableViewCell {
         let someView = UIView()
         someView.backgroundColor = .clear
         self.selectedBackgroundView = someView
-        contentView.layer.cornerRadius = 16
         
-        contentView.addSubview(cellStackView)
+        contentView.addSubview(cellView)
+        
+        cellView.layer.cornerRadius = 16
+        cellView.addSubview(cellStackView)
         
         cellStackView.addArrangedSubview(companyLogo)
         cellStackView.addArrangedSubview(titleStackView)
@@ -176,10 +185,13 @@ class StocksTableViewCell: UITableViewCell {
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            cellStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            cellStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-            cellStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            cellStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            
+            cellStackView.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+            cellStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10),
+            cellStackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
+            cellStackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
             
             companyLogo.heightAnchor.constraint(equalToConstant: 60),
             companyLogo.widthAnchor.constraint(equalToConstant: 60),
@@ -204,15 +216,24 @@ class StocksTableViewCell: UITableViewCell {
     func updateLabels (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor) {
         companySymbol.text = newCompanySymbol
         companyTitle.text = newCompanyTitle
-        contentView.backgroundColor = cellBackgroundColor
+        cellView.backgroundColor = cellBackgroundColor
     }
     
     func updateLogo (newCompanyLogo: UIImage) {
         companyLogo.image = newCompanyLogo
     }
     
+    func setImageButton (newImage: UIImage) {
+        favoriteButton.setImage(newImage, for: .normal)
+    }
+    
     @objc func favoriteButtonPressed () {
         let currentImage = favoriteButton.imageView?.image
+        if currentImage == UIImage(named: "Image") {
+            StockData.favorites[companySymbol.text!] = false
+        } else {
+            StockData.favorites[companySymbol.text!] = true
+        }
         favoriteButton.setImage(currentImage == UIImage(named: "Image") ? UIImage(named: "Image-1") : UIImage(named: "Image"), for: .normal)
     }
 }

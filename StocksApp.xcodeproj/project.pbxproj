@@ -15,6 +15,7 @@
 		8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */; };
 		8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC162A78FF5400EFFE5F /* StockData.swift */; };
 		8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC1A2A79314300EFFE5F /* NetworkingService.swift */; };
+		89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89876D962A7E266C007DD43D /* StockDataManager.swift */; };
 		89A0BCDA2A7AA4A600BEA2BE /* stockProfiles.json in Resources */ = {isa = PBXBuildFile; fileRef = 89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableViewCell.swift; sourceTree = "<group>"; };
 		8902CC162A78FF5400EFFE5F /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		8902CC1A2A79314300EFFE5F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stockProfiles.json; path = ../../../../../../Downloads/stockProfiles.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +98,7 @@
 				89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */,
 				8902CC162A78FF5400EFFE5F /* StockData.swift */,
 				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
+				89876D962A7E266C007DD43D /* StockDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 			files = (
 				8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */,
 				8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */,
+				89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */,
 				8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,
 				8902CBFC2A78FB4C00EFFE5F /* AppDelegate.swift in Sources */,

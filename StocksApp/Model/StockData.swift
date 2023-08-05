@@ -11,6 +11,7 @@ struct StockData {
     let stocksCellIndentifier = "stocksCell"
     static var stockCompanies = [StockProfileData]()
     static var usedLogos: [String: UIImage] = [:]
+    static var favorites: [String: Bool] = [:]
 }
 
 struct StockProfileData: Codable {
