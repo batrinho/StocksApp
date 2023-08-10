@@ -13,6 +13,10 @@ class StocksTableView: UITableView {
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        setupTableView()
+    }
+    
+    private func setupTableView () {
         self.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.delegate = self
         self.dataSource = self
@@ -24,9 +28,11 @@ class StocksTableView: UITableView {
     }
 }
 
+// MARK: - Delegate, DataSource
+
 extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StockData.stockCompanies.count
+        return StockData.companies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,39 +40,26 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let newCell = StockData.stockCompanies[indexPath.row]
-        let cellBackground = indexPath.row % 2 == 0 ? UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1): .systemBackground
-        cell.updateLabels(newCompanySymbol: newCell.ticker, newCompanyTitle: newCell.name, cellBackgroundColor: cellBackground)
+        let stock = StockData.companies[indexPath.row]
+        let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .systemBackground
+        cell.updateLabels(newCompanySymbol: stock.ticker, newCompanyTitle: stock.name, cellBackgroundColor: cellBackground, logo: stock.logo)
         
-        let setImage = StockData.favorites[newCell.ticker] == true ? UIImage(named: "Image")! : UIImage(named: "Image-1")!
-        cell.setImageButton(newImage: setImage)
+        let buttonImage = StockData.favorites[stock.ticker] == true ? StockData.filledStar : StockData.emptyStar
+        cell.setButtonImage(newImage: buttonImage)
         
-        if let newImage = StockData.usedLogos[newCell.logo] {
-            cell.updateLogo(newCompanyLogo: newImage)
-        } else {
-            Task {
-                do {
-                    guard let imageUrl = URL(string: newCell.logo),
-                          let fetchedImage = try await networkingService.fetchCompanyLogo(url: imageUrl) else { return }
-                    DispatchQueue.main.async {
-                        cell.updateLogo(newCompanyLogo: fetchedImage)
-                        StockData.usedLogos[newCell.logo] = fetchedImage
-                    }
-                } catch {}
+        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { image in
+            DispatchQueue.main.async {
+                if let newImage = image {
+                    cell.updateLogo(newCompanyLogo: newImage)
+                }
             }
         }
         
-        if let newPrice = StockData.prices[newCell.ticker] {
-            cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
-        } else {
-            Task {
-                do {
-                    guard let fetchedPrice = try await stockDataManager.fetchPrice(stockSymbol: newCell.ticker) else { return }
-                    DispatchQueue.main.async {
-                        cell.updatePrices(currentPrice: fetchedPrice.c, priceChange: fetchedPrice.d)
-                        StockData.prices[newCell.ticker] = fetchedPrice
-                    }
-                } catch {}
+        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { price in
+            DispatchQueue.main.async {
+                if let newPrice = StockData.prices[stock.ticker] {
+                    cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
+                }
             }
         }
         
@@ -74,6 +67,6 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 95
     }
 }

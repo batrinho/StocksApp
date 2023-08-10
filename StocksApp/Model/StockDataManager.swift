@@ -8,11 +8,28 @@
 import UIKit
 
 protocol StockDataManagerProtocol {
-    func fetchPrice (stockSymbol: String) async throws -> StockPriceData?
+    func fetchPrice (stockSymbol: String, completion: @escaping (StockPriceData?) -> Void)
 }
 
 final class StockDataManager: StockDataManagerProtocol {
-    func fetchPrice (stockSymbol: String) async throws -> StockPriceData? {
+    
+    func fetchPrice (stockSymbol: String, completion: @escaping (StockPriceData?) -> Void) {
+        if let price = StockData.prices[stockSymbol] {
+            completion(price)
+        } else {
+            Task {
+                do {
+                    guard let fetchedPrice = try await parseJSON(stockSymbol: stockSymbol) else { return }
+                    StockData.prices[stockSymbol] = fetchedPrice
+                    completion(fetchedPrice)
+                } catch {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    func parseJSON (stockSymbol: String) async throws -> StockPriceData? {
         do {
             let queryParameters = [
                 "symbol": stockSymbol,

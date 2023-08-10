@@ -8,17 +8,39 @@
 import UIKit
 
 protocol NetworkingServiceProtocol {
-    func fetchCompanyLogo (url: URL) async throws -> UIImage?
+    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?) -> Void)
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
+    
     init () {
         Task {
             await getDataFromLocalJSONFile(name: StockData.localJsonFile)
         }
     }
     
-    func fetchCompanyLogo (url: URL) async throws -> UIImage? {
+    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?) -> Void) {
+        if let image = StockData.logos[logoUrl] {
+            completion(image)
+        } else {
+            Task {
+                do {
+                    guard let imageUrl = URL(string: logoUrl),
+                          let fetchedImage = try await parseJSON(url: imageUrl) else {
+                        completion(nil)
+                        return
+                    }
+                    
+                    StockData.logos[logoUrl] = fetchedImage
+                    completion(fetchedImage)
+                } catch {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    func parseJSON (url: URL) async throws -> UIImage? {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             return UIImage(data: data)

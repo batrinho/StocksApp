@@ -12,13 +12,21 @@ struct StockData {
     static let localJsonFile = "stockProfiles"
     static let baseUrlString = "https://finnhub.io/api/v1/quote"
     static let apikey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
+    static let cellBackgroundColor = UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1)
+    static let filledStar = UIImage(named: "Image")!
+    static let emptyStar = UIImage(named: "Image-1")!
+    static let reusableImage = UIImage()
+    
+    static var companies = [StockProfileData]()
     static var stockCompanies = [StockProfileData]()
-    static var usedLogos: [String: UIImage] = [:]
+    static var favoritesStockCompanies = [StockProfileData]()
+    
+    static var logos: [String: UIImage] = [:]
     static var favorites: [String: Bool] = [:]
     static var prices: [String: StockPriceData] = [:]
 }
 
-struct StockProfileData: Codable {
+struct StockProfileData: Codable, Equatable {
     let name: String
     let logo: String
     let ticker: String
