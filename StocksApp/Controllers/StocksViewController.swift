@@ -10,6 +10,7 @@ import UIKit
 class StocksViewController: UIViewController {
     
     private var stocksTableView = StocksTableView()
+    private let coreDatabaseManager: CoreDatabaseManagerFetchProtocol = CoreDatabaseManager()
     
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -55,7 +56,6 @@ class StocksViewController: UIViewController {
     }
     
     private func setupView () {
-        
         view.backgroundColor = .systemBackground
         view.addSubview(mainStackView)
         
@@ -93,13 +93,22 @@ class StocksViewController: UIViewController {
     
     @objc private func stocksBigger () {
         switchButtons(dominant: stocksButton, passive: favoritesButton)
-        StockData.companies = StockData.stockCompanies
-        stocksTableView.reloadData()
+        DispatchQueue.main.async {
+            StockData.companies = StockData.stockCompanies
+            self.stocksTableView.reloadData()
+        }
     }
     
     @objc private func favoritesBigger () {
         switchButtons(dominant: favoritesButton, passive: stocksButton)
-        StockData.companies = StockData.favoritesStockCompanies
-        stocksTableView.reloadData()
+        coreDatabaseManager.fetchStocks { stockProfileDataArray in
+            if let newArray = stockProfileDataArray {
+                DispatchQueue.main.async {
+                    StockData.favoritesStockCompanies = newArray
+                    StockData.companies = StockData.favoritesStockCompanies
+                    self.stocksTableView.reloadData()
+                }
+            }
+        }
     }
 }

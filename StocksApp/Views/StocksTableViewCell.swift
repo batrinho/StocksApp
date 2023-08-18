@@ -11,8 +11,8 @@ final class StocksTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     
-    private var isFavorite: Bool = false
     private var logo = String()
+    private let coreDatabaseManager: CoreDatabaseManagerProtocol = CoreDatabaseManager()
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -214,9 +214,7 @@ final class StocksTableViewCell: UITableViewCell {
         cellView.backgroundColor = cellBackgroundColor
         self.logo = logo
         
-        if let favorite = StockData.favorites[companySymbol.text!] {
-            isFavorite = favorite
-        }
+        favoriteButton.setImage(coreDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.filledStar : StockData.emptyStar, for: .normal)
     }
     
     func updateLogo (newCompanyLogo: UIImage) {
@@ -225,13 +223,8 @@ final class StocksTableViewCell: UITableViewCell {
     
     func updatePrices (currentPrice: Double, priceChange: Double) {
         currentPriceLabel.text = "$\(currentPrice)"
-        if priceChange < 0 {
-            priceChangeLabel.text = "-$\(priceChange * -1)"
-            priceChangeLabel.textColor = .systemRed
-        } else {
-            priceChangeLabel.text = "+$\(priceChange)"
-            priceChangeLabel.textColor = .systemGreen
-        }
+        priceChangeLabel.text = (priceChange < 0 ? "-$\(priceChange * -1)" : "+$\(priceChange)")
+        priceChangeLabel.textColor = (priceChange < 0 ? .systemRed : .systemGreen)
     }
     
     func setButtonImage (newImage: UIImage) {
@@ -239,15 +232,13 @@ final class StocksTableViewCell: UITableViewCell {
     }
     
     @objc func favoriteButtonPressed () {
-        isFavorite.toggle()
-        favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
-        StockData.favorites[companySymbol.text!] = isFavorite ? true : false
+        favoriteButton.setImage(coreDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.emptyStar : StockData.filledStar, for: .normal)
         
         let favoriteStockCompany = StockProfileData(name: companyTitle.text!, logo: logo, ticker: companySymbol.text!)
-        if isFavorite == true {
-            StockData.favoritesStockCompanies.append(favoriteStockCompany)
+        if coreDatabaseManager.getIsFavorite(ticker: companySymbol.text!) == false {
+            coreDatabaseManager.addStock(stock: favoriteStockCompany)
         } else {
-            StockData.favoritesStockCompanies.removeAll { $0 == favoriteStockCompany }
+            coreDatabaseManager.deleteStock(stock: favoriteStockCompany)
         }
     }
 }
