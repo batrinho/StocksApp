@@ -8,17 +8,17 @@
 import UIKit
 import CoreData
 
-protocol CoreDatabaseManagerProtocol {
+protocol CoreDataDatabaseManagerProtocol {
     func addStock (stock: StockProfileData)
     func deleteStock (stock: StockProfileData)
     func getIsFavorite (ticker: String) -> Bool
 }
 
-protocol CoreDatabaseManagerFetchProtocol {
+protocol CoreDataDatabaseManagerFetchProtocol {
     func fetchStocks (completion: @escaping ([StockProfileData]?) -> Void)
 }
 
-class CoreDatabaseManager: CoreDatabaseManagerProtocol, CoreDatabaseManagerFetchProtocol {
+class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabaseManagerFetchProtocol {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var favoriteStocks: [FavoriteStock]?

@@ -12,7 +12,6 @@ protocol StockDataManagerProtocol {
 }
 
 final class StockDataManager: StockDataManagerProtocol {
-    
     func fetchPrice (stockSymbol: String, completion: @escaping (StockPriceData?) -> Void) {
         if let price = StockData.prices[stockSymbol] {
             completion(price)

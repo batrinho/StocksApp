@@ -8,9 +8,8 @@
 import UIKit
 
 class StocksViewController: UIViewController {
-    
     private var stocksTableView = StocksTableView()
-    private let coreDatabaseManager: CoreDatabaseManagerFetchProtocol = CoreDatabaseManager()
+    private let coreDataDatabaseManager: CoreDataDatabaseManagerFetchProtocol = CoreDataDatabaseManager()
     
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -47,9 +46,11 @@ class StocksViewController: UIViewController {
         button.setTitleColor(.lightGray, for: .normal)
         return button
     } ()
-    
-    // MARK: - Methods
-    
+}
+
+// MARK: - Methods
+
+extension StocksViewController {
     override func viewDidLoad () {
         super.viewDidLoad()
         setupView()
@@ -82,7 +83,11 @@ class StocksViewController: UIViewController {
         
         stocksBigger()
     }
-    
+}
+
+// MARK: - Buttons
+
+extension StocksViewController {
     private func switchButtons (dominant: UIButton, passive: UIButton) {
         dominant.titleLabel?.font = UIFont.systemFont(ofSize: 35, weight: .heavy)
         dominant.setTitleColor(.black, for: .normal)
@@ -101,7 +106,7 @@ class StocksViewController: UIViewController {
     
     @objc private func favoritesBigger () {
         switchButtons(dominant: favoritesButton, passive: stocksButton)
-        coreDatabaseManager.fetchStocks { stockProfileDataArray in
+        coreDataDatabaseManager.fetchStocks { stockProfileDataArray in
             if let newArray = stockProfileDataArray {
                 DispatchQueue.main.async {
                     StockData.favoritesStockCompanies = newArray

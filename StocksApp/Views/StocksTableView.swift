@@ -10,7 +10,7 @@ import UIKit
 class StocksTableView: UITableView {
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
     private let stockDataManager: StockDataManagerProtocol = StockDataManager()
-    private let coreDatabaseManager: CoreDatabaseManagerProtocol = CoreDatabaseManager()
+    private let coreDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)

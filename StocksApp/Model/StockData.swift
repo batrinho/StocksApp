@@ -43,4 +43,3 @@ struct StockProfile {
     let logo: UIImage
     let backgroundColor: UIColor
 }
-
