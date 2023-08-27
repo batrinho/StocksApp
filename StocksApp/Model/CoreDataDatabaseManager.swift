@@ -18,7 +18,7 @@ protocol CoreDataDatabaseManagerFetchProtocol {
     func fetchStocks (completion: @escaping ([StockProfileData]?) -> Void)
 }
 
-class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabaseManagerFetchProtocol {
+final class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabaseManagerFetchProtocol {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var favoriteStocks: [FavoriteStock]?
@@ -102,5 +102,4 @@ class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabase
             return false
         }
     }
-    
 }

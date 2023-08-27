@@ -9,7 +9,8 @@ import UIKit
 
 class StocksViewController: UIViewController {
     private var stocksTableView = StocksTableView()
-    private let coreDataDatabaseManager: CoreDataDatabaseManagerFetchProtocol = CoreDataDatabaseManager()
+    private let coreDataDatabaseFetchManager: CoreDataDatabaseManagerFetchProtocol = CoreDataDatabaseManager()
+    private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
     
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -63,6 +64,8 @@ extension StocksViewController {
         mainStackView.addArrangedSubview(buttonsStackView)
         mainStackView.addArrangedSubview(stocksTableView)
         
+        stocksTableView.coreDatabaseManager = self.coreDataDatabaseManager as? CoreDataDatabaseManager
+        
         buttonsStackView.addArrangedSubview(stocksButton)
         buttonsStackView.addArrangedSubview(favoritesButton)
         
@@ -106,7 +109,7 @@ extension StocksViewController {
     
     @objc private func favoritesBigger () {
         switchButtons(dominant: favoritesButton, passive: stocksButton)
-        coreDataDatabaseManager.fetchStocks { stockProfileDataArray in
+        coreDataDatabaseFetchManager.fetchStocks { stockProfileDataArray in
             if let newArray = stockProfileDataArray {
                 DispatchQueue.main.async {
                     StockData.favoritesStockCompanies = newArray

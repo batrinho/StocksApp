@@ -10,7 +10,7 @@ import UIKit
 class StocksTableView: UITableView {
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
     private let stockDataManager: StockDataManagerProtocol = StockDataManager()
-    private let coreDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
+    weak var coreDatabaseManager: CoreDataDatabaseManager?
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -44,9 +44,11 @@ extension StocksTableView: UITableViewDelegate, UITableViewDataSource {
         let stock = StockData.companies[indexPath.row]
         let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .systemBackground
         cell.updateLabels(newCompanySymbol: stock.ticker, newCompanyTitle: stock.name, cellBackgroundColor: cellBackground, logo: stock.logo)
-        
-        let buttonImage = coreDatabaseManager.getIsFavorite(ticker: stock.ticker) ? StockData.filledStar : StockData.emptyStar
-        cell.setButtonImage(newImage: buttonImage)
+
+        let isFavorite = coreDatabaseManager!.getIsFavorite(ticker: stock.ticker)
+        cell.configure(isFavourite: isFavorite) { currentState in
+            print(indexPath.row, currentState)
+        }
         
         networkingService.fetchCompanyLogo(logoUrl: stock.logo) { image in
             DispatchQueue.main.async {

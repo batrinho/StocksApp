@@ -12,7 +12,8 @@ final class StocksTableViewCell: UITableViewCell {
     // MARK: - Variables
     
     private var logo = String()
-    private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
+    private var didSelectIsFavorite: ((Bool) -> Void)?
+    private var isFavourite: Bool?
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -135,18 +136,19 @@ final class StocksTableViewCell: UITableViewCell {
     
     // MARK: - Internal Methods
     
-    override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
+    func configure(isFavourite: Bool, callback: @escaping (Bool) -> Void) {
+        self.isFavourite = isFavourite
+        self.didSelectIsFavorite = callback
+        
+        let buttonImage = isFavourite ? StockData.filledStar : StockData.emptyStar
+        setButtonImage(newImage: buttonImage)
+        
         setupView()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.updateLogo(newCompanyLogo: UIImage())
-    }
-    
-    required init? (coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setting up the View
@@ -213,8 +215,6 @@ final class StocksTableViewCell: UITableViewCell {
         companyTitle.text = newCompanyTitle
         cellView.backgroundColor = cellBackgroundColor
         self.logo = logo
-        
-        favoriteButton.setImage(coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.filledStar : StockData.emptyStar, for: .normal)
     }
     
     func updateLogo (newCompanyLogo: UIImage) {
@@ -232,13 +232,10 @@ final class StocksTableViewCell: UITableViewCell {
     }
     
     @objc func favoriteButtonPressed () {
-        favoriteButton.setImage(coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.emptyStar : StockData.filledStar, for: .normal)
-        
-        let favoriteStockCompany = StockProfileData(name: companyTitle.text!, logo: logo, ticker: companySymbol.text!)
-        if coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) == false {
-            coreDataDatabaseManager.addStock(stock: favoriteStockCompany)
-        } else {
-            coreDataDatabaseManager.deleteStock(stock: favoriteStockCompany)
+        isFavourite?.toggle()
+        if let didSelectIsFavorite = didSelectIsFavorite,
+           let isFavourite = isFavourite {
+            didSelectIsFavorite(isFavourite)
         }
     }
 }
