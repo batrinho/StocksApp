@@ -59,6 +59,10 @@ final class NetworkingService: NetworkingServiceProtocol {
                 do {
                     let decodedData = try decoder.decode([StockProfileData].self, from: data)
                     StockData.stockCompanies = decodedData
+                    StockData.tickers.removeAll()
+                    for decodedDatum in decodedData {
+                        StockData.tickers.append(decodedDatum.ticker)
+                    }
                 } catch {}
             }
         } catch {}

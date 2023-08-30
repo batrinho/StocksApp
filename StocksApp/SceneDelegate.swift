@@ -17,7 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = StocksViewController()
+        let nav = UINavigationController(rootViewController: StocksViewController())
+//        nav.hidesBarsOnSwipe = true
+        window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
 

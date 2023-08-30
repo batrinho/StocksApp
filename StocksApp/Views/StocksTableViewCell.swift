@@ -13,6 +13,8 @@ final class StocksTableViewCell: UITableViewCell {
     
     private var logo = String()
     private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
+    var isFavorite: Bool?
+    var didSelectIsFavorite: ((Bool) -> (Void))?
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -137,7 +139,6 @@ final class StocksTableViewCell: UITableViewCell {
     
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
-        setupView()
     }
     
     override func prepareForReuse() {
@@ -147,6 +148,13 @@ final class StocksTableViewCell: UITableViewCell {
     
     required init? (coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String, isFavorite: Bool, callback: @escaping (Bool) -> Void) {
+        self.isFavorite = isFavorite
+        self.didSelectIsFavorite = callback
+        self.updateLabels(newCompanySymbol: newCompanySymbol, newCompanyTitle: newCompanyTitle, cellBackgroundColor: cellBackgroundColor, logo: logo)
+        setupView()
     }
     
     // MARK: - Setting up the View
@@ -212,9 +220,10 @@ final class StocksTableViewCell: UITableViewCell {
         companySymbol.text = newCompanySymbol
         companyTitle.text = newCompanyTitle
         cellView.backgroundColor = cellBackgroundColor
+        if let isFavorite = isFavorite {
+            favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
+        }
         self.logo = logo
-        
-        favoriteButton.setImage(coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.filledStar : StockData.emptyStar, for: .normal)
     }
     
     func updateLogo (newCompanyLogo: UIImage) {
@@ -232,13 +241,9 @@ final class StocksTableViewCell: UITableViewCell {
     }
     
     @objc func favoriteButtonPressed () {
-        favoriteButton.setImage(coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) ? StockData.emptyStar : StockData.filledStar, for: .normal)
-        
-        let favoriteStockCompany = StockProfileData(name: companyTitle.text!, logo: logo, ticker: companySymbol.text!)
-        if coreDataDatabaseManager.getIsFavorite(ticker: companySymbol.text!) == false {
-            coreDataDatabaseManager.addStock(stock: favoriteStockCompany)
-        } else {
-            coreDataDatabaseManager.deleteStock(stock: favoriteStockCompany)
+        isFavorite?.toggle()
+        if let newFavoriteState = isFavorite {
+            didSelectIsFavorite?(newFavoriteState)
         }
     }
 }
