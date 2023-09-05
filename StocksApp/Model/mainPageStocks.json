@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Apple Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AAPL",
+        "ticker": "AAPL"
+    },
+    {
+        "name": "Alphabet Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=GOOGL",
+        "ticker": "GOOGL"
+    },
+    {
+        "name": "Adobe Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=ADBE",
+        "ticker": "ADBE"
+    },
+    {
+        "name": "Amcor PLC",
+        "logo": "https://finnhub.io/api/logo?symbol=AMCR",
+        "ticker": "AMCR"
+    },
+    {
+        "name": "Amazon.com Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AMZN",
+        "ticker": "AMZN"
+    },
+    {
+        "name": "American International Group Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AIG",
+        "ticker": "AIG"
+    },
+    {
+        "name": "AT&T Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=T",
+        "ticker": "T"
+    },
+    {
+        "name": "Bristol-Myers Squibb Co",
+        "logo": "https://finnhub.io/api/logo?symbol=BMY",
+        "ticker": "BMY"
+    },
+    {
+        "name": "Boston Scientific Corp",
+        "logo": "https://finnhub.io/api/logo?symbol=BSX",
+        "ticker": "BSX"
+    },
+    {
+        "name": "Colgate-Palmolive Co",
+        "logo": "https://finnhub.io/api/logo?symbol=CL",
+        "ticker": "CL"
+    },
+    {
+        "name": "Coca-Cola Co",
+        "logo": "https://finnhub.io/api/logo?symbol=KO",
+        "ticker": "KO"
+    },
+    {
+        "name": "Electronic Arts Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=EA",
+        "ticker": "EA"
+    }
+]

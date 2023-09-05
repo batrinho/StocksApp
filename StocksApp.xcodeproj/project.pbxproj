@@ -34,6 +34,7 @@
 		8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableViewCell.swift; sourceTree = "<group>"; };
 		8902CC162A78FF5400EFFE5F /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		8902CC1A2A79314300EFFE5F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		892DC6F52A9772080017BB73 /* mainPageStocks.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mainPageStocks.json; sourceTree = "<group>"; };
 		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		899816842A8D0FE000AC822D /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 				899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */,
 				899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */,
 				89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */,
+				892DC6F52A9772080017BB73 /* mainPageStocks.json */,
 			);
 			path = Model;
 			sourceTree = "<group>";

@@ -12,9 +12,14 @@ final class StocksTableViewCell: UITableViewCell {
     // MARK: - Variables
     
     private var logo = String()
+<<<<<<< HEAD
     private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
     var isFavorite: Bool?
     var didSelectIsFavorite: ((Bool) -> (Void))?
+=======
+    private var didSelectIsFavorite: ((Bool) -> Void)?
+    private var isFavourite: Bool?
+>>>>>>> a3a4c03cd9b98dd79e4cd58982705730b17d83b1
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -137,8 +142,19 @@ final class StocksTableViewCell: UITableViewCell {
     
     // MARK: - Internal Methods
     
+<<<<<<< HEAD
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
+=======
+    func configure(isFavourite: Bool, callback: @escaping (Bool) -> Void) {
+        self.isFavourite = isFavourite
+        self.didSelectIsFavorite = callback
+        
+        let buttonImage = isFavourite ? StockData.filledStar : StockData.emptyStar
+        setButtonImage(newImage: buttonImage)
+        
+        setupView()
+>>>>>>> a3a4c03cd9b98dd79e4cd58982705730b17d83b1
     }
     
     override func prepareForReuse() {
@@ -146,6 +162,7 @@ final class StocksTableViewCell: UITableViewCell {
         self.updateLogo(newCompanyLogo: UIImage())
     }
     
+<<<<<<< HEAD
     required init? (coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -157,6 +174,8 @@ final class StocksTableViewCell: UITableViewCell {
         setupView()
     }
     
+=======
+>>>>>>> a3a4c03cd9b98dd79e4cd58982705730b17d83b1
     // MARK: - Setting up the View
     
     func setupView () {
@@ -241,9 +260,16 @@ final class StocksTableViewCell: UITableViewCell {
     }
     
     @objc func favoriteButtonPressed () {
+<<<<<<< HEAD
         isFavorite?.toggle()
         if let newFavoriteState = isFavorite {
             didSelectIsFavorite?(newFavoriteState)
+=======
+        isFavourite?.toggle()
+        if let didSelectIsFavorite = didSelectIsFavorite,
+           let isFavourite = isFavourite {
+            didSelectIsFavorite(isFavourite)
+>>>>>>> a3a4c03cd9b98dd79e4cd58982705730b17d83b1
         }
     }
 }

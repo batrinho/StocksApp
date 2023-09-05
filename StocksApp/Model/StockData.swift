@@ -23,7 +23,6 @@ struct StockData {
     static var tickers = [String]()
     
     static var logos: [String: UIImage] = [:]
-    static var favorites: [String: Bool] = [:]
     static var prices: [String: StockPriceData] = [:]
 }
 
