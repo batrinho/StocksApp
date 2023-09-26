@@ -12,7 +12,6 @@ protocol NetworkingServiceProtocol {
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
-    
     init () {
         Task {
             await getDataFromLocalJSONFile(name: StockData.localJsonFile)
@@ -56,14 +55,14 @@ final class NetworkingService: NetworkingServiceProtocol {
                 let fileUrl = URL(fileURLWithPath: filePath)
                 let data = try Data(contentsOf: fileUrl)
                 let decoder = JSONDecoder()
-                do {
+                
                     let decodedData = try decoder.decode([StockProfileData].self, from: data)
                     StockData.stockCompanies = decodedData
                     StockData.tickers.removeAll()
                     for decodedDatum in decodedData {
                         StockData.tickers.append(decodedDatum.ticker)
                     }
-                } catch {}
+               
             }
         } catch {}
     }

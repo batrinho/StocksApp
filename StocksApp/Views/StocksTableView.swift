@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StocksTableView: UITableView {
+final class StocksTableView: UITableView {
     var isStocks = true
     
     override init(frame: CGRect, style: UITableView.Style) {

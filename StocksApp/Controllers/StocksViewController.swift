@@ -7,13 +7,14 @@
 
 import UIKit
 
-class StocksViewController: UIViewController {
-    
+final class StocksViewController: UIViewController {
     // MARK: - Variables
     
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
     private let stockDataManager: StockDataManagerProtocol = StockDataManager()
     private let coreDataDatabaseManager = CoreDataDatabaseManager()
+    
+    private var buttonsStackViewWidthConstraint: NSLayoutConstraint!
     
     private var searchController: UISearchController = UISearchController()
     
@@ -31,7 +32,26 @@ class StocksViewController: UIViewController {
         let tableView = StocksTableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
-    }()
+    } ()
+    
+    private var searchView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    } ()
+    
+    private var popularRequestsView: RequestsView = {
+        let requestsView = RequestsView()
+        requestsView.translatesAutoresizingMaskIntoConstraints = false
+        requestsView.configure(label: "Popular Requests", array: StockData.popularStocks)
+        return requestsView
+    } ()
+    
+    private var recentRequestsView: RequestsView = {
+        let requestsView = RequestsView()
+        requestsView.translatesAutoresizingMaskIntoConstraints = false
+        return requestsView
+    } ()
     
     private let stocksButton: UIButton = {
         let button = UIButton()
@@ -61,21 +81,42 @@ extension StocksViewController {
     }
     
     private func configureStocksViewController () {
+        view.backgroundColor = .systemBackground
+        
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
         
         initSearchController()
         
-        DispatchQueue.main.async {
-            self.setupView()
-        }
+        setupView()
     }
     
     private func setupView () {
-        view.backgroundColor = .systemBackground
-        
-        view.addSubview(buttonsStackView)
         view.addSubview(stocksTableView)
+        view.addSubview(buttonsStackView)
+        
+        view.addSubview(searchView)
+
+        searchView.addSubview(popularRequestsView)
+        popularRequestsView.addAction { stockRequest in
+            self.searchController.searchBar.text = stockRequest
+        }
+        searchView.addSubview(recentRequestsView)
+        coreDataDatabaseManager.fetchRequests { recentRequests in
+            guard let recentRequests = recentRequests else { return }
+            for recentRequest in recentRequests {
+                guard let recentRequestTitle = recentRequest.requestTitle else { return }
+                StockData.recentRequests.append(recentRequestTitle)
+            }
+            self.recentRequestsView.configure(label: "Recent Requests", array: StockData.recentRequests)
+        }
+        recentRequestsView.addAction { stockRequest in
+            self.searchController.searchBar.text = stockRequest
+        }
+        
+        setupConstraints()
+        
+        searchView.isHidden = true
         
         buttonsStackView.addArrangedSubview(stocksButton)
         buttonsStackView.addArrangedSubview(favoritesButton)
@@ -83,19 +124,38 @@ extension StocksViewController {
         stocksButton.addTarget(self, action: #selector(showStocks), for: .touchUpInside)
         favoritesButton.addTarget(self, action: #selector(showFavorites), for: .touchUpInside)
         
+        showStocks()
+    }
+    
+    private func setupConstraints () {
+        buttonsStackViewWidthConstraint = buttonsStackView.widthAnchor.constraint(equalToConstant: 270)
+        
         NSLayoutConstraint.activate([
+            searchView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
+            searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            searchView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            popularRequestsView.topAnchor.constraint(equalTo: searchView.topAnchor),
+            popularRequestsView.leadingAnchor.constraint(equalTo: searchView.leadingAnchor),
+            popularRequestsView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor),
+            popularRequestsView.heightAnchor.constraint(equalToConstant: 170),
+
+            recentRequestsView.topAnchor.constraint(equalTo: popularRequestsView.bottomAnchor),
+            recentRequestsView.leadingAnchor.constraint(equalTo: searchView.leadingAnchor),
+            recentRequestsView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor),
+            recentRequestsView.heightAnchor.constraint(equalToConstant: 170),
+
             buttonsStackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -140),
+            buttonsStackViewWidthConstraint,
             
-            stocksTableView.topAnchor.constraint(equalTo: buttonsStackView.layoutMarginsGuide.bottomAnchor),
+            stocksTableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 60),
             stocksTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stocksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stocksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
-        
-        showStocks()
     }
 }
 
@@ -108,26 +168,76 @@ extension StocksViewController: UISearchBarDelegate, UISearchResultsUpdating {
         searchController.searchResultsUpdater = self
         
         searchController.hidesNavigationBarDuringPresentation = true
-        navigationItem.hidesSearchBarWhenScrolling = true
         
         searchController.searchBar.sizeToFit()
         searchController.searchBar.returnKeyType = UIReturnKeyType.search
         searchController.searchBar.placeholder = "Find a Company or Ticker"
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchView.isHidden = false
+        buttonsStackView.isHidden = true
+        stocksTableView.isHidden = true
+        
+        return true
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        if let searchText = searchBar.text {
-            filterStocks(searchText: searchText)
-        }
+        guard let searchText = searchBar.text else { return }
+        
+        filterStocks(searchText: searchText)
+        buttonsStackView.isHidden = searchText.isEmpty
+        
+        favoritesButton.isHidden = true
+        stocksButton.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        stocksButton.setTitleColor(.black, for: .normal)
+        stocksButton.isEnabled = false
+        buttonsStackViewWidthConstraint.isActive = false
+        buttonsStackViewWidthConstraint = buttonsStackView.widthAnchor.constraint(equalToConstant: 100)
+        buttonsStackViewWidthConstraint.isActive = true
+
+        stocksTableView.isHidden = searchText.isEmpty
+        searchView.isHidden = !searchText.isEmpty
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if stocksTableView.isStocks == true {
-            showStocks()
-        } else {
-            showFavorites()
+        DispatchQueue.main.async {
+            self.searchView.isHidden = true
+            
+            self.stocksButton.isEnabled = true
+            
+            self.favoritesButton.isHidden = false
+            self.stocksTableView.isHidden = false
+            self.buttonsStackView.isHidden = false
+            
+            self.buttonsStackViewWidthConstraint.isActive = false
+            self.buttonsStackViewWidthConstraint = self.buttonsStackView.widthAnchor.constraint(equalToConstant: 270)
+            self.buttonsStackViewWidthConstraint.isActive = true
+            
+            if self.stocksTableView.isStocks == true {
+                self.showStocks()
+            } else {
+                self.showFavorites()
+            }
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let searchBarText = searchBar.text else { return }
+        if !searchBarText.isEmpty {
+            coreDataDatabaseManager.addRequest(request: searchBarText)
+            StockData.recentRequests.removeAll()
+            coreDataDatabaseManager.fetchRequests { recentRequests in
+                guard let recentRequests = recentRequests else { return }
+                for recentRequest in recentRequests {
+                    guard let recentRequestTitle = recentRequest.requestTitle else { return }
+                    StockData.recentRequests.append(recentRequestTitle)
+                }
+            }
+            recentRequestsView.updateStackView(array: StockData.recentRequests)
         }
     }
     
@@ -190,10 +300,11 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let stock = StockData.companies[indexPath.row]
-        let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .systemBackground
+        let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .clear
         let currentIsFavorite = coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
         
-        cell.configure(newCompanySymbol: stock.ticker, newCompanyTitle: stock.name, cellBackgroundColor: cellBackground, logo: stock.logo, isFavorite: currentIsFavorite) { currentFavoriteState in
+        cell.configure(newCompanySymbol: stock.ticker, newCompanyTitle: stock.name, cellBackgroundColor: cellBackground, logo: stock.logo, isFavorite: currentIsFavorite) { [weak self] currentFavoriteState in
+            guard let self = self else {return}
             if currentFavoriteState == true {
                 self.coreDataDatabaseManager.addStock(stock: stock)
             } else {
@@ -226,8 +337,36 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 95
+        return 85
     }
 }
 
+// MARK: - Array split method
+
+extension Array {
+    func split() -> (left: [Element], right: [Element]) {
+        let ct = self.count
+        let half = ct / 2
+        let leftSplit = self[0 ..< half]
+        let rightSplit = self[half ..< ct]
+        return (left: Array(leftSplit), right: Array(rightSplit))
+    }
+}
+
+extension UIStackView {
+    func removeFully(view: UIView) {
+        removeArrangedSubview(view)
+        view.removeFromSuperview()
+    }
+    
+    func removeFullyAllArrangedSubviews() {
+        arrangedSubviews.forEach { (view) in
+            removeFully(view: view)
+        }
+    }
+}

@@ -8,13 +8,13 @@
 import UIKit
 
 final class StocksTableViewCell: UITableViewCell {
-    
     // MARK: - Variables
     
     private var logo = String()
-    private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol = CoreDataDatabaseManager()
     var isFavorite: Bool?
     var didSelectIsFavorite: ((Bool) -> (Void))?
+    
+    var originalBackgroundColor: UIColor?
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -160,16 +160,10 @@ final class StocksTableViewCell: UITableViewCell {
     // MARK: - Setting up the View
     
     func setupView () {
-        let someView = UIView()
-        someView.backgroundColor = .clear
-        self.selectedBackgroundView = someView
+        layer.cornerRadius = 16
         
-        contentView.addSubview(cellView)
-        
-        cellView.layer.cornerRadius = 16
-        
-        cellView.addSubview(companyLogo)
-        cellView.addSubview(titleStackView)
+        contentView.addSubview(companyLogo)
+        contentView.addSubview(titleStackView)
         
         titleStackView.addArrangedSubview(symbolStackView)
         
@@ -181,24 +175,19 @@ final class StocksTableViewCell: UITableViewCell {
         
         titleStackView.addArrangedSubview(companyTitle)
         
-        cellView.addSubview(priceStackView)
+        contentView.addSubview(priceStackView)
         
         priceStackView.addArrangedSubview(currentPriceLabel)
         priceStackView.addArrangedSubview(priceChangeLabel)
         
         NSLayoutConstraint.activate([
-            cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            companyLogo.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-            companyLogo.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10),
-            companyLogo.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
+            companyLogo.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            companyLogo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            companyLogo.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             companyLogo.widthAnchor.constraint(equalToConstant: 65),
             
-            titleStackView.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 15),
-            titleStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -15),
+            titleStackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            titleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             titleStackView.leadingAnchor.constraint(equalTo: companyLogo.trailingAnchor, constant: 15),
             titleStackView.widthAnchor.constraint(equalToConstant: 150),
             
@@ -207,10 +196,10 @@ final class StocksTableViewCell: UITableViewCell {
             favoriteButton.widthAnchor.constraint(equalToConstant: 20),
             favoriteButton.heightAnchor.constraint(equalTo: favoriteButton.widthAnchor),
             
-            priceStackView.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 15),
-            priceStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -15),
+            priceStackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            priceStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             priceStackView.leadingAnchor.constraint(equalTo: titleStackView.trailingAnchor, constant: 10),
-            priceStackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10)
+            priceStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
     
@@ -219,7 +208,8 @@ final class StocksTableViewCell: UITableViewCell {
     func updateLabels (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String) {
         companySymbol.text = newCompanySymbol
         companyTitle.text = newCompanyTitle
-        cellView.backgroundColor = cellBackgroundColor
+        backgroundColor = cellBackgroundColor
+        originalBackgroundColor = cellBackgroundColor
         if let isFavorite = isFavorite {
             favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
         }

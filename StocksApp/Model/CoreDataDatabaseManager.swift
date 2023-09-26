@@ -18,10 +18,18 @@ protocol CoreDataDatabaseManagerFetchProtocol {
     func fetchStocks (completion: @escaping ([StockProfileData]?) -> Void)
 }
 
-class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabaseManagerFetchProtocol {
+final class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabaseManagerFetchProtocol {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var favoriteStocks: [FavoriteStock]?
+    var recentRequests: [RecentRequest]?
+}
+
+
+
+// MARK: - Favorite Stocks
+
+extension CoreDataDatabaseManager {
     
     func addStock (stock: StockProfileData) {
         let newStock = FavoriteStock(context: self.context)
@@ -103,4 +111,29 @@ class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDatabase
         }
     }
     
+}
+
+
+// MARK: - Recent Requests
+
+extension CoreDataDatabaseManager {
+    
+    func addRequest (request: String) {
+        let newRequest = RecentRequest(context: self.context)
+        newRequest.requestTitle = request
+        do {
+            try context.save()
+        } catch {
+            print("lol")
+        }
+    }
+    
+    func fetchRequests (completion: @escaping ([RecentRequest]?) -> Void) {
+        do {
+            self.recentRequests = try self.context.fetch(RecentRequest.fetchRequest())
+        } catch {
+            print("rofl")
+        }
+        completion(recentRequests)
+    }
 }

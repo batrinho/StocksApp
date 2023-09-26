@@ -9,6 +9,7 @@ import UIKit
 
 struct StockData {
     static let stocksCellIndentifier = "stocksCell"
+    static let collectionViewCellIndentifier = "collectionViewCell"
     static let localJsonFile = "stockProfiles"
     static let baseUrlString = "https://finnhub.io/api/v1/quote"
     static let apikey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
@@ -25,6 +26,9 @@ struct StockData {
     static var logos: [String: UIImage] = [:]
     static var favorites: [String: Bool] = [:]
     static var prices: [String: StockPriceData] = [:]
+    
+    static let popularStocks = ["Apple","Amazon","Google","Tesla","Microsoft","Facebook","Alibaba","Yandex","Mastercard","Booking","Firstsolar"]
+    static var recentRequests = [String]()
 }
 
 struct StockProfileData: Codable, Equatable {

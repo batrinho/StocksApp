@@ -15,6 +15,10 @@
 		8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */; };
 		8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC162A78FF5400EFFE5F /* StockData.swift */; };
 		8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC1A2A79314300EFFE5F /* NetworkingService.swift */; };
+		890388422AB31F2600E9A814 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890388412AB31F2600E9A814 /* RequestsView.swift */; };
+		892332282AB1D896005299B3 /* RequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892332272AB1D896005299B3 /* RequestButton.swift */; };
+		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
+		89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */; };
 		89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89876D962A7E266C007DD43D /* StockDataManager.swift */; };
 		899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */; };
 		899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */; };
@@ -34,6 +38,10 @@
 		8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableViewCell.swift; sourceTree = "<group>"; };
 		8902CC162A78FF5400EFFE5F /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		8902CC1A2A79314300EFFE5F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		890388412AB31F2600E9A814 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
+		892332272AB1D896005299B3 /* RequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestButton.swift; sourceTree = "<group>"; };
+		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
+		89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		899816842A8D0FE000AC822D /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -96,6 +104,8 @@
 			children = (
 				8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */,
 				8902CC102A78FE1300EFFE5F /* StocksTableView.swift */,
+				892332272AB1D896005299B3 /* RequestButton.swift */,
+				890388412AB31F2600E9A814 /* RequestsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -109,6 +119,8 @@
 				8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */,
 				899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */,
 				899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */,
+				89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */,
+				89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */,
 				899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */,
 				89A0BCD92A7AA4A600BEA2BE /* stockProfiles.json */,
 			);
@@ -191,11 +203,15 @@
 				89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */,
 				8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */,
 				8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */,
+				89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,
 				899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */,
+				890388422AB31F2600E9A814 /* RequestsView.swift in Sources */,
 				8902CBFC2A78FB4C00EFFE5F /* AppDelegate.swift in Sources */,
 				899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */,
+				892332282AB1D896005299B3 /* RequestButton.swift in Sources */,
 				8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */,
+				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
 				8902CBFE2A78FB4C00EFFE5F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         let nav = UINavigationController(rootViewController: StocksViewController())
-//        nav.hidesBarsOnSwipe = true
+        nav.navigationBar.barTintColor = .white
+        nav.navigationBar.shadowImage = UIImage()
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }

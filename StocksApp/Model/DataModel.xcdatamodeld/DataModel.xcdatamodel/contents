@@ -5,7 +5,11 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="ticker" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="RecentRequest" representedClassName="RecentRequest" syncable="YES">
+        <attribute name="requestTitle" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="FavoriteStock" positionX="-54" positionY="-9" width="128" height="74"/>
+        <element name="RecentRequest" positionX="-54" positionY="18" width="128" height="44"/>
     </elements>
 </model>
