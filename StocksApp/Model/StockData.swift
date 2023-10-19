@@ -10,12 +10,12 @@ import UIKit
 struct StockData {
     static let stocksCellIndentifier = "stocksCell"
     static let collectionViewCellIndentifier = "collectionViewCell"
-    static let localJsonFile = "stockProfiles"
+    static let localJsonFile = "stockProfiles (1)"
     static let baseUrlString = "https://finnhub.io/api/v1/quote"
     static let apikey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
     static let cellBackgroundColor = UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1)
-    static let filledStar = UIImage(named: "Image")!
-    static let emptyStar = UIImage(named: "Image-1")!
+    static let filledStar = UIImage(named: "star.yellow.fill")!
+    static let emptyStar = UIImage(named: "star.gray.fill")!
     static let reusableImage = UIImage()
     
     static var companies = [StockProfileData]()

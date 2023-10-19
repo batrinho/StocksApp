@@ -14,7 +14,7 @@ final class RequestButton: UIButton {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 17.5, weight: .semibold)
+        label.font = UIFont(name: "Montserrat-Medium", size: 12)
         return label
     } ()
     

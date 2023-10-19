@@ -42,8 +42,6 @@ final class StockDataManager: StockDataManagerProtocol {
             
             guard let theUrl = urlComponents?.url else { return nil }
             
-            print(theUrl)
-            
             let decoder = JSONDecoder()
             
             let (data, _) = try await URLSession.shared.data(from: theUrl)

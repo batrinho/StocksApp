@@ -16,6 +16,7 @@ final class StocksTableView: UITableView {
     }
     
     private func setupTableView () {
+        translatesAutoresizingMaskIntoConstraints = false
         separatorStyle = UITableViewCell.SeparatorStyle.none
         showsVerticalScrollIndicator = false
         register(StocksTableViewCell.self, forCellReuseIdentifier: StockData.stocksCellIndentifier)

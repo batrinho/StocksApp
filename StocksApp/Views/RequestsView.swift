@@ -13,8 +13,7 @@ final class RequestsView: UIView {
     private var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)
         return label
     } ()
     
@@ -114,7 +113,6 @@ final class RequestsView: UIView {
     }
     
     func handleButtonTap (buttonTitle: String) {
-        print("Button tapped: \(buttonTitle)")
         closure?(buttonTitle)
     }
     

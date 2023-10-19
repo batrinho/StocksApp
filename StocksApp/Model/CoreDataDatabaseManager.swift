@@ -119,12 +119,14 @@ extension CoreDataDatabaseManager {
 extension CoreDataDatabaseManager {
     
     func addRequest (request: String) {
-        let newRequest = RecentRequest(context: self.context)
-        newRequest.requestTitle = request
-        do {
-            try context.save()
-        } catch {
-            print("lol")
+        if !request.isEmpty {
+            let newRequest = RecentRequest(context: self.context)
+            newRequest.requestTitle = request
+            do {
+                try context.save()
+            } catch {
+                print("lol")
+            }
         }
     }
     

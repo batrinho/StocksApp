@@ -14,129 +14,67 @@ final class StocksTableViewCell: UITableViewCell {
     var isFavorite: Bool?
     var didSelectIsFavorite: ((Bool) -> (Void))?
     
-    var originalBackgroundColor: UIColor?
-    
     private let companyLogo: UIImageView = {
         let image = UIImageView()
-        
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "")
         image.clipsToBounds = true
-        image.layer.cornerRadius = 16
-        
+        image.layer.cornerRadius = 20
         return image
-    } ()
-    
-    private let companyTitle: UILabel = {
-        let title = UILabel()
-        
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.textColor = .black
-        title.font = UIFont.systemFont(ofSize: 17)
-        title.lineBreakMode = .byTruncatingTail
-        
-        return title
     } ()
     
     private let companySymbol: UILabel = {
         let title = UILabel()
-        
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textColor = .black
-        title.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        title.lineBreakMode = .byTruncatingTail
-        
-        title.numberOfLines = 0
-        
+        title.font = UIFont(name: "Montserrat-Bold", size: 18)
         return title
     } ()
     
     private let favoriteButton: UIButton = {
         let button = UIButton()
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(StockData.emptyStar, for: .normal)
-        
         return button
     } ()
     
-    private let favoriteButtonView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let companyTitle: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.textColor = .black
+        title.font = UIFont(name: "Montserrat-Medium", size: 12)
+        return title
     } ()
     
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)
         label.textColor = .black
         label.textAlignment = .right
-        
         return label
     } ()
     
     private let priceChangeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont(name: "Montserrat-Medium", size: 12)
         label.textColor = .systemGreen
         label.textAlignment = .right
-        
         return label
     } ()
     
     private let priceStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         stackView.axis = .vertical
         stackView.spacing = 0
         stackView.alignment = .trailing
-        
         return stackView
     } ()
-    
-    private let symbolStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 5
-        
-        return stackView
-    } ()
-    
-    private let cellStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 15
-        
-        return stackView
-    } ()
-    
-    private let titleStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 0
-        
-        return stackView
-    } ()
-    
-    private let cellView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    } ()
-    
-    // MARK: - Internal Methods
-    
+
+// MARK: - Internal Methods
+
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
     }
@@ -152,67 +90,65 @@ final class StocksTableViewCell: UITableViewCell {
     
     func configure (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String, isFavorite: Bool, callback: @escaping (Bool) -> Void) {
         self.isFavorite = isFavorite
-        self.didSelectIsFavorite = callback
-        self.updateLabels(newCompanySymbol: newCompanySymbol, newCompanyTitle: newCompanyTitle, cellBackgroundColor: cellBackgroundColor, logo: logo)
+        didSelectIsFavorite = callback
+        updateLabels(newCompanySymbol: newCompanySymbol, newCompanyTitle: newCompanyTitle, cellBackgroundColor: cellBackgroundColor, logo: logo)
         setupView()
     }
     
     // MARK: - Setting up the View
     
     func setupView () {
-        layer.cornerRadius = 16
+        layer.cornerRadius = 25
         
         contentView.addSubview(companyLogo)
-        contentView.addSubview(titleStackView)
+        contentView.addSubview(companySymbol)
+        contentView.addSubview(favoriteButton)
+        contentView.addSubview(companyTitle)
+        contentView.addSubview(currentPriceLabel)
+        contentView.addSubview(priceChangeLabel)
         
-        titleStackView.addArrangedSubview(symbolStackView)
-        
-        symbolStackView.addArrangedSubview(companySymbol)
-        symbolStackView.addArrangedSubview(favoriteButtonView)
-        
-        favoriteButtonView.addSubview(favoriteButton)
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
-        
-        titleStackView.addArrangedSubview(companyTitle)
-        
-        contentView.addSubview(priceStackView)
-        
-        priceStackView.addArrangedSubview(currentPriceLabel)
-        priceStackView.addArrangedSubview(priceChangeLabel)
         
         NSLayoutConstraint.activate([
             companyLogo.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             companyLogo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             companyLogo.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            companyLogo.widthAnchor.constraint(equalToConstant: 65),
+            companyLogo.widthAnchor.constraint(equalToConstant: 70),
             
-            titleStackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            titleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
-            titleStackView.leadingAnchor.constraint(equalTo: companyLogo.trailingAnchor, constant: 15),
-            titleStackView.widthAnchor.constraint(equalToConstant: 150),
+            companySymbol.topAnchor.constraint(equalTo: topAnchor, constant: 17.5),
+            companySymbol.leadingAnchor.constraint(equalTo: companyLogo.trailingAnchor, constant: 10),
+            companySymbol.heightAnchor.constraint(equalToConstant: 20),
             
-            favoriteButton.topAnchor.constraint(equalTo: favoriteButtonView.topAnchor, constant: 7.5),
-            favoriteButton.bottomAnchor.constraint(equalTo: favoriteButtonView.bottomAnchor, constant: -7.5),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 20),
-            favoriteButton.heightAnchor.constraint(equalTo: favoriteButton.widthAnchor),
+            favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 19),
+            favoriteButton.leadingAnchor.constraint(equalTo: companySymbol.trailingAnchor, constant: 5),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 16),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 16),
             
-            priceStackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            priceStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
-            priceStackView.leadingAnchor.constraint(equalTo: titleStackView.trailingAnchor, constant: 10),
-            priceStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            companyTitle.topAnchor.constraint(equalTo: companySymbol.bottomAnchor),
+            companyTitle.leadingAnchor.constraint(equalTo: companyLogo.trailingAnchor, constant: 10),
+            companyTitle.heightAnchor.constraint(equalToConstant: 15),
+            companyTitle.widthAnchor.constraint(equalToConstant: 130),
+            
+            currentPriceLabel.topAnchor.constraint(equalTo: topAnchor, constant: 17.5),
+            currentPriceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            currentPriceLabel.heightAnchor.constraint(equalToConstant: 20),
+            currentPriceLabel.widthAnchor.constraint(equalToConstant: 100),
+            
+            priceChangeLabel.topAnchor.constraint(equalTo: currentPriceLabel.bottomAnchor),
+            priceChangeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            priceChangeLabel.heightAnchor.constraint(equalToConstant: 15),
+            priceChangeLabel.widthAnchor.constraint(equalToConstant: 70),
         ])
     }
     
     // MARK: - Cell modifications
     
     func updateLabels (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String) {
+        guard let isFavorite = isFavorite else { return }
         companySymbol.text = newCompanySymbol
         companyTitle.text = newCompanyTitle
         backgroundColor = cellBackgroundColor
-        originalBackgroundColor = cellBackgroundColor
-        if let isFavorite = isFavorite {
-            favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
-        }
+        favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
         self.logo = logo
     }
     
@@ -232,8 +168,7 @@ final class StocksTableViewCell: UITableViewCell {
     
     @objc func favoriteButtonPressed () {
         isFavorite?.toggle()
-        if let newFavoriteState = isFavorite {
-            didSelectIsFavorite?(newFavoriteState)
-        }
+        guard let newFavoriteState = isFavorite else { return }
+        didSelectIsFavorite?(newFavoriteState)
     }
 }
