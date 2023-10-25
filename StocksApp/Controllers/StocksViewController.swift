@@ -48,9 +48,45 @@ final class StocksViewController: UIViewController {
 // MARK: - Configurations
 
 extension StocksViewController {
+    
     override func viewDidLoad () {
         super.viewDidLoad()
+        print(#function)
+        print("\nThe frame of the table view: \(stocksTableView.frame)\n")
+        // the frame is 0 because there is a space that was prepared for the table view, which is yet to be displayed
         configureStocksViewController()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(#function)
+        print("\nThe frame of the table view: \(stocksTableView.frame)\n")
+        // the frame is not 0 because the table view has been sketched, layed its constraints and is active
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print(#function)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print(#function)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print(#function)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print(#function)
     }
     
     private func configureStocksViewController () {
@@ -62,6 +98,7 @@ extension StocksViewController {
     }
     
     private func setupView () {
+        view.backgroundColor = .systemBackground
         view.addSubview(searchBarView)
         searchBarView.button.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
         

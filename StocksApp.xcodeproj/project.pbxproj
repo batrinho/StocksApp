@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8902CBFC2A78FB4C00EFFE5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */; };
-		8902CBFE2A78FB4C00EFFE5F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CBFD2A78FB4C00EFFE5F /* SceneDelegate.swift */; };
 		8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CBFF2A78FB4C00EFFE5F /* StocksViewController.swift */; };
 		8902CC052A78FB4D00EFFE5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8902CC042A78FB4D00EFFE5F /* Assets.xcassets */; };
 		8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC102A78FE1300EFFE5F /* StocksTableView.swift */; };
@@ -34,7 +33,6 @@
 /* Begin PBXFileReference section */
 		8902CBF82A78FB4C00EFFE5F /* StocksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8902CBFD2A78FB4C00EFFE5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8902CBFF2A78FB4C00EFFE5F /* StocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewController.swift; sourceTree = "<group>"; };
 		8902CC042A78FB4D00EFFE5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8902CC092A78FB4D00EFFE5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */,
-				8902CBFD2A78FB4C00EFFE5F /* SceneDelegate.swift */,
 				8902CC132A78FED100EFFE5F /* Model */,
 				8902CC122A78FEBF00EFFE5F /* Views */,
 				8902CC0F2A78FDE700EFFE5F /* Controllers */,
@@ -175,7 +172,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					8902CBF72A78FB4C00EFFE5F = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -236,7 +233,6 @@
 				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
 				89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */,
 				89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */,
-				8902CBFE2A78FB4C00EFFE5F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +275,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -339,6 +336,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
