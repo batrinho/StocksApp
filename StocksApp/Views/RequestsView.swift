@@ -8,7 +8,7 @@
 import UIKit
 
 final class RequestsView: UIView {
-    var closure: ((String) -> Void)?
+    private var closure: ((String) -> Void)?
     
     private var label: UILabel = {
         let label = UILabel()

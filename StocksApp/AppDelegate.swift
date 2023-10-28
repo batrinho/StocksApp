@@ -8,12 +8,29 @@
 import UIKit
 import CoreData
 
+extension UIApplication.State {
+    var stringValue: String {
+        switch self {
+        case .active:
+            "active"
+        case .inactive:
+            "inactive"
+        case .background:
+            "background"
+        @unknown default:
+            fatalError()
+        }
+    }
+}
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var lastState: String?
-
+    var state: String?
+    
+    //    /Users/batyrtolkynbayev/Desktop/the folder/iOS Development/Adlet Abi Tasks/StocksApp
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -21,35 +38,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = StocksViewController()
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "Not Running") to \(UIApplication.State.inactive.stringValue): \(#function)")
+        state = UIApplication.State.inactive.stringValue
         return true
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "Not Running") to \(UIApplication.State.inactive.stringValue): \(#function)")
+        state = UIApplication.State.inactive.stringValue
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "") to \(UIApplication.State.active.stringValue): \(#function)")
+        state = UIApplication.State.active.stringValue
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "") to \(UIApplication.State.inactive.stringValue): \(#function)")
+        state = UIApplication.State.inactive.stringValue
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "") to \(UIApplication.State.background.stringValue): \(#function)")
+        state = UIApplication.State.background.stringValue
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        print("Application moved from \(lastState ?? "*") to \(#function)")
-        lastState = #function
+        print("Application moved from \(state ?? "") to Not Running: \(#function)")
+        state = "Not Running"
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("Application moved from \(state ?? "") to \(UIApplication.State.inactive.stringValue): \(#function)")
+        state = UIApplication.State.inactive.stringValue
     }
 
     // MARK: UISceneSession Lifecycle
@@ -97,4 +119,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-

@@ -108,7 +108,8 @@ extension StocksViewController {
         view.addSubview(searchView)
 
         searchView.addSubview(popularRequestsView)
-        popularRequestsView.addAction { stockRequest in
+        popularRequestsView.addAction { [weak self] stockRequest in
+            guard let self else { return }
             self.searchBarView.textField.text = stockRequest
             self.updateResults(text: stockRequest)
         }
@@ -414,7 +415,13 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
         let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .clear
         let currentIsFavorite = coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
         
-        cell.configure(newCompanySymbol: stock.ticker, newCompanyTitle: stock.name, cellBackgroundColor: cellBackground, logo: stock.logo, isFavorite: currentIsFavorite) { [weak self] currentFavoriteState in
+        cell.configure(
+            newCompanySymbol: stock.ticker,
+            newCompanyTitle: stock.name,
+            cellBackgroundColor: cellBackground,
+            logo: stock.logo,
+            isFavorite: currentIsFavorite
+        ) { [weak self] currentFavoriteState in
             guard let self = self else { return }
             if currentFavoriteState == true {
                 self.coreDataDatabaseManager.addStock(stock: stock)
@@ -438,10 +445,13 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
         }
         
         stockDataManager.fetchPrice(stockSymbol: stock.ticker) { price in
+            guard let price else { return }
             DispatchQueue.main.async {
-                if let newPrice = StockData.prices[stock.ticker] {
-                    cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
-                }
+                cell.updatePrices(currentPrice: price.c, priceChange: price.d)
+                StockData.prices[stock.ticker] = price
+//                if let newPrice = StockData.prices[stock.ticker] {
+//                    cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
+//                }
             }
         }
         
@@ -474,6 +484,8 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
 }
 
 // MARK: - Array split method
+
+// Create folder named "Extension" and add for each extensions below different files
 
 extension Array {
     func split() -> (left: [Element], right: [Element]) {

@@ -19,7 +19,7 @@ final class StockDataManager: StockDataManagerProtocol {
             Task {
                 do {
                     guard let fetchedPrice = try await parseJSON(stockSymbol: stockSymbol) else { return }
-                    StockData.prices[stockSymbol] = fetchedPrice
+//                    StockData.prices[stockSymbol] = fetchedPrice
                     completion(fetchedPrice)
                 } catch {
                     completion(nil)
