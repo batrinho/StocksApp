@@ -8,7 +8,7 @@
 import UIKit
 
 final class StocksViewController: UIViewController {
-    // MARK: - Variables
+    // MARK: - Configurations
     
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
     private let stockDataManager: StockDataManagerProtocol = StockDataManager()
@@ -43,11 +43,6 @@ final class StocksViewController: UIViewController {
         requestsView.translatesAutoresizingMaskIntoConstraints = false
         return requestsView
     } ()
-}
-
-// MARK: - Configurations
-
-extension StocksViewController {
     
     override func viewDidLoad () {
         super.viewDidLoad()
@@ -289,89 +284,6 @@ extension StocksViewController: UITextFieldDelegate {
     }
 }
 
-//extension StocksViewController: UISearchBarDelegate {
-//    func initSearchController () {
-////        self.searchController = UISearchController(searchResultsController: nil)
-////        searchController.searchBar.delegate = self
-////        searchController.searchResultsUpdater = self
-////
-////        searchController.hidesNavigationBarDuringPresentation = true
-////
-////        searchController.searchBar.sizeToFit()
-////        searchController.searchBar.returnKeyType = UIReturnKeyType.search
-////        searchController.searchBar.placeholder = "Find a Company or Ticker"
-////        navigationItem.searchController = searchController
-////        navigationItem.hidesSearchBarWhenScrolling = true
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-////        guard let searchText = self.searchBar.text else { return }
-////
-////        filterStocks(searchText: searchText)
-////        buttonsStackView.isHidden = searchText.isEmpty
-////
-////        favoritesButton.isHidden = true
-////        stocksButton.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
-////        stocksButton.setTitleColor(.black, for: .normal)
-////        stocksButton.isEnabled = false
-////        buttonsStackViewWidthConstraint.isActive = false
-////        buttonsStackViewWidthConstraint = buttonsStackView.widthAnchor.constraint(equalToConstant: 100)
-////        buttonsStackViewWidthConstraint.isActive = true
-////
-////        stocksTableView.isHidden = searchText.isEmpty
-////        searchView.isHidden = !searchText.isEmpty
-//    }
-//
-//    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-//        self.searchBar.showsCancelButton = true
-//        searchView.isHidden = false
-//        buttonsStackView.isHidden = true
-//        stocksTableView.isHidden = true
-//        return true
-//    }
-//
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        DispatchQueue.main.async {
-//            self.searchView.isHidden = true
-//
-//            self.stocksButton.isEnabled = true
-//
-//            self.favoritesButton.isHidden = false
-//            self.stocksTableView.isHidden = false
-//            self.buttonsStackView.isHidden = false
-//
-//            self.buttonsStackViewWidthConstraint.isActive = false
-//            self.buttonsStackViewWidthConstraint = self.buttonsStackView.widthAnchor.constraint(equalToConstant: 270)
-//            self.buttonsStackViewWidthConstraint.isActive = true
-//
-//            if self.stocksTableView.isStocks == true {
-//                self.showStocks()
-//            } else {
-//                self.showFavorites()
-//            }
-//        }
-//        self.searchBar.isUserInteractionEnabled = false
-//        self.searchBar.isUserInteractionEnabled = true
-//        self.searchBar.showsCancelButton = false
-//    }
-//
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        guard let searchBarText = self.searchBar.text else { return }
-//        if !searchBarText.isEmpty {
-//            coreDataDatabaseManager.addRequest(request: searchBarText)
-//            StockData.recentRequests.removeAll()
-//            coreDataDatabaseManager.fetchRequests { recentRequests in
-//                guard let recentRequests = recentRequests else { return }
-//                for recentRequest in recentRequests {
-//                    guard let recentRequestTitle = recentRequest.requestTitle else { return }
-//                    StockData.recentRequests.append(recentRequestTitle)
-//                }
-//            }
-//            recentRequestsView.updateStackView(array: StockData.recentRequests)
-//        }
-//    }
-//}
-
 // MARK: - Buttons
 
 extension StocksViewController {
@@ -436,22 +348,20 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
             }
         }
         
-        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { image in
+        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { [weak self] image, logoUrl in
+            guard let image = image,
+                  let logoUrl = logoUrl else { return }
             DispatchQueue.main.async {
-                if let newImage = image {
-                    cell.updateLogo(newCompanyLogo: newImage)
-                }
+                cell.updateLogo(newCompanyLogo: image)
+                StockData.logos[logoUrl] = image
             }
         }
-        
-        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { price in
+                
+        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { [weak self] price in
             guard let price else { return }
             DispatchQueue.main.async {
                 cell.updatePrices(currentPrice: price.c, priceChange: price.d)
                 StockData.prices[stock.ticker] = price
-//                if let newPrice = StockData.prices[stock.ticker] {
-//                    cell.updatePrices(currentPrice: newPrice.c, priceChange: newPrice.d)
-//                }
             }
         }
         

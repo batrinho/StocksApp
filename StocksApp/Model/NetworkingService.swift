@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NetworkingServiceProtocol {
-    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?) -> Void)
+    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?, String?) -> Void)
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
@@ -18,22 +18,22 @@ final class NetworkingService: NetworkingServiceProtocol {
         }
     }
     
-    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?) -> Void) {
+    func fetchCompanyLogo (logoUrl: String, completion: @escaping (UIImage?, String?) -> Void) {
         if let image = StockData.logos[logoUrl] {
-            completion(image)
+            completion(image, logoUrl)
         } else {
             Task {
                 do {
                     guard let imageUrl = URL(string: logoUrl),
                           let fetchedImage = try await parseJSON(url: imageUrl) else {
-                        completion(nil)
+                        completion(nil, nil)
                         return
                     }
                     
-                    StockData.logos[logoUrl] = fetchedImage
-                    completion(fetchedImage)
+//                    StockData.logos[logoUrl] = fetchedImage
+                    completion(fetchedImage, logoUrl)
                 } catch {
-                    completion(nil)
+                    completion(nil, nil)
                 }
             }
         }
