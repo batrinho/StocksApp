@@ -27,6 +27,9 @@
 		899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */; };
 		8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */; };
 		89B6F5AE2ACC649800282BF7 /* static in Resources */ = {isa = PBXBuildFile; fileRef = 89B6F5AD2ACC649800282BF7 /* static */; };
+		89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4BE2AF287E600622315 /* UIApplication.State.swift */; };
+		89BAF4C12AF2880500622315 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C02AF2880500622315 /* Array.swift */; };
+		89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C22AF2882100622315 /* UIStackView.swift */; };
 		89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB19162ACF370A0020E605 /* ButtonsStackView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +56,9 @@
 		899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabaseManager.swift; sourceTree = "<group>"; };
 		89B6F5AD2ACC649800282BF7 /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
+		89BAF4BE2AF287E600622315 /* UIApplication.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.State.swift; sourceTree = "<group>"; };
+		89BAF4C02AF2880500622315 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		89BAF4C22AF2882100622315 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		89FB19162ACF370A0020E605 /* ButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +97,7 @@
 				8902CC122A78FEBF00EFFE5F /* Views */,
 				8902CC0F2A78FDE700EFFE5F /* Controllers */,
 				89B6F5AA2ACC5FDE00282BF7 /* Fonts */,
+				89BAF4BD2AF287CE00622315 /* Extensions */,
 				8902CC042A78FB4D00EFFE5F /* Assets.xcassets */,
 				8902CC092A78FB4D00EFFE5F /* Info.plist */,
 			);
@@ -142,6 +149,16 @@
 				89B6F5AD2ACC649800282BF7 /* static */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		89BAF4BD2AF287CE00622315 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				89BAF4BE2AF287E600622315 /* UIApplication.State.swift */,
+				89BAF4C02AF2880500622315 /* Array.swift */,
+				89BAF4C22AF2882100622315 /* UIStackView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */,
+				89BAF4C12AF2880500622315 /* Array.swift in Sources */,
 				8968DFA22AD11E82007DCA2A /* SearchView.swift in Sources */,
 				8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */,
 				899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */,
@@ -230,7 +248,9 @@
 				899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */,
 				892332282AB1D896005299B3 /* RequestButton.swift in Sources */,
 				8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */,
+				89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */,
 				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
+				89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */,
 				89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */,
 				89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */,
 			);

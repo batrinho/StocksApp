@@ -348,7 +348,7 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
             }
         }
         
-        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { [weak self] image, logoUrl in
+        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { image, logoUrl in
             guard let image = image,
                   let logoUrl = logoUrl else { return }
             DispatchQueue.main.async {
@@ -357,7 +357,7 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
             }
         }
                 
-        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { [weak self] price in
+        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { price in
             guard let price else { return }
             DispatchQueue.main.async {
                 cell.updatePrices(currentPrice: price.c, priceChange: price.d)
@@ -385,7 +385,7 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
             let maxHeight: CGFloat = 48
             let newHeight = maxHeight - yOffset
             searchBarViewHeightConstraint.constant = newHeight
-            searchBarView.layer.cornerRadius = 25 - yOffset / 4
+            searchBarView.layer.cornerRadius = 25 - yOffset / 2
         } else {
             searchBarViewHeightConstraint.constant = 48
             searchBarView.layer.cornerRadius = 25
@@ -393,29 +393,4 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
     }
 }
 
-// MARK: - Array split method
 
-// Create folder named "Extension" and add for each extensions below different files
-
-extension Array {
-    func split() -> (left: [Element], right: [Element]) {
-        let ct = self.count
-        let half = ct / 2
-        let leftSplit = self[0 ..< half]
-        let rightSplit = self[half ..< ct]
-        return (left: Array(leftSplit), right: Array(rightSplit))
-    }
-}
-
-extension UIStackView {
-    func removeFully(view: UIView) {
-        removeArrangedSubview(view)
-        view.removeFromSuperview()
-    }
-    
-    func removeFullyAllArrangedSubviews() {
-        arrangedSubviews.forEach { (view) in
-            removeFully(view: view)
-        }
-    }
-}

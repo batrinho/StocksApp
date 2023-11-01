@@ -8,21 +8,6 @@
 import UIKit
 import CoreData
 
-extension UIApplication.State {
-    var stringValue: String {
-        switch self {
-        case .active:
-            "active"
-        case .inactive:
-            "inactive"
-        case .background:
-            "background"
-        @unknown default:
-            fatalError()
-        }
-    }
-}
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

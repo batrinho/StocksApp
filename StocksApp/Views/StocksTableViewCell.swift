@@ -82,6 +82,7 @@ final class StocksTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.updateLogo(newCompanyLogo: UIImage())
+        self.updatePrices(currentPrice: 0.0, priceChange: 0.0)
     }
     
     required init? (coder: NSCoder) {
