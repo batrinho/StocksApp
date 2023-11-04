@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol HandleRequestButtonTapDelegate: AnyObject {
+    func handleRequestButtonTap (name: String)
+}
+
 final class RequestsView: UIView {
     private var closure: ((String) -> Void)?
+    weak var delegate: HandleRequestButtonTapDelegate?
     
     private var label: UILabel = {
         let label = UILabel()
@@ -77,8 +82,14 @@ final class RequestsView: UIView {
         for i in splitArray.left {
             let newButton = RequestButton()
             newButton.updateLabel(newName: i)
-            newButton.addAction { buttonTitle in
-                self.handleButtonTap(buttonTitle: buttonTitle)
+            // here I added weak capturing of this class in order to avoid a retain cycle between newButton and this class
+            newButton.addAction { [weak self] buttonTitle in
+                guard let self else { return }
+//                self.handleButtonTap(buttonTitle: buttonTitle)
+//                for closure
+                
+                self.delegate?.handleRequestButtonTap(name: buttonTitle)
+//                for delegate
             }
             upperStackView.addArrangedSubview(newButton)
         }
@@ -86,8 +97,14 @@ final class RequestsView: UIView {
         for i in splitArray.right {
             let newButton = RequestButton()
             newButton.updateLabel(newName: i)
-            newButton.addAction { buttonTitle in
-                self.handleButtonTap(buttonTitle: buttonTitle)
+            // here I added weak capturing of this class in order to avoid a retain cycle between newButton and this class
+            newButton.addAction { [weak self] buttonTitle in
+                guard let self else { return }
+//                self.handleButtonTap(buttonTitle: buttonTitle)
+//                for closure
+                
+                self.delegate?.handleRequestButtonTap(name: buttonTitle)
+//                for delegate
             }
             lowerStackView.addArrangedSubview(newButton)
         }
@@ -112,11 +129,11 @@ final class RequestsView: UIView {
         ])
     }
     
-    func handleButtonTap (buttonTitle: String) {
-        closure?(buttonTitle)
-    }
-    
-    func addAction(_ action: ((String) -> Void)?) {
-        self.closure = action
-    }
+//    private func handleButtonTap (buttonTitle: String) {
+//        closure?(buttonTitle)
+//    }
+//    
+//    func addAction(_ action: ((String) -> Void)?) {
+//        self.closure = action
+//    }
 }

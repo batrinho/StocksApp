@@ -21,6 +21,7 @@ struct StockData {
     static var companies = [StockProfileData]()
     static var stockCompanies = [StockProfileData]()
     static var favoritesStockCompanies = [StockProfileData]()
+    static var favoriteStockTickers = [String]()
     static var tickers = [String]()
     
     static var logos: [String: UIImage] = [:]
@@ -42,9 +43,3 @@ struct StockPriceData: Codable {
     let d: Double
 }
 
-struct StockProfile {
-    let name: String
-    let symbol: String
-    let logo: UIImage
-    let backgroundColor: UIColor
-}

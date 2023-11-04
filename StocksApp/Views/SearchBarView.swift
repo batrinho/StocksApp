@@ -10,7 +10,6 @@ import UIKit
 final class SearchBarView: UIView {
     
     var isClicked = false
-    var action: (() -> Void)?
     
     let textField: UITextField = {
         let textField = UITextField()

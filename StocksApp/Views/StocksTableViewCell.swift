@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol HandleButtonTapDelegate: AnyObject {
+    func handleButtonTap (with indexPath: IndexPath, isFavorite: Bool, ticker: String, name: String, logoUrl: String)
+}
+
+// MARK: - Configurations
 final class StocksTableViewCell: UITableViewCell {
-    // MARK: - Variables
-    
-    private var logo = String()
-    var isFavorite: Bool?
-    var didSelectIsFavorite: ((Bool) -> (Void))?
+    private var logoUrl = String()
+    private var isFavorite: Bool?
+    private var didSelectIsFavorite: ((Bool) -> (Void))?
+    weak var delegate: HandleButtonTapDelegate?
     
     private let companyLogo: UIImageView = {
         let image = UIImageView()
@@ -72,44 +76,58 @@ final class StocksTableViewCell: UITableViewCell {
         stackView.alignment = .trailing
         return stackView
     } ()
-
-// MARK: - Internal Methods
-
+    
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: StockData.stocksCellIndentifier)
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.updateLogo(newCompanyLogo: UIImage())
-        self.updatePrices(currentPrice: 0.0, priceChange: 0.0)
     }
     
     required init? (coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String, isFavorite: Bool, callback: @escaping (Bool) -> Void) {
-        self.isFavorite = isFavorite
-        didSelectIsFavorite = callback
-        updateLabels(newCompanySymbol: newCompanySymbol, newCompanyTitle: newCompanyTitle, cellBackgroundColor: cellBackgroundColor, logo: logo)
+    func configure (ticker: String, name: String, color: UIColor, logoUrl: String, isFavorite: Bool) {
+        updateLabels(ticker: ticker, name: name, color: color, logoUrl: logoUrl, isFavorite: isFavorite)
         setupView()
     }
+//    configure() method for using delegate
     
-    // MARK: - Setting up the View
+//    func configure (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String, isFavorite: Bool, callback: @escaping (Bool) -> Void) {
+//        didSelectIsFavorite = callback
+//        updateLabels(ticker: newCompanySymbol,
+//                     name: newCompanyTitle, 
+//                     color: cellBackgroundColor,
+//                     logoUrl: logo,
+//                     isFavorite: isFavorite)
+//        setupView()
+//    }
+//    configure() method for using closure
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        updateLogo(newCompanyLogo: UIImage())
+        updatePrices(currentPrice: 0.0, priceChange: 0.0)
+    }
+}
+
+// MARK: - Layout
+extension StocksTableViewCell {
     func setupView () {
+        addSubviews()
+        addConstraints()
+    }
+    
+    private func addSubviews () {
         layer.cornerRadius = 25
-        
         contentView.addSubview(companyLogo)
         contentView.addSubview(companySymbol)
         contentView.addSubview(favoriteButton)
         contentView.addSubview(companyTitle)
         contentView.addSubview(currentPriceLabel)
         contentView.addSubview(priceChangeLabel)
-        
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
-        
+    }
+    
+    private func addConstraints () {
         NSLayoutConstraint.activate([
             companyLogo.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             companyLogo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
@@ -142,15 +160,21 @@ final class StocksTableViewCell: UITableViewCell {
         ])
     }
     
-    // MARK: - Cell modifications
+}
+
+// MARK: - Cell modifications
+extension StocksTableViewCell {
+    private func updateLabels (ticker: String, name: String, color: UIColor, logoUrl: String, isFavorite: Bool) {
+        companySymbol.text = ticker
+        companyTitle.text = name
+        backgroundColor = color
+        updateButtonImage(isFavorite: isFavorite)
+        self.isFavorite = isFavorite
+        self.logoUrl = logoUrl
+    }
     
-    func updateLabels (newCompanySymbol: String, newCompanyTitle: String, cellBackgroundColor: UIColor, logo: String) {
-        guard let isFavorite = isFavorite else { return }
-        companySymbol.text = newCompanySymbol
-        companyTitle.text = newCompanyTitle
-        backgroundColor = cellBackgroundColor
+    func updateButtonImage (isFavorite: Bool) {
         favoriteButton.setImage(isFavorite ? StockData.filledStar : StockData.emptyStar, for: .normal)
-        self.logo = logo
     }
     
     func updateLogo (newCompanyLogo: UIImage) {
@@ -163,13 +187,16 @@ final class StocksTableViewCell: UITableViewCell {
         priceChangeLabel.textColor = (priceChange < 0 ? .systemRed : .systemGreen)
     }
     
-    func setButtonImage (newImage: UIImage) {
-        favoriteButton.setImage(newImage, for: .normal)
-    }
-    
     @objc func favoriteButtonPressed () {
         isFavorite?.toggle()
-        guard let newFavoriteState = isFavorite else { return }
-        didSelectIsFavorite?(newFavoriteState)
+        guard let superview = self.superview as? UITableView,
+              let newFavoriteState = isFavorite,
+              let indexPath = superview.indexPath(for: self) else { return }
+        delegate?.handleButtonTap(with: indexPath, isFavorite: newFavoriteState, ticker: companySymbol.text!, name: companyTitle.text!, logoUrl: self.logoUrl)
+//        for delegate
+        
+//        didSelectIsFavorite?(newFavoriteState)
+//        for closure
+        
     }
 }

@@ -30,6 +30,7 @@
 		89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4BE2AF287E600622315 /* UIApplication.State.swift */; };
 		89BAF4C12AF2880500622315 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C02AF2880500622315 /* Array.swift */; };
 		89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C22AF2882100622315 /* UIStackView.swift */; };
+		89BAF4C72AF3AD0700622315 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C62AF3AD0700622315 /* Int.swift */; };
 		89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB19162ACF370A0020E605 /* ButtonsStackView.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		89BAF4BE2AF287E600622315 /* UIApplication.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.State.swift; sourceTree = "<group>"; };
 		89BAF4C02AF2880500622315 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		89BAF4C22AF2882100622315 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		89BAF4C62AF3AD0700622315 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		89FB19162ACF370A0020E605 /* ButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 				89BAF4BE2AF287E600622315 /* UIApplication.State.swift */,
 				89BAF4C02AF2880500622315 /* Array.swift */,
 				89BAF4C22AF2882100622315 /* UIStackView.swift */,
+				89BAF4C62AF3AD0700622315 /* Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */,
 				89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */,
 				8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */,
+				89BAF4C72AF3AD0700622315 /* Int.swift in Sources */,
 				8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */,
 				89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,

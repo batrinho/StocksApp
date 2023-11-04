@@ -25,12 +25,9 @@ final class CoreDataDatabaseManager: CoreDataDatabaseManagerProtocol, CoreDataDa
     var recentRequests: [RecentRequest]?
 }
 
-
-
 // MARK: - Favorite Stocks
 
 extension CoreDataDatabaseManager {
-    
     func addStock (stock: StockProfileData) {
         let newStock = FavoriteStock(context: self.context)
         newStock.logo = stock.logo

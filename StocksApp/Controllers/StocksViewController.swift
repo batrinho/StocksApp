@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class StocksViewController: UIViewController {
+final class StocksViewController: UIViewController, HandleRequestButtonTapDelegate {
     // MARK: - Configurations
     
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
@@ -46,42 +46,7 @@ final class StocksViewController: UIViewController {
     
     override func viewDidLoad () {
         super.viewDidLoad()
-        print(#function)
-        print("\nThe frame of the table view: \(stocksTableView.frame)\n")
-        // the frame is 0 because there is a space that was prepared for the table view, which is yet to be displayed
         configureStocksViewController()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(#function)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(#function)
-        print("\nThe frame of the table view: \(stocksTableView.frame)\n")
-        // the frame is not 0 because the table view has been sketched, layed its constraints and is active
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(#function)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print(#function)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(#function)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print(#function)
     }
     
     private func configureStocksViewController () {
@@ -101,29 +66,8 @@ final class StocksViewController: UIViewController {
         view.addSubview(showMoreView)
         view.addSubview(stocksTableView)
         view.addSubview(searchView)
-
-        searchView.addSubview(popularRequestsView)
-        popularRequestsView.addAction { [weak self] stockRequest in
-            guard let self else { return }
-            self.searchBarView.textField.text = stockRequest
-            self.updateResults(text: stockRequest)
-        }
-        searchView.addSubview(recentRequestsView)
-        coreDataDatabaseManager.fetchRequests { recentRequests in
-            guard let recentRequests = recentRequests else { return }
-            for recentRequest in recentRequests {
-                guard let recentRequestTitle = recentRequest.requestTitle else { return }
-                if !recentRequestTitle.isEmpty {
-                    StockData.recentRequests.append(recentRequestTitle)
-                }
-            }
-            self.recentRequestsView.configure(label: "Recent Requests", array: StockData.recentRequests)
-        }
-        recentRequestsView.addAction { stockRequest in
-            self.searchBarView.textField.text = stockRequest
-            self.updateResults(text: stockRequest)
-        }
-
+        
+        setupRequestStackViews()
         setupShowMoreView()
         setupConstraints()
         
@@ -135,6 +79,43 @@ final class StocksViewController: UIViewController {
         
         showStocks()
     }
+    
+    private func setupRequestStackViews () {
+        searchView.addSubview(popularRequestsView)
+        popularRequestsView.delegate = self
+//        popularRequestsView.addAction { [weak self] stockRequest in
+//            guard let self else { return }
+//            self.searchBarView.textField.text = stockRequest
+//            self.updateResults(text: stockRequest)
+//        }
+//        for closure
+        
+        searchView.addSubview(recentRequestsView)
+        recentRequestsView.delegate = self
+        coreDataDatabaseManager.fetchRequests { [weak self] recentRequests in
+            // here I added weak capturing of this class in order to avoid a retain cycle between coreDataDatabaseManager and this class
+            guard let recentRequests = recentRequests, let self else { return }
+            for recentRequest in recentRequests {
+                guard let recentRequestTitle = recentRequest.requestTitle else { return }
+                if !recentRequestTitle.isEmpty {
+                    StockData.recentRequests.append(recentRequestTitle)
+                }
+            }
+            self.recentRequestsView.configure(label: "Recent Requests", array: StockData.recentRequests)
+        }
+//        recentRequestsView.addAction { [weak self] stockRequest in
+//            guard let self else { return }
+//            self.searchBarView.textField.text = stockRequest
+//            self.updateResults(text: stockRequest)
+//        }
+//        for closure
+    }
+    
+    func handleRequestButtonTap (name: String) {
+        self.searchBarView.textField.text = name
+        self.updateResults(text: name)
+    }
+    // for delegate
     
     private func setupShowMoreView () {
         let labelOne = UILabel()
@@ -180,17 +161,17 @@ final class StocksViewController: UIViewController {
             searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchBarViewHeightConstraint,
-
+            
             popularRequestsView.topAnchor.constraint(equalTo: searchView.topAnchor),
             popularRequestsView.leadingAnchor.constraint(equalTo: searchView.leadingAnchor),
             popularRequestsView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor),
             popularRequestsView.heightAnchor.constraint(equalToConstant: 170),
-
+            
             recentRequestsView.topAnchor.constraint(equalTo: popularRequestsView.bottomAnchor),
             recentRequestsView.leadingAnchor.constraint(equalTo: searchView.leadingAnchor),
             recentRequestsView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor),
             recentRequestsView.heightAnchor.constraint(equalToConstant: 170),
-
+            
             buttonsStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 10),
             buttonsStackView.heightAnchor.constraint(equalToConstant: 40),
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -277,7 +258,7 @@ extension StocksViewController: UITextFieldDelegate {
         StockData.companies = StockData.stockCompanies.filter({ stock in
             let stockNameMatch = stock.name.lowercased().contains(searchText.lowercased())
             let stockTickerMatch = stock.ticker.lowercased().contains(searchText.lowercased())
-
+            
             return stockNameMatch || stockTickerMatch
         })
         stocksTableView.reloadData()
@@ -298,14 +279,13 @@ extension StocksViewController {
     
     @objc private func showFavorites () {
         buttonsStackView.switchButtons(dominant: buttonsStackView.favoritesButton, passive: buttonsStackView.stocksButton)
-        coreDataDatabaseManager.fetchStocks { stockProfileDataArray in
-            if let newArray = stockProfileDataArray {
-                DispatchQueue.main.async {
-                    StockData.favoritesStockCompanies = newArray
-                    StockData.companies = StockData.favoritesStockCompanies
-                    self.stocksTableView.isStocks = false
-                    self.stocksTableView.reloadData()
-                }
+        coreDataDatabaseManager.fetchStocks { [weak self] stockProfileDataArray in
+            guard let newArray = stockProfileDataArray, let self else { return }
+            DispatchQueue.main.async {
+                StockData.favoritesStockCompanies = newArray
+                StockData.companies = StockData.favoritesStockCompanies
+                self.stocksTableView.isStocks = false
+                self.stocksTableView.reloadData()
             }
         }
     }
@@ -313,69 +293,11 @@ extension StocksViewController {
 
 // MARK: - Table View Delegate, DataSource
 
-extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StockData.companies.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockData.stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
-            return UITableViewCell()
-        }
-        
-        let stock = StockData.companies[indexPath.row]
-        let cellBackground = indexPath.row % 2 == 0 ? StockData.cellBackgroundColor : .clear
-        let currentIsFavorite = coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
-        
-        cell.configure(
-            newCompanySymbol: stock.ticker,
-            newCompanyTitle: stock.name,
-            cellBackgroundColor: cellBackground,
-            logo: stock.logo,
-            isFavorite: currentIsFavorite
-        ) { [weak self] currentFavoriteState in
-            guard let self = self else { return }
-            if currentFavoriteState == true {
-                self.coreDataDatabaseManager.addStock(stock: stock)
-            } else {
-                self.coreDataDatabaseManager.deleteStock(stock: stock)
-            }
-            DispatchQueue.main.async {
-                if self.stocksTableView.isStocks == false {
-                    StockData.companies = StockData.favoritesStockCompanies
-                }
-                self.stocksTableView.reloadData()
-            }
-        }
-        
-        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { image, logoUrl in
-            guard let image = image,
-                  let logoUrl = logoUrl else { return }
-            DispatchQueue.main.async {
-                cell.updateLogo(newCompanyLogo: image)
-                StockData.logos[logoUrl] = image
-            }
-        }
-                
-        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { price in
-            guard let price else { return }
-            DispatchQueue.main.async {
-                cell.updatePrices(currentPrice: price.c, priceChange: price.d)
-                StockData.prices[stock.ticker] = price
-            }
-        }
-        
-        return cell
-    }
-    
+extension StocksViewController: UITableViewDelegate, UIScrollViewDelegate, HandleButtonTapDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
         cell.selectedBackgroundView?.layer.cornerRadius = 25
         tableView.deselectRow(at: indexPath, animated: false)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -390,6 +312,97 @@ extension StocksViewController: UITableViewDelegate, UITableViewDataSource, UISc
             searchBarViewHeightConstraint.constant = 48
             searchBarView.layer.cornerRadius = 25
         }
+    }
+    
+    func handleButtonTap(with indexPath: IndexPath, isFavorite: Bool, ticker: String, name: String, logoUrl: String) {
+        guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
+        let stock = StockProfileData(name: name, logo: logoUrl, ticker: ticker)
+        cell.updateButtonImage(isFavorite: isFavorite)
+        if isFavorite == true {
+            self.coreDataDatabaseManager.addStock(stock: stock)
+        } else {
+            self.coreDataDatabaseManager.deleteStock(stock: stock)
+        }
+        DispatchQueue.main.async {
+            if self.stocksTableView.isStocks == false {
+                StockData.companies = StockData.favoritesStockCompanies
+            }
+            self.stocksTableView.reloadData()
+        }
+    }
+//    the delegate for handling the "favorite button"
+}
+
+extension StocksViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return StockData.companies.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockData.stocksCellIndentifier, for: indexPath) as? StocksTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let stock = StockData.companies[indexPath.row]
+        let color = indexPath.row.getCellBackgroundColor()
+        let isFavorite = coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
+        
+        cell.selectedBackgroundView?.layer.cornerRadius = 25
+        cell.delegate = self
+        cell.configure(ticker: stock.ticker, 
+                       name: stock.name,
+                       color: color,
+                       logoUrl: stock.logo,
+                       isFavorite: isFavorite
+        )
+//        configure() method for using delegate
+        
+        //        cell.configure(
+        //            newCompanySymbol: stock.ticker,
+        //            newCompanyTitle: stock.name,
+        //            cellBackgroundColor: cellBackground,
+        //            logo: stock.logo,
+        //            isFavorite: currentIsFavorite
+        //        ) { [weak self] currentFavoriteState in
+        //            guard let self = self else { return }
+        //            if currentFavoriteState == true {
+        //                self.coreDataDatabaseManager.addStock(stock: stock)
+        //            } else {
+        //                self.coreDataDatabaseManager.deleteStock(stock: stock)
+        //            }
+        //            DispatchQueue.main.async {
+        //                if self.stocksTableView.isStocks == false {
+        //                    StockData.companies = StockData.favoritesStockCompanies
+        //                }
+        //                self.stocksTableView.reloadData()
+        //            }
+        //        }
+//        configure() method for using closure
+        
+        networkingService.fetchCompanyLogo(logoUrl: stock.logo) { [weak cell] image, logoUrl in
+            guard let image,
+                  let logoUrl,
+                  let cell else { return }
+            DispatchQueue.main.async {
+                cell.updateLogo(newCompanyLogo: image)
+                StockData.logos[logoUrl] = image
+            }
+        }
+        
+        stockDataManager.fetchPrice(stockSymbol: stock.ticker) { [weak cell] price in
+            guard let price,
+                  let cell else { return }
+            DispatchQueue.main.async {
+                cell.updatePrices(currentPrice: price.c, priceChange: price.d)
+                StockData.prices[stock.ticker] = price
+            }
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
     }
 }
 

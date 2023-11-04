@@ -37,10 +37,6 @@ class ButtonsStackView: UIStackView {
         spacing = 15
         distribution = .equalCentering
         alignment = .firstBaseline
-//        layer.shadowColor = UIColor.black.cgColor
-//        layer.shadowOpacity = 0.2
-//        layer.shadowOffset = CGSize(width: 0, height: 4)
-//        layer.shadowRadius = 4
         
         addArrangedSubview(stocksButton)
         addArrangedSubview(favoritesButton)
