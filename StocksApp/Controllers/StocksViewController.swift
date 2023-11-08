@@ -7,8 +7,11 @@
 
 import UIKit
 
-final class StocksViewController: UIViewController, HandleRequestButtonTapDelegate {
-    // MARK: - Configurations
+// MARK: - Configurations
+final class StocksViewController: UIViewController {
+//    private struct Constants {
+//        static let starIMage = 
+//    }
     
     private let networkingService: NetworkingServiceProtocol = NetworkingService()
     private let stockDataManager: StockDataManagerProtocol = StockDataManager()
@@ -111,12 +114,6 @@ final class StocksViewController: UIViewController, HandleRequestButtonTapDelega
 //        for closure
     }
     
-    func handleRequestButtonTap (name: String) {
-        self.searchBarView.textField.text = name
-        self.updateResults(text: name)
-    }
-    // for delegate
-    
     private func setupShowMoreView () {
         let labelOne = UILabel()
         let labelTwo = UILabel()
@@ -190,8 +187,16 @@ final class StocksViewController: UIViewController, HandleRequestButtonTapDelega
     }
 }
 
-// MARK: - Search bar
+// MARK: - HandleRequestButtonTapDelegate
+extension StocksViewController: RequestsViewDelegate {
+    func handleRequestButtonTap (name: String) {
+        self.searchBarView.textField.text = name
+        self.updateResults(text: name)
+    }
+    // for delegate
+}
 
+// MARK: - Search bar
 extension StocksViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         searchBarView.isClicked = true
@@ -266,7 +271,6 @@ extension StocksViewController: UITextFieldDelegate {
 }
 
 // MARK: - Buttons
-
 extension StocksViewController {
     @objc private func showStocks () {
         buttonsStackView.switchButtons(dominant: buttonsStackView.stocksButton, passive: buttonsStackView.favoritesButton)
@@ -291,15 +295,17 @@ extension StocksViewController {
     }
 }
 
-// MARK: - Table View Delegate, DataSource
-
-extension StocksViewController: UITableViewDelegate, UIScrollViewDelegate, HandleButtonTapDelegate {
+// MARK: - Table View Delegate
+extension StocksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
         cell.selectedBackgroundView?.layer.cornerRadius = 25
         tableView.deselectRow(at: indexPath, animated: false)
     }
-    
+}
+
+// MARK: - UIScrollViewDelegate
+extension StocksViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
         
@@ -313,7 +319,10 @@ extension StocksViewController: UITableViewDelegate, UIScrollViewDelegate, Handl
             searchBarView.layer.cornerRadius = 25
         }
     }
-    
+}
+
+// MARK: - HandleButtonTapDelegate
+extension StocksViewController: HandleButtonTapDelegate {
     func handleButtonTap(with indexPath: IndexPath, isFavorite: Bool, ticker: String, name: String, logoUrl: String) {
         guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
         let stock = StockProfileData(name: name, logo: logoUrl, ticker: ticker)
@@ -333,6 +342,7 @@ extension StocksViewController: UITableViewDelegate, UIScrollViewDelegate, Handl
 //    the delegate for handling the "favorite button"
 }
 
+// MARK: - UITableViewDataSource
 extension StocksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return StockData.companies.count
@@ -344,16 +354,17 @@ extension StocksViewController: UITableViewDataSource {
         }
         
         let stock = StockData.companies[indexPath.row]
-        let color = indexPath.row.getCellBackgroundColor()
+        let color = getCellBackgroundColor(row: indexPath.row)
         let isFavorite = coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
         
         cell.selectedBackgroundView?.layer.cornerRadius = 25
         cell.delegate = self
-        cell.configure(ticker: stock.ticker, 
-                       name: stock.name,
-                       color: color,
-                       logoUrl: stock.logo,
-                       isFavorite: isFavorite
+        cell.configure(
+            ticker: stock.ticker,
+            name: stock.name,
+            color: color,
+            logoUrl: stock.logo,
+            isFavorite: isFavorite
         )
 //        configure() method for using delegate
         
@@ -403,6 +414,10 @@ extension StocksViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
+    }
+    
+    func getCellBackgroundColor (row: Int) -> UIColor {
+        return (row % 2 == 0) ? StockData.cellBackgroundColor : .clear
     }
 }
 

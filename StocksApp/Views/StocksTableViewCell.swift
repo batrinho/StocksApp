@@ -107,10 +107,7 @@ final class StocksTableViewCell: UITableViewCell {
         updateLogo(newCompanyLogo: UIImage())
         updatePrices(currentPrice: 0.0, priceChange: 0.0)
     }
-}
-
-// MARK: - Layout
-extension StocksTableViewCell {
+    
     func setupView () {
         addSubviews()
         addConstraints()
@@ -197,6 +194,5 @@ extension StocksTableViewCell {
         
 //        didSelectIsFavorite?(newFavoriteState)
 //        for closure
-        
     }
 }

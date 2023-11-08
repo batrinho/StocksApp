@@ -12,6 +12,10 @@ protocol NetworkingServiceProtocol {
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
+    enum Constants {
+        static let localJsonFileName = ""
+    }
+    
     init () {
         Task {
             await getDataFromLocalJSONFile(name: StockData.localJsonFile)

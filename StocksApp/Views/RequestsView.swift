@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol HandleRequestButtonTapDelegate: AnyObject {
-    func handleRequestButtonTap (name: String)
+protocol RequestsViewDelegate: AnyObject {
+    func handleRequestButtonTap(name: String)
 }
 
 final class RequestsView: UIView {
     private var closure: ((String) -> Void)?
-    weak var delegate: HandleRequestButtonTapDelegate?
+    weak var delegate: RequestsViewDelegate?
     
     private var label: UILabel = {
         let label = UILabel()
@@ -61,7 +61,7 @@ final class RequestsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure (label: String, array: [String]) {
+    func configure(label: String, array: [String]) {
         self.label.text = label
         addSubview(self.label)
         addSubview(scrollView)
@@ -129,11 +129,11 @@ final class RequestsView: UIView {
         ])
     }
     
-//    private func handleButtonTap (buttonTitle: String) {
-//        closure?(buttonTitle)
-//    }
-//    
-//    func addAction(_ action: ((String) -> Void)?) {
-//        self.closure = action
-//    }
+    private func handleButtonTap(buttonTitle: String) {
+        closure?(buttonTitle)
+    }
+    
+    func addAction(_ action: ((String) -> Void)?) {
+        self.closure = action
+    }
 }
