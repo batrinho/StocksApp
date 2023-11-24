@@ -10,15 +10,22 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    var state: String?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let rootViewController = StocksViewController()
+        let networkingService = NetworkingService()
+        let coreDataDatabaseManager = CoreDataDatabaseManager()
+        
+        let presenter = StocksViewControllerPresenter(
+            networkingService: networkingService,
+            coreDataDatabaseManager: coreDataDatabaseManager
+        )
+        let rootViewController = StocksViewController(
+            presenter: presenter
+        )
+        presenter.input = rootViewController
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
         return true

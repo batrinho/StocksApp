@@ -7,6 +7,6 @@
 
 import UIKit
 
-class SearchView: UIView {
+class : UIView {
     
 }

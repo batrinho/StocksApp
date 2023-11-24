@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol ButtonsStackViewProtocol: AnyObject {
+    func handleButtonStackViewButtonTap(isStocks: Bool)
+}
+
 class ButtonsStackView: UIStackView {
+    private var isStocks: Bool = true
+    weak var delegate: ButtonsStackViewProtocol?
     
-    private var buttonsStackViewWidthConstraint: NSLayoutConstraint!
-    
+    // MARK: - UI
     let stocksButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -31,27 +36,44 @@ class ButtonsStackView: UIStackView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        axis = .horizontal
-        spacing = 15
-        distribution = .equalCentering
-        alignment = .firstBaseline
-        
-        addArrangedSubview(stocksButton)
-        addArrangedSubview(favoritesButton)
-    }
-    
-    func switchButtons (dominant: UIButton, passive: UIButton) {
-        dominant.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 28)
-        dominant.setTitleColor(.black, for: .normal)
-        
-        passive.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 18)
-        passive.setTitleColor(.lightGray, for: .normal)
+        setupView()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupView() {
+        axis = .horizontal
+        spacing = 15
+        distribution = .equalCentering
+        alignment = .firstBaseline
+        addSubviews()
+    }
+    
+    private func addSubviews() {
+        addArrangedSubview(stocksButton)
+        addArrangedSubview(favoritesButton)
+        stocksButton.addTarget(self, action: #selector(anyButtonClicked), for: .touchUpInside)
+        favoritesButton.addTarget(self, action: #selector(anyButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc
+    private func anyButtonClicked() {
+        isStocks.toggle()
+        if isStocks {
+            switchButtons(dominant: stocksButton, passive: favoritesButton)
+        } else {
+            switchButtons(dominant: favoritesButton, passive: stocksButton)
+        }
+        delegate?.handleButtonStackViewButtonTap(isStocks: isStocks)
+    }
+    
+    private func switchButtons(dominant: UIButton, passive: UIButton) {
+        dominant.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 28)
+        dominant.setTitleColor(.black, for: .normal)
+        
+        passive.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 18)
+        passive.setTitleColor(.lightGray, for: .normal)
+    }
 }

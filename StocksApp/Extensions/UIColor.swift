@@ -2,13 +2,13 @@
 //  UIColor.swift
 //  StocksApp
 //
-//  Created by Batyr Tolkynbayev on 02.11.2023.
+//  Created by Batyr Tolkynbayev on 08.11.2023.
 //
 
 import UIKit
 
 extension UIColor {
-    func getCellBackgroundColor (id: Int) -> UIColor {
-        return (id % 2 == 0) ? StockData.cellBackgroundColor : .clear;
+    static var backgroundGray: UIColor {
+        return UIColor(red: 0.941176471, green: 0.956862745, blue: 0.968627451, alpha: 1)
     }
 }

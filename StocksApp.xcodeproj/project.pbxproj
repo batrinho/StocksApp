@@ -14,12 +14,18 @@
 		8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */; };
 		8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC162A78FF5400EFFE5F /* StockData.swift */; };
 		8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC1A2A79314300EFFE5F /* NetworkingService.swift */; };
-		890388422AB31F2600E9A814 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890388412AB31F2600E9A814 /* RequestsView.swift */; };
+		890388422AB31F2600E9A814 /* RequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890388412AB31F2600E9A814 /* RequestView.swift */; };
+		891723AA2AFBAE0A009E1464 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723A92AFBAE0A009E1464 /* UIColor.swift */; };
+		891723AC2AFCD03B009E1464 /* ShowMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723AB2AFCD03B009E1464 /* ShowMoreView.swift */; };
+		891723B22AFCD4E1009E1464 /* StocksViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B12AFCD4E1009E1464 /* StocksViewControllerPresenter.swift */; };
+		891723B52AFCD95D009E1464 /* StocksViewControllerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */; };
+		891723B72AFCD968009E1464 /* StocksViewControllerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B62AFCD968009E1464 /* StocksViewControllerInput.swift */; };
+		891723B92AFCFEA4009E1464 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B82AFCFEA4009E1464 /* RequestsView.swift */; };
+		891723BB2AFF4FF0009E1464 /* OldStocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */; };
 		892332282AB1D896005299B3 /* RequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892332272AB1D896005299B3 /* RequestButton.swift */; };
 		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
 		89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */; };
 		893457112AE1657000ACFE69 /* stockProfiles (1).json in Resources */ = {isa = PBXBuildFile; fileRef = 893457102AE1657000ACFE69 /* stockProfiles (1).json */; };
-		8968DFA22AD11E82007DCA2A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968DFA12AD11E82007DCA2A /* SearchView.swift */; };
 		89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89876D962A7E266C007DD43D /* StockDataManager.swift */; };
 		89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */; };
 		899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */; };
@@ -43,12 +49,18 @@
 		8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableViewCell.swift; sourceTree = "<group>"; };
 		8902CC162A78FF5400EFFE5F /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		8902CC1A2A79314300EFFE5F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
-		890388412AB31F2600E9A814 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
+		890388412AB31F2600E9A814 /* RequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestView.swift; sourceTree = "<group>"; };
+		891723A92AFBAE0A009E1464 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		891723AB2AFCD03B009E1464 /* ShowMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreView.swift; sourceTree = "<group>"; };
+		891723B12AFCD4E1009E1464 /* StocksViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewControllerPresenter.swift; sourceTree = "<group>"; };
+		891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewControllerOutput.swift; sourceTree = "<group>"; };
+		891723B62AFCD968009E1464 /* StocksViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewControllerInput.swift; sourceTree = "<group>"; };
+		891723B82AFCFEA4009E1464 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
+		891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldStocksViewController.swift; sourceTree = "<group>"; };
 		892332272AB1D896005299B3 /* RequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestButton.swift; sourceTree = "<group>"; };
 		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
 		89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		893457102AE1657000ACFE69 /* stockProfiles (1).json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "stockProfiles (1).json"; sourceTree = "<group>"; };
-		8968DFA12AD11E82007DCA2A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		899816842A8D0FE000AC822D /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -93,9 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */,
-				8902CC132A78FED100EFFE5F /* Model */,
-				8902CC122A78FEBF00EFFE5F /* Views */,
-				8902CC0F2A78FDE700EFFE5F /* Controllers */,
+				891723AD2AFCD2ED009E1464 /* Modules */,
+				891723AF2AFCD45A009E1464 /* Detailes View Controller */,
 				89B6F5AA2ACC5FDE00282BF7 /* Fonts */,
 				89BAF4BD2AF287CE00622315 /* Extensions */,
 				8902CC042A78FB4D00EFFE5F /* Assets.xcassets */,
@@ -108,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				8902CBFF2A78FB4C00EFFE5F /* StocksViewController.swift */,
+				891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */,
+				891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -118,10 +131,11 @@
 				8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */,
 				8902CC102A78FE1300EFFE5F /* StocksTableView.swift */,
 				892332272AB1D896005299B3 /* RequestButton.swift */,
-				890388412AB31F2600E9A814 /* RequestsView.swift */,
+				890388412AB31F2600E9A814 /* RequestView.swift */,
+				891723B82AFCFEA4009E1464 /* RequestsView.swift */,
 				89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */,
 				89FB19162ACF370A0020E605 /* ButtonsStackView.swift */,
-				8968DFA12AD11E82007DCA2A /* SearchView.swift */,
+				891723AB2AFCD03B009E1464 /* ShowMoreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,14 +147,57 @@
 				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
 				89876D962A7E266C007DD43D /* StockDataManager.swift */,
 				8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */,
+				891723B32AFCD6C6009E1464 /* Core Data Entities */,
+				893457102AE1657000ACFE69 /* stockProfiles (1).json */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		891723AD2AFCD2ED009E1464 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				891723AE2AFCD442009E1464 /* Stocks View Controller */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		891723AE2AFCD442009E1464 /* Stocks View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				891723B02AFCD48D009E1464 /* Presenter */,
+				8902CC0F2A78FDE700EFFE5F /* Controllers */,
+				8902CC122A78FEBF00EFFE5F /* Views */,
+				8902CC132A78FED100EFFE5F /* Model */,
+			);
+			path = "Stocks View Controller";
+			sourceTree = "<group>";
+		};
+		891723AF2AFCD45A009E1464 /* Detailes View Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Detailes View Controller";
+			sourceTree = "<group>";
+		};
+		891723B02AFCD48D009E1464 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				891723B12AFCD4E1009E1464 /* StocksViewControllerPresenter.swift */,
+				891723B62AFCD968009E1464 /* StocksViewControllerInput.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		891723B32AFCD6C6009E1464 /* Core Data Entities */ = {
+			isa = PBXGroup;
+			children = (
 				899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */,
 				899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */,
 				89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */,
 				89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */,
 				899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */,
-				893457102AE1657000ACFE69 /* stockProfiles (1).json */,
 			);
-			path = Model;
+			path = "Core Data Entities";
 			sourceTree = "<group>";
 		};
 		89B6F5AA2ACC5FDE00282BF7 /* Fonts */ = {
@@ -157,6 +214,7 @@
 				89BAF4BE2AF287E600622315 /* UIApplication.State.swift */,
 				89BAF4C02AF2880500622315 /* Array.swift */,
 				89BAF4C22AF2882100622315 /* UIStackView.swift */,
+				891723A92AFBAE0A009E1464 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,16 +292,22 @@
 			files = (
 				8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */,
 				89BAF4C12AF2880500622315 /* Array.swift in Sources */,
-				8968DFA22AD11E82007DCA2A /* SearchView.swift in Sources */,
+				891723AC2AFCD03B009E1464 /* ShowMoreView.swift in Sources */,
+				891723B72AFCD968009E1464 /* StocksViewControllerInput.swift in Sources */,
+				891723BB2AFF4FF0009E1464 /* OldStocksViewController.swift in Sources */,
 				8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */,
 				899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */,
 				89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */,
 				8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */,
+				891723AA2AFBAE0A009E1464 /* UIColor.swift in Sources */,
+				891723B52AFCD95D009E1464 /* StocksViewControllerOutput.swift in Sources */,
 				8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */,
 				89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,
+				891723B22AFCD4E1009E1464 /* StocksViewControllerPresenter.swift in Sources */,
 				899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */,
-				890388422AB31F2600E9A814 /* RequestsView.swift in Sources */,
+				891723B92AFCFEA4009E1464 /* RequestsView.swift in Sources */,
+				890388422AB31F2600E9A814 /* RequestView.swift in Sources */,
 				8902CBFC2A78FB4C00EFFE5F /* AppDelegate.swift in Sources */,
 				899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */,
 				892332282AB1D896005299B3 /* RequestButton.swift in Sources */,
