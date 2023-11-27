@@ -12,6 +12,19 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    enum AppState {
+        case notRunning
+        case active
+        case inactive
+        case background
+    }
+    
+    private var state: AppState = .notRunning {
+        didSet {
+            print("Application moved from \(oldValue) to \(state)")
+        }
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -28,29 +41,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         presenter.input = rootViewController
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
+        state = .inactive
         return true
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        state = .inactive
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        state = .active
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
+        state = .inactive
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        state = .background
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        state = .notRunning
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
+        state = .inactive
     }
-
-    // MARK: UISceneSession Lifecycle
     
     // MARK: - Core Data Saving support
     

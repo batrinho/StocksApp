@@ -13,7 +13,7 @@ protocol StocksTableViewCellDelegate: AnyObject {
 
 // MARK: - Configurations
 final class StocksTableViewCell: UITableViewCell {
-    static let identifier = "stocksCell"
+    static let identifier = String(describing: StocksTableViewCell.self)
     weak var delegate: StocksTableViewCellDelegate?
     
     // MARK: - UI

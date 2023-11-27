@@ -208,7 +208,7 @@ extension StocksViewController: UITableViewDataSource, UITableViewDelegate {
                 name: stock.name,
                 color: (indexPath.row % 2 == 0) ? UIColor.backgroundGray : .clear,
                 logo: stock.logo,
-                favoriteButtonImage: stock.favoriteButtonImage,
+                favoriteButtonImage: self.presenter.buttonImageForStock(with: stock.ticker),
                 currentPrice: stock.currentPrice,
                 changePrice: stock.changePrice
             )

@@ -12,7 +12,6 @@ struct Stock: Equatable {
     let ticker: String
     let logoUrl: String
     let logo: UIImage
-    var favoriteButtonImage: UIImage
     let currentPrice: Double
     let changePrice: Double
 }

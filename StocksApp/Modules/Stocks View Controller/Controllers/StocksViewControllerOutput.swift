@@ -32,9 +32,11 @@ protocol StocksViewControllerOutput {
     
     func getStocksCount() -> Int
     
+    func getHeightForCell() -> Double
+    
     func getPopularRequestsArray() -> [String]
     
     func getRecentRequestsArray() -> [String]
     
-    func getHeightForCell() -> Double
+    func buttonImageForStock(with ticker: String) -> UIImage
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NetworkingServiceProtocol {
-    func fetchStockInformation(with stockModel: StockModel, isFavorite: Bool) async throws -> Stock?
+    func fetchStockInformation(with stockModel: StockModel) async throws -> Stock?
     func stockDataFromLocalFile(with name: String) -> [StockModel]
 }
 
@@ -34,7 +34,7 @@ final class NetworkingService: NetworkingServiceProtocol {
         }
     }
     
-    func fetchStockInformation(with stockModel: StockModel, isFavorite: Bool) async throws -> Stock? {
+    func fetchStockInformation(with stockModel: StockModel) async throws -> Stock? {
         guard let stockLogo = try await fetchStockLogo(from: stockModel.logo) else {
             print("Error fetching logo for \(stockModel.ticker)")
             return nil
@@ -48,7 +48,6 @@ final class NetworkingService: NetworkingServiceProtocol {
             ticker: stockModel.ticker,
             logoUrl: stockModel.logo,
             logo: stockLogo,
-            favoriteButtonImage: ((isFavorite ? self.yellowStar : self.grayStar)!),
             currentPrice: stockPriceModel.c,
             changePrice: stockPriceModel.d
         )
