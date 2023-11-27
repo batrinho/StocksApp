@@ -12,8 +12,8 @@ protocol StocksTableViewCellDelegate: AnyObject {
 }
 
 // MARK: - Configurations
-class StocksTableViewCell: UITableViewCell {
-    private var logoUrl = String()
+final class StocksTableViewCell: UITableViewCell {
+    static let identifier = "stocksCell"
     weak var delegate: StocksTableViewCellDelegate?
     
     // MARK: - UI
@@ -76,7 +76,7 @@ class StocksTableViewCell: UITableViewCell {
     } ()
     
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: "stocksCell")
+        super.init(style: style, reuseIdentifier: StocksTableViewCell.identifier)
     }
     
     required init? (coder: NSCoder) {

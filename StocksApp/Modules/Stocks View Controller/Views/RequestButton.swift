@@ -11,7 +11,7 @@ protocol RequestButtonDelegate: AnyObject {
     func handleRequestButtonTap(name: String)
 }
 
-class RequestButton: UIButton {
+final class RequestButton: UIButton {
     weak var delegate: RequestButtonDelegate?
     
     // MARK: - UI

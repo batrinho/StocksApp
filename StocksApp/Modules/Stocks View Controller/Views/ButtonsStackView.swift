@@ -8,11 +8,10 @@
 import UIKit
 
 protocol ButtonsStackViewProtocol: AnyObject {
-    func handleButtonStackViewButtonTap(isStocks: Bool)
+    func handleButtonStackViewButtonTap()
 }
 
-class ButtonsStackView: UIStackView {
-    private var isStocks: Bool = true
+final class ButtonsStackView: UIStackView {
     weak var delegate: ButtonsStackViewProtocol?
     
     // MARK: - UI
@@ -60,13 +59,7 @@ class ButtonsStackView: UIStackView {
     
     @objc
     private func anyButtonClicked() {
-        isStocks.toggle()
-        if isStocks {
-            switchButtons(dominant: stocksButton, passive: favoritesButton)
-        } else {
-            switchButtons(dominant: favoritesButton, passive: stocksButton)
-        }
-        delegate?.handleButtonStackViewButtonTap(isStocks: isStocks)
+        delegate?.handleButtonStackViewButtonTap()
     }
     
     private func switchButtons(dominant: UIButton, passive: UIButton) {
@@ -75,5 +68,13 @@ class ButtonsStackView: UIStackView {
         
         passive.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 18)
         passive.setTitleColor(.lightGray, for: .normal)
+    }
+    
+    func switchButtonsPriority(isStocksPrior: Bool) {
+        if isStocksPrior {
+            switchButtons(dominant: stocksButton, passive: favoritesButton)
+        } else {
+            switchButtons(dominant: favoritesButton, passive: stocksButton)
+        }
     }
 }

@@ -10,9 +10,10 @@ import UIKit
 protocol SearchBarViewDelegate: AnyObject {
     func handleTextFieldButton()
     func handleTextFieldChanges(text: String)
+    func handleEnter(text: String)
 }
 
-class SearchBarView: UIView {
+final class SearchBarView: UIView {
     private var isSearching: Bool = false
     private var isTyping: Bool = false
     weak var delegate: SearchBarViewDelegate?
@@ -110,6 +111,12 @@ extension SearchBarView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
         delegate?.handleTextFieldChanges(text: text)
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else { return false }
+        delegate?.handleEnter(text: text)
         return true
     }
 }

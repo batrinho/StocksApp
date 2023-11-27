@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StocksTableView: UITableView {
+final class StocksTableView: UITableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         setupView()
@@ -20,6 +20,6 @@ class StocksTableView: UITableView {
     private func setupView () {
         separatorStyle = UITableViewCell.SeparatorStyle.none
         showsVerticalScrollIndicator = false
-        register(StocksTableViewCell.self, forCellReuseIdentifier: "stockCell")
+        register(StocksTableViewCell.self, forCellReuseIdentifier: StocksTableViewCell.identifier)
     }
 }

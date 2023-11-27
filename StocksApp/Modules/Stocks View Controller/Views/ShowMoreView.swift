@@ -7,7 +7,13 @@
 
 import UIKit
 
-class ShowMoreView: UIView {
+protocol ShowMoreViewDelegate: AnyObject {
+    func handleShowMoreButtonTap()
+}
+
+final class ShowMoreView: UIView {
+    weak var delegate: ShowMoreViewDelegate?
+    
     // MARK: - UI
     private let labelOne: UILabel = {
         let label = UILabel()
@@ -18,16 +24,16 @@ class ShowMoreView: UIView {
         return label
     }()
     
-    private let labelTwo: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Show more"
-        label.font = UIFont(name: "Montserrat-Bold", size: 12)
-        label.textColor = .black
-        label.textAlignment = .right
-        return label
+    private let button: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Show more", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 12)
+        button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .right
+        return button
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -40,11 +46,12 @@ class ShowMoreView: UIView {
     private func setupView() {
         addSubviews()
         addConstraints()
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
     
     private func addSubviews() {
         addSubview(labelOne)
-        addSubview(labelTwo)
+        addSubview(button)
     }
     
     private func addConstraints() {
@@ -55,11 +62,17 @@ class ShowMoreView: UIView {
             labelOne.widthAnchor.constraint(equalToConstant: 100),
             labelOne.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            labelTwo.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            labelTwo.topAnchor.constraint(equalTo: self.topAnchor),
-            labelTwo.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            labelTwo.widthAnchor.constraint(equalToConstant: 100),
-            labelTwo.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            button.topAnchor.constraint(equalTo: self.topAnchor),
+            button.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            button.widthAnchor.constraint(equalToConstant: 100),
+            button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
         ])
     }
+    
+    @objc
+    func buttonPressed() {
+        delegate?.handleShowMoreButtonTap()
+    }
 }
+    

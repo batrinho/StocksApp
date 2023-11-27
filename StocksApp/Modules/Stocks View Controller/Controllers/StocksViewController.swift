@@ -7,7 +7,6 @@
 
 import UIKit
 
-// MARK: - Init, Configurations
 final class StocksViewController: UIViewController {
     private let presenter: StocksViewControllerOutput
     
@@ -32,15 +31,16 @@ final class StocksViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private let requestsView: RequestsView
-    
-    init(presenter: StocksViewControllerOutput) {
-        self.presenter = presenter
-        self.requestsView = RequestsView(
+    private lazy var requestsView: RequestsView = {
+        return RequestsView(
             frame: .zero,
             popularRequestsArray: presenter.getPopularRequestsArray(),
             recentRequestsArray: presenter.getRecentRequestsArray()
         )
+    }()
+    
+    init(presenter: StocksViewControllerOutput) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,6 +51,7 @@ final class StocksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        presenter.viewIsReady()
     }
     
     private func configure() {
@@ -59,9 +60,8 @@ final class StocksViewController: UIViewController {
         searchBarView.delegate = self
         buttonsStackView.delegate = self
         requestsView.delegate = self
+        showMoreView.delegate = self
         setupView()
-        
-        presenter.openStocks()
     }
     
     private func setupView() {
@@ -76,9 +76,6 @@ final class StocksViewController: UIViewController {
         view.addSubview(buttonsStackView)
         view.addSubview(stocksTableView)
         view.addSubview(requestsView)
-        
-        showMoreView.isHidden = true
-        requestsView.isHidden = true
     }
     
     private func addConstraints() {
@@ -113,31 +110,22 @@ final class StocksViewController: UIViewController {
 
 // MARK: - Search Bar View delegate
 extension StocksViewController: SearchBarViewDelegate {
+    func handleEnter(text: String) {
+        presenter.handleEnter(text: text)
+    }
+    
     func handleTextFieldButton() {
-        presenter.handleTextFieldButton()
+        presenter.handleTextFieldButtonTap()
     }
     
     func handleTextFieldChanges(text: String) {
-        presenter.handleTextFieldChanges(text: text)
+        presenter.startedEditingTextField(with: text)
     }
 }
 
 // MARK: - StocksVC Input
 extension StocksViewController: StocksViewControllerInput {
-    func textFieldResignFirstResponder() {
-        searchBarView.textFieldResignFirstResponder()
-    }
-    
-    func updateTextFieldButtonImage(with image: UIImage) {
-        searchBarView.updateTextFieldButtonImage(with: image)
-    }
-    
-    func updateFavoriteButton(with indexPath: IndexPath, buttonImage: UIImage) {
-        guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
-        cell.updateButtonImage(with: buttonImage)
-    }
-    
-    func stateChangedTo(state: StocksViewControllerPresenter.State) {
+    func stateChangedTo(_ state: StocksViewControllerPresenter.State) {
         switch state {
         case .displayingStocks, .displayingFavorites:
             buttonsStackView.isHidden = false
@@ -157,18 +145,38 @@ extension StocksViewController: StocksViewControllerInput {
         }
     }
     
+    func switchButtonsDominance(isStocksPrior: Bool) {
+        buttonsStackView.switchButtonsPriority(isStocksPrior: isStocksPrior)
+    }
+    
+    func replaceTextFieldButtonImage(with image: UIImage) {
+        searchBarView.updateTextFieldButtonImage(with: image)
+    }
+    
+    func textFieldResignFirstResponder() {
+        searchBarView.textFieldResignFirstResponder()
+    }
+    
     func updateSearchBarView(text: String) {
         searchBarView.updateTextField(text: text)
     }
     
-    func reloadTableView() {
+    func addRequestToStackView(request: String, upper: Bool) {
+        requestsView.addRequest(request: request, upper: upper)
+    }
+    
+    func updateFavoriteButton(with indexPath: IndexPath, buttonImage: UIImage) {
+        guard let cell = stocksTableView.cellForRow(at: indexPath) as? StocksTableViewCell else { return }
+        cell.updateButtonImage(with: buttonImage)
+    }
+    
+    func updateUI() {
         DispatchQueue.main.async {
             self.stocksTableView.reloadData()
         }
     }
 }
 
-// MARK: - Table View
 // MARK: - Stocks Table View Cell Delegate
 extension StocksViewController: StocksTableViewCellDelegate {
     func handleFavoriteButtonTap(with indexPath: IndexPath) {
@@ -176,28 +184,24 @@ extension StocksViewController: StocksTableViewCellDelegate {
     }
 }
 
-// MARK: - Table View Delegate
-extension StocksViewController: UITableViewDelegate {
-    
-}
-
 // MARK: - Table View DataSource
-extension StocksViewController: UITableViewDataSource {
+extension StocksViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.getStocksCount()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return presenter.getHeightForCell()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "stockCell",
+            withIdentifier: StocksTableViewCell.identifier,
             for: indexPath
-        ) as? StocksTableViewCell else { return UITableViewCell() }
+        ) as? StocksTableViewCell, let stock = presenter.getStockInformation(with: indexPath.row) else {
+            return UITableViewCell()
+        }
         cell.delegate = self
-        guard let stock = presenter.getStockInformation(with: indexPath.row) else { return UITableViewCell() }
         DispatchQueue.main.async {
             cell.configure(
                 ticker: stock.ticker,
@@ -215,14 +219,8 @@ extension StocksViewController: UITableViewDataSource {
 
 // MARK: - Buttons Stack View Delegate
 extension StocksViewController: ButtonsStackViewProtocol {
-    func handleButtonStackViewButtonTap(isStocks: Bool) {
-        switch isStocks {
-        case true:
-            presenter.openStocks()
-        case false:
-            presenter.openFavorites()
-        }
-        reloadTableView()
+    func handleButtonStackViewButtonTap() {
+        presenter.handleButtonStackViewTap()
     }
 }
 
@@ -230,5 +228,12 @@ extension StocksViewController: ButtonsStackViewProtocol {
 extension StocksViewController: RequestsViewDelegate {
     func handleRequestButtonTap(name: String) {
         presenter.handleRequestButtonTap(name: name)
+    }
+}
+
+// MARK: - Show More View Delegate
+extension StocksViewController: ShowMoreViewDelegate {
+    func handleShowMoreButtonTap() {
+        presenter.handleShowMoreButtonTap()
     }
 }

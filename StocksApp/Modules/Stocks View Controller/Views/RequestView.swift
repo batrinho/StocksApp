@@ -11,7 +11,7 @@ protocol RequestViewDelegate: AnyObject {
     func handleRequestButtonTap(name: String)
 }
  
-class RequestView: UIView {
+final class RequestView: UIView {
     private var array: [String]
     weak var delegate: RequestViewDelegate?
     
@@ -115,6 +115,19 @@ class RequestView: UIView {
             stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
         ])
+    }
+    
+    func addRequest(request: String, upper: Bool) {
+        switch upper {
+        case true:
+            let newButton = RequestButton(frame: .zero, name: request)
+            newButton.delegate = self
+            upperStackView.addArrangedSubview(newButton)
+        case false:
+            let newButton = RequestButton(frame: .zero, name: request)
+            newButton.delegate = self
+            lowerStackView.addArrangedSubview(newButton)
+        }
     }
 }
 

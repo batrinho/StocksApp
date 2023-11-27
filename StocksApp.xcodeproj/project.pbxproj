@@ -23,9 +23,9 @@
 		891723B92AFCFEA4009E1464 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B82AFCFEA4009E1464 /* RequestsView.swift */; };
 		891723BB2AFF4FF0009E1464 /* OldStocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */; };
 		892332282AB1D896005299B3 /* RequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892332272AB1D896005299B3 /* RequestButton.swift */; };
+		892947062B14980000A1136D /* stockModels.json in Resources */ = {isa = PBXBuildFile; fileRef = 892947052B14980000A1136D /* stockModels.json */; };
 		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
 		89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */; };
-		893457112AE1657000ACFE69 /* stockProfiles (1).json in Resources */ = {isa = PBXBuildFile; fileRef = 893457102AE1657000ACFE69 /* stockProfiles (1).json */; };
 		89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89876D962A7E266C007DD43D /* StockDataManager.swift */; };
 		89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */; };
 		899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */; };
@@ -58,9 +58,9 @@
 		891723B82AFCFEA4009E1464 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
 		891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldStocksViewController.swift; sourceTree = "<group>"; };
 		892332272AB1D896005299B3 /* RequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestButton.swift; sourceTree = "<group>"; };
+		892947052B14980000A1136D /* stockModels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockModels.json; sourceTree = "<group>"; };
 		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
 		89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		893457102AE1657000ACFE69 /* stockProfiles (1).json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "stockProfiles (1).json"; sourceTree = "<group>"; };
 		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		899816842A8D0FE000AC822D /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				89876D962A7E266C007DD43D /* StockDataManager.swift */,
 				8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */,
 				891723B32AFCD6C6009E1464 /* Core Data Entities */,
-				893457102AE1657000ACFE69 /* stockProfiles (1).json */,
+				892947052B14980000A1136D /* stockModels.json */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -277,7 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				893457112AE1657000ACFE69 /* stockProfiles (1).json in Resources */,
+				892947062B14980000A1136D /* stockModels.json in Resources */,
 				89B6F5AE2ACC649800282BF7 /* static in Resources */,
 				8902CC052A78FB4D00EFFE5F /* Assets.xcassets in Resources */,
 			);

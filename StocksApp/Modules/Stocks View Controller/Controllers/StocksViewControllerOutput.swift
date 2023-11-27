@@ -8,17 +8,25 @@
 import UIKit
 
 protocol StocksViewControllerOutput {
-    func handleTextFieldChanges(text: String)
+    func viewIsReady()
     
-    func handleTextFieldButton()
+    func startedEditingTextField(with searchText: String)
+    
+    func handleButtonStackViewTap()
+
+    func handleTextFieldButtonTap()
     
     func handleFavoriteButtonTap(with indexPath: IndexPath)
     
     func handleRequestButtonTap(name: String)
     
-    func openStocks()
+    func handleEnter(text: String)
     
-    func openFavorites()
+    func handleShowMoreButtonTap()
+    
+    func displayStocks()
+    
+    func displayFavorites()
     
     func getStockInformation(with id: Int) -> Stock?
     
@@ -27,4 +35,6 @@ protocol StocksViewControllerOutput {
     func getPopularRequestsArray() -> [String]
     
     func getRecentRequestsArray() -> [String]
+    
+    func getHeightForCell() -> Double
 }

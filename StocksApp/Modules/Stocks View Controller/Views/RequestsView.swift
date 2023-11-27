@@ -11,7 +11,7 @@ protocol RequestsViewDelegate: AnyObject {
     func handleRequestButtonTap(name: String)
 }
 
-class RequestsView: UIView {
+final class RequestsView: UIView {
     weak var delegate: RequestsViewDelegate?
     
     // MARK: - UI
@@ -64,6 +64,10 @@ class RequestsView: UIView {
             recentRequestView.trailingAnchor.constraint(equalTo: trailingAnchor),
             recentRequestView.heightAnchor.constraint(equalToConstant: 170),
         ])
+    }
+    
+    func addRequest(request: String, upper: Bool) {
+        recentRequestView.addRequest(request: request, upper: upper)
     }
 }
 

@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class StocksViewControllerPresenter: StocksViewControllerOutput {
-    enum Constants {
-        static let yellowStar = UIImage(named: "star.yellow.fill")
-        static let grayStar = UIImage(named: "star.gray.fill")
-        static let magnifyingGlass = UIImage(systemName: "magnifyingglass")
-        static let backArrow = UIImage(named: "returnIcon")
-    }
+final class StocksViewControllerPresenter {
+    private let yellowStar = UIImage(named: "star.yellow.fill")!
+    private let grayStar = UIImage(named: "star.gray.fill")!
+    private let magnifyingGlass = UIImage(systemName: "magnifyingglass")!
+    private let backArrow = UIImage(named: "returnIcon")!
+    private let fileName = "stockModels"
     
     enum State {
         case displayingStocks
@@ -23,12 +22,22 @@ final class StocksViewControllerPresenter: StocksViewControllerOutput {
     }
     
     weak var input: StocksViewControllerInput?
-    private var onStocks: Bool = true
-    private var state: State = .displayingStocks
-    private var displayingStocks: [Stock] = []
-    private var stocks: [Stock] = []
-    private var backUpStocks: [Stock] = []
-    private var favoriteStocks: [Stock] = []
+    
+    private var previousState: State = .displayingStocks
+    private var state: State = .displayingStocks {
+        didSet {
+            switch oldValue {
+            case .displayingStocks, .displayingFavorites:
+                previousState = oldValue
+            default:
+                print("")
+            }
+            input?.stateChangedTo(state)
+        }
+    }
+    
+    private var filteredStocks = [Stock]()
+    private var stocks = [Stock]()
     
     private let networkingService: NetworkingServiceProtocol
     private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol
@@ -37,48 +46,68 @@ final class StocksViewControllerPresenter: StocksViewControllerOutput {
         self.networkingService = networkingService
         self.coreDataDatabaseManager = coreDataDatabaseManager
     }
+}
+
+extension StocksViewControllerPresenter: StocksViewControllerOutput {
+    func viewIsReady() {
+        displayStocks()
+    }
     
-    func handleTextFieldChanges(text: String) {
-        switch text.isEmpty {
-        case true:
+    func getHeightForCell() -> Double {
+        return 90.0
+    }
+    
+    func startedEditingTextField(with searchText: String) {
+        if searchText.isEmpty {
             state = .searching
-            stocks = backUpStocks
-        case false:
-            state = .typing
-            filterStocks(searchText: text)
-        }
-        input?.stateChangedTo(state: state)
-        input?.updateTextFieldButtonImage(with: Constants.backArrow!)
-    }
-    
-    func filterStocks(searchText: String) {
-        stocks = stocks.filter({ stock in
-            let stockNameMatch = stock.name.lowercased().contains(searchText.lowercased())
-            let stockTickerMatch = stock.ticker.lowercased().contains(searchText.lowercased())
-            
-            return stockNameMatch || stockTickerMatch
-        })
-        displayingStocks = stocks
-        input?.reloadTableView()
-    }
-    
-    func handleTextFieldButton() {
-        if onStocks {
-            openStocks()
         } else {
-            openFavorites()
+            state = .typing
+            filterStocks(with: searchText)
         }
-        input?.stateChangedTo(state: state)
-        input?.updateTextFieldButtonImage(with: Constants.magnifyingGlass!)
+        input?.replaceTextFieldButtonImage(with: backArrow)
+    }
+    
+    func handleShowMoreButtonTap() {
+        input?.updateSearchBarView(text: "")
+        input?.textFieldResignFirstResponder()
+        input?.replaceTextFieldButtonImage(with: magnifyingGlass)
+        displayStocks()
+    }
+    
+    func handleButtonStackViewTap() {
+        switch state {
+        case .displayingStocks:
+            displayFavorites()
+            input?.switchButtonsDominance(isStocksPrior: false)
+        case .displayingFavorites:
+            displayStocks()
+            input?.switchButtonsDominance(isStocksPrior: true)
+        default:
+            print("Button Stack View can only be called when displaying stocks or favorite stocks")
+        }
+    }
+    
+    func handleTextFieldButtonTap() {
+        switch previousState {
+        case .displayingStocks:
+            displayStocks()
+        case .displayingFavorites:
+            displayFavorites()
+        default:
+            print("previousState can only be .displayingStocks or .displayingFavorites")
+        }
+        input?.updateSearchBarView(text: "")
+        input?.replaceTextFieldButtonImage(with: magnifyingGlass)
         input?.textFieldResignFirstResponder()
     }
     
     func handleFavoriteButtonTap(with indexPath: IndexPath) {
-        let selectedStock = displayingStocks[indexPath.row]
+        let selectedStock = filteredStocks[indexPath.row]
         let isFavorite = coreDataDatabaseManager.getIsFavorite(ticker: selectedStock.ticker)
+        
         if let selectedIndex = stocks.firstIndex(where: { $0.ticker == selectedStock.ticker }) {
-            stocks[selectedIndex].favoriteButtonImage = (isFavorite ? Constants.grayStar : Constants.yellowStar)!
-            input?.updateFavoriteButton(with: indexPath, buttonImage: stocks[selectedIndex].favoriteButtonImage)
+            stocks[selectedIndex].favoriteButtonImage = (isFavorite ? grayStar : yellowStar)
+            input?.updateFavoriteButton(with: indexPath, buttonImage: (isFavorite ? grayStar : yellowStar))
         }
         
         if isFavorite {
@@ -87,58 +116,44 @@ final class StocksViewControllerPresenter: StocksViewControllerOutput {
             coreDataDatabaseManager.addStock(stock: StockModel(name: selectedStock.name, logo: selectedStock.logoUrl, ticker: selectedStock.ticker))
         }
         
-        if state == .displayingStocks {
-            openStocks()
-        } else {
-            openFavorites()
+        if state == .displayingFavorites {
+            filterStocks(with: "")
         }
     }
     
     func handleRequestButtonTap(name: String) {
         state = .typing
-        filterStocks(searchText: name)
-        input?.stateChangedTo(state: state)
+        filterStocks(with: name)
         input?.updateSearchBarView(text: name)
     }
     
-    func openStocks() {
-        onStocks = true
+    func handleEnter(text: String) {
+        coreDataDatabaseManager.addRequest(request: text)
+        guard let recentRequests = coreDataDatabaseManager.fetchRecentRequests() else { return }
+        input?.addRequestToStackView(request: text, upper: recentRequests.count % 2 == 0)
+    }
+    
+    func displayStocks() {
         state = .displayingStocks
         guard stocks.isEmpty else {
-            DispatchQueue.main.async {
-                self.displayingStocks = self.stocks
-                self.input?.reloadTableView()
-            }
+            filterStocks(with: "")
             return
         }
-        let stockModels = networkingService.stockDataFromLocalFile(with: "stockProfiles (1)")
+        let stockModels = networkingService.stockDataFromLocalFile(with: fileName)
         let group = DispatchGroup()
         for stockModel in stockModels {
             group.enter()
             Task {
                 do {
-                    guard let stockLogo = try await networkingService.fetchStockLogo(from: stockModel.logo) else {
-                        print("Error fetching logo for \(stockModel.ticker)")
-                        return
-                    }
-                    guard let stockPriceModel = try await networkingService.fetchPrice(stockTicker: stockModel.ticker) else {
-                        print("Error fetching price for \(stockModel.ticker)")
+                    guard let stock = try await networkingService.fetchStockInformation(
+                        with: stockModel,
+                        isFavorite: coreDataDatabaseManager.getIsFavorite(ticker: stockModel.ticker)
+                    ) else {
                         return
                     }
                     DispatchQueue.main.async {
-                        let isFavorite = self.coreDataDatabaseManager.getIsFavorite(ticker: stockModel.ticker)
-                        let stock = Stock(
-                            name: stockModel.name,
-                            ticker: stockModel.ticker, 
-                            logoUrl: stockModel.logo,
-                            logo: stockLogo,
-                            favoriteButtonImage: ((isFavorite ? Constants.yellowStar : Constants.grayStar)!),
-                            currentPrice: stockPriceModel.c,
-                            changePrice: stockPriceModel.d
-                        )
                         self.stocks.append(stock)
-                        self.displayingStocks = self.stocks
-                        self.backUpStocks = self.stocks
+                        self.filteredStocks = self.stocks
                     }
                 } catch {
                     print("Error in openStocks: \(error)")
@@ -147,32 +162,21 @@ final class StocksViewControllerPresenter: StocksViewControllerOutput {
             }
         }
         group.notify(queue: .main) {
-            self.input?.reloadTableView()            
+            self.input?.updateUI()
         }
     }
     
-    func openFavorites() {
-        onStocks = false
+    func displayFavorites() {
         state = .displayingFavorites
-        guard let favoriteStockModels = coreDataDatabaseManager.fetchFavoriteStocks() else { return }
-        favoriteStocks.removeAll()
-        for favoriteStockModel in favoriteStockModels {
-            if let foundStock = stocks.first(where: { $0.ticker == favoriteStockModel.ticker }) {
-                favoriteStocks.append(foundStock)
-            }
-        }
-        DispatchQueue.main.async {
-            self.displayingStocks = self.favoriteStocks
-            self.input?.reloadTableView()
-        }
+        filterStocks(with: "")
     }
     
     func getStockInformation(with id: Int) -> Stock? {
-        return displayingStocks[id]
+        return filteredStocks[id]
     }
     
     func getStocksCount() -> Int {
-        return displayingStocks.count
+        return filteredStocks.count
     }
     
     func getPopularRequestsArray() -> [String] {
@@ -182,5 +186,26 @@ final class StocksViewControllerPresenter: StocksViewControllerOutput {
     func getRecentRequestsArray() -> [String] {
         guard let recentRequests = coreDataDatabaseManager.fetchRecentRequests() else { return [] }
         return recentRequests
+    }
+    
+    private func filterStocks(with searchText: String) {
+        switch state {
+        case .displayingStocks:
+            filteredStocks = stocks
+        case .displayingFavorites:
+            filteredStocks = stocks.filter({ stock in
+                return coreDataDatabaseManager.getIsFavorite(ticker: stock.ticker)
+            })
+        case .typing:
+            filteredStocks = stocks.filter({ stock in
+                let stockNameMatch = stock.name.lowercased().contains(searchText.lowercased())
+                let stockTickerMatch = stock.ticker.lowercased().contains(searchText.lowercased())
+                
+                return stockNameMatch || stockTickerMatch
+            })
+        default:
+            print("Irrelevant state to call filterStocks()")
+        }
+        input?.updateUI()
     }
 }
