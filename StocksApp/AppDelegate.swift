@@ -10,56 +10,65 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    var state: String?
     
-    //    /Users/batyrtolkynbayev/Desktop/the folder/iOS Development/Adlet Abi Tasks/StocksApp
+    enum AppState {
+        case notRunning
+        case active
+        case inactive
+        case background
+    }
+    
+    private var state: AppState = .notRunning {
+        didSet {
+            print("Application moved from \(oldValue) to \(state)")
+        }
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let rootViewController = StocksViewController()
+        let networkingService = NetworkingService()
+        let coreDataDatabaseManager = CoreDataDatabaseManager()
+        
+        let presenter = StocksViewControllerPresenter(
+            networkingService: networkingService,
+            coreDataDatabaseManager: coreDataDatabaseManager
+        )
+        let rootViewController = StocksViewController(
+            presenter: presenter
+        )
+        presenter.input = rootViewController
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
-        print("Application moved from \(state ?? "Not Running") to \(UIApplication.State.inactive.stringValue): \(#function)")
-        state = UIApplication.State.inactive.stringValue
+        state = .inactive
         return true
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("Application moved from \(state ?? "Not Running") to \(UIApplication.State.inactive.stringValue): \(#function)")
-        state = UIApplication.State.inactive.stringValue
+        state = .inactive
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        print("Application moved from \(state ?? "") to \(UIApplication.State.active.stringValue): \(#function)")
-        state = UIApplication.State.active.stringValue
+        state = .active
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        print("Application moved from \(state ?? "") to \(UIApplication.State.inactive.stringValue): \(#function)")
-        state = UIApplication.State.inactive.stringValue
+        state = .inactive
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        print("Application moved from \(state ?? "") to \(UIApplication.State.background.stringValue): \(#function)")
-        state = UIApplication.State.background.stringValue
+        state = .background
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        print("Application moved from \(state ?? "") to Not Running: \(#function)")
-        state = "Not Running"
+        state = .notRunning
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        print("Application moved from \(state ?? "") to \(UIApplication.State.inactive.stringValue): \(#function)")
-        state = UIApplication.State.inactive.stringValue
+        state = .inactive
     }
-
-    // MARK: UISceneSession Lifecycle
     
     // MARK: - Core Data Saving support
     

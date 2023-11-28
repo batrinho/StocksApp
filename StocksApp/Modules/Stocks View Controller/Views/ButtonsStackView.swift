@@ -7,10 +7,14 @@
 
 import UIKit
 
-class ButtonsStackView: UIStackView {
+protocol ButtonsStackViewProtocol: AnyObject {
+    func handleButtonStackViewButtonTap()
+}
+
+final class ButtonsStackView: UIStackView {
+    weak var delegate: ButtonsStackViewProtocol?
     
-    private var buttonsStackViewWidthConstraint: NSLayoutConstraint!
-    
+    // MARK: - UI
     let stocksButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -31,22 +35,34 @@ class ButtonsStackView: UIStackView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        translatesAutoresizingMaskIntoConstraints = false
+        setupView()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
         axis = .horizontal
         spacing = 15
         distribution = .equalCentering
         alignment = .firstBaseline
-//        layer.shadowColor = UIColor.black.cgColor
-//        layer.shadowOpacity = 0.2
-//        layer.shadowOffset = CGSize(width: 0, height: 4)
-//        layer.shadowRadius = 4
-        
-        addArrangedSubview(stocksButton)
-        addArrangedSubview(favoritesButton)
+        addSubviews()
     }
     
-    func switchButtons (dominant: UIButton, passive: UIButton) {
+    private func addSubviews() {
+        addArrangedSubview(stocksButton)
+        addArrangedSubview(favoritesButton)
+        stocksButton.addTarget(self, action: #selector(anyButtonClicked), for: .touchUpInside)
+        favoritesButton.addTarget(self, action: #selector(anyButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc
+    private func anyButtonClicked() {
+        delegate?.handleButtonStackViewButtonTap()
+    }
+    
+    private func switchButtons(dominant: UIButton, passive: UIButton) {
         dominant.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 28)
         dominant.setTitleColor(.black, for: .normal)
         
@@ -54,8 +70,11 @@ class ButtonsStackView: UIStackView {
         passive.setTitleColor(.lightGray, for: .normal)
     }
     
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func switchButtonsPriority(isStocksPrior: Bool) {
+        if isStocksPrior {
+            switchButtons(dominant: stocksButton, passive: favoritesButton)
+        } else {
+            switchButtons(dominant: favoritesButton, passive: stocksButton)
+        }
     }
-    
 }

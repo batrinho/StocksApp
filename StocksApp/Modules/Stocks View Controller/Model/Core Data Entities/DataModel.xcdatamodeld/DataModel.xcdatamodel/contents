@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FavoriteStock" representedClassName="FavoriteStock" syncable="YES">
         <attribute name="logo" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -8,8 +8,4 @@
     <entity name="RecentRequest" representedClassName="RecentRequest" syncable="YES">
         <attribute name="requestTitle" optional="YES" attributeType="String"/>
     </entity>
-    <elements>
-        <element name="FavoriteStock" positionX="-54" positionY="-9" width="128" height="74"/>
-        <element name="RecentRequest" positionX="-54" positionY="18" width="128" height="44"/>
-    </elements>
 </model>

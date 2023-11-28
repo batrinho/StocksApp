@@ -7,9 +7,15 @@
 
 import UIKit
 
-final class RequestsView: UIView {
-    private var closure: ((String) -> Void)?
+protocol RequestViewDelegate: AnyObject {
+    func handleRequestButtonTap(name: String)
+}
+ 
+final class RequestView: UIView {
+    private var array: [String]
+    weak var delegate: RequestViewDelegate?
     
+    // MARK: - UI
     private var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,52 +54,51 @@ final class RequestsView: UIView {
         return stackView
     } ()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, title: String, array: [String]) {
+        self.label.text = title
+        self.array = array
         super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure (label: String, array: [String]) {
-        self.label.text = label
-        addSubview(self.label)
+    private func setupView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        addSubviews()
+        addConstraints()
+    }
+    
+    private func addSubviews() {
+        addSubview(label)
         addSubview(scrollView)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(upperStackView)
         
-        updateStackView(array: array)
-        
-        setupConstraints()
+        addStackViews()
+        addConstraints()
     }
     
-    func updateStackView (array: [String]) {
-        upperStackView.removeFullyAllArrangedSubviews()
-        lowerStackView.removeFullyAllArrangedSubviews()
+    private func addStackViews() {
+        stackView.addArrangedSubview(upperStackView)
+        stackView.addArrangedSubview(lowerStackView)
         
         let splitArray = array.split()
-        for i in splitArray.left {
-            let newButton = RequestButton()
-            newButton.updateLabel(newName: i)
-            newButton.addAction { buttonTitle in
-                self.handleButtonTap(buttonTitle: buttonTitle)
-            }
+        for name in splitArray.left {
+            let newButton = RequestButton(frame: .zero, name: name)
+            newButton.delegate = self
             upperStackView.addArrangedSubview(newButton)
         }
-        stackView.addArrangedSubview(lowerStackView)
-        for i in splitArray.right {
-            let newButton = RequestButton()
-            newButton.updateLabel(newName: i)
-            newButton.addAction { buttonTitle in
-                self.handleButtonTap(buttonTitle: buttonTitle)
-            }
+        for name in splitArray.right {
+            let newButton = RequestButton(frame: .zero, name: name)
+            newButton.delegate = self
             lowerStackView.addArrangedSubview(newButton)
         }
     }
     
-    private func setupConstraints () {
+    private func addConstraints() {
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor),
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -112,11 +117,22 @@ final class RequestsView: UIView {
         ])
     }
     
-    func handleButtonTap (buttonTitle: String) {
-        closure?(buttonTitle)
+    func addRequest(request: String, upper: Bool) {
+        switch upper {
+        case true:
+            let newButton = RequestButton(frame: .zero, name: request)
+            newButton.delegate = self
+            upperStackView.addArrangedSubview(newButton)
+        case false:
+            let newButton = RequestButton(frame: .zero, name: request)
+            newButton.delegate = self
+            lowerStackView.addArrangedSubview(newButton)
+        }
     }
-    
-    func addAction(_ action: ((String) -> Void)?) {
-        self.closure = action
+}
+
+extension RequestView: RequestButtonDelegate {
+    func handleRequestButtonTap(name: String) {
+        delegate?.handleRequestButtonTap(name: name)
     }
 }

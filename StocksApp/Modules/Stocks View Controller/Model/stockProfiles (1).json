@@ -1,0 +1,27 @@
+[ {
+    "name": "Waters Corp",
+    "logo": "https://finnhub.io/api/logo?symbol=WAT",
+    "ticker": "WAT"
+},
+    {
+        "name": "American Airlines Group Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AAL",
+        "ticker": "AAL"
+    },
+    {
+        "name": "Advance Auto Parts Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AAP",
+        "ticker": "AAP"
+    },
+    {
+        "name": "Abbvie Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=ABBV",
+        "ticker": "ABBV"
+    },
+    
+    {
+        "name": "Abbott Laboratories",
+        "logo": "https://finnhub.io/api/logo?symbol=ABT",
+        "ticker": "ABT"
+    }
+]
