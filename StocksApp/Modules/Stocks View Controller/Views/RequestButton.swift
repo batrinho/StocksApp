@@ -15,7 +15,7 @@ final class RequestButton: UIButton {
     weak var delegate: RequestButtonDelegate?
     
     // MARK: - UI
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black

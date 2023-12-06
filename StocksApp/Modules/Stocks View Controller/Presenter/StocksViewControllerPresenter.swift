@@ -126,6 +126,24 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
         input?.addRequestToStackView(request: text, upper: recentRequests.count % 2 == 0)
     }
     
+    func handleCellSelection(at indexPath: IndexPath) {
+        let selectedStock = filteredStocks[indexPath.row]
+        let secondVCPresenter = DetailsPageViewControllerPresenter(
+            networkingService: networkingService,
+            coreDataDatabaseManager: coreDataDatabaseManager,
+            stock: selectedStock
+        )
+        let secondVC = DetailsPageViewController(
+            presenter: secondVCPresenter,
+            stockCompanyName: selectedStock.name,
+            stockCompanyTicker: selectedStock.ticker,
+            favoriteButtonImage: buttonImageForStock(with: selectedStock.ticker),
+            stockCurrentPrice: "$\(selectedStock.currentPrice)"
+        )
+        secondVCPresenter.input = secondVC
+        input?.displaySecondViewController(secondVC)
+    }
+    
     func displayStocks() {
         state = .displayingStocks
         guard stocks.isEmpty else {

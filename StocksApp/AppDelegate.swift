@@ -31,14 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let networkingService = NetworkingService()
         let coreDataDatabaseManager = CoreDataDatabaseManager()
         
-        let presenter = StocksViewControllerPresenter(
+        let stocksVCPresenter = StocksViewControllerPresenter(
             networkingService: networkingService,
             coreDataDatabaseManager: coreDataDatabaseManager
         )
-        let rootViewController = StocksViewController(
-            presenter: presenter
-        )
-        presenter.input = rootViewController
+        let stocksVC = StocksViewController(presenter: stocksVCPresenter)
+        stocksVCPresenter.input = stocksVC
+        
+        let rootViewController = UINavigationController(rootViewController: stocksVC)
+        
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
         state = .inactive

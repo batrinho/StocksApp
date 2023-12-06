@@ -2,7 +2,8 @@
     "name": "Waters Corp",
     "logo": "https://finnhub.io/api/logo?symbol=WAT",
     "ticker": "WAT"
-},
+}
+    ,
     {
         "name": "American Airlines Group Inc",
         "logo": "https://finnhub.io/api/logo?symbol=AAL",

@@ -23,4 +23,6 @@ protocol StocksViewControllerInput: AnyObject {
     func addRequestToStackView(request: String, upper: Bool)
     
     func switchButtonsDominance(isStocksPrior: Bool)
+    
+    func displaySecondViewController(_ secondVC: UIViewController)
 }

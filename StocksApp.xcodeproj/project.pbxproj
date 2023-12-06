@@ -21,7 +21,6 @@
 		891723B52AFCD95D009E1464 /* StocksViewControllerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */; };
 		891723B72AFCD968009E1464 /* StocksViewControllerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B62AFCD968009E1464 /* StocksViewControllerInput.swift */; };
 		891723B92AFCFEA4009E1464 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B82AFCFEA4009E1464 /* RequestsView.swift */; };
-		891723BB2AFF4FF0009E1464 /* OldStocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */; };
 		892332282AB1D896005299B3 /* RequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892332272AB1D896005299B3 /* RequestButton.swift */; };
 		892947062B14980000A1136D /* stockModels.json in Resources */ = {isa = PBXBuildFile; fileRef = 892947052B14980000A1136D /* stockModels.json */; };
 		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
@@ -32,14 +31,26 @@
 		899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */; };
 		899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */; };
 		8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */; };
+		89A066922B189C5D0035D0F5 /* DetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066912B189C5D0035D0F5 /* DetailsPageViewController.swift */; };
+		89A066942B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066932B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift */; };
+		89A066962B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066952B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift */; };
+		89A066982B18A2470035D0F5 /* DetailsPageViewControllerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066972B18A2470035D0F5 /* DetailsPageViewControllerInput.swift */; };
+		89A0669C2B18C8AA0035D0F5 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669B2B18C8AA0035D0F5 /* ChartView.swift */; };
+		89A0669E2B18CA190035D0F5 /* ChartButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */; };
+		89A066A02B18CCE40035D0F5 /* ChartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669F2B18CCE40035D0F5 /* ChartButton.swift */; };
 		89B6F5AE2ACC649800282BF7 /* static in Resources */ = {isa = PBXBuildFile; fileRef = 89B6F5AD2ACC649800282BF7 /* static */; };
 		89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4BE2AF287E600622315 /* UIApplication.State.swift */; };
 		89BAF4C12AF2880500622315 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C02AF2880500622315 /* Array.swift */; };
 		89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C22AF2882100622315 /* UIStackView.swift */; };
+		89E1B8882B1D3FE9005D9631 /* BuyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E1B8872B1D3FE9005D9631 /* BuyButton.swift */; };
+		89E1B88A2B1EDC46005D9631 /* StockGraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E1B8892B1EDC46005D9631 /* StockGraphData.swift */; };
 		89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB19162ACF370A0020E605 /* ButtonsStackView.swift */; };
+		930F2BDD10ED99C007B47250 /* Pods_StocksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446F44D1CC84957CEB1FAC01 /* Pods_StocksApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		446F44D1CC84957CEB1FAC01 /* Pods_StocksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		813184DD13B044CAA68C09CA /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
 		8902CBF82A78FB4C00EFFE5F /* StocksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8902CBFF2A78FB4C00EFFE5F /* StocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +67,6 @@
 		891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewControllerOutput.swift; sourceTree = "<group>"; };
 		891723B62AFCD968009E1464 /* StocksViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewControllerInput.swift; sourceTree = "<group>"; };
 		891723B82AFCFEA4009E1464 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
-		891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldStocksViewController.swift; sourceTree = "<group>"; };
 		892332272AB1D896005299B3 /* RequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestButton.swift; sourceTree = "<group>"; };
 		892947052B14980000A1136D /* stockModels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockModels.json; sourceTree = "<group>"; };
 		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -67,11 +77,21 @@
 		899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataClass.swift"; sourceTree = "<group>"; };
 		899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabaseManager.swift; sourceTree = "<group>"; };
+		89A066912B189C5D0035D0F5 /* DetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewController.swift; sourceTree = "<group>"; };
+		89A066932B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewControllerPresenter.swift; sourceTree = "<group>"; };
+		89A066952B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewControllerOutput.swift; sourceTree = "<group>"; };
+		89A066972B18A2470035D0F5 /* DetailsPageViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewControllerInput.swift; sourceTree = "<group>"; };
+		89A0669B2B18C8AA0035D0F5 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartButtonStackView.swift; sourceTree = "<group>"; };
+		89A0669F2B18CCE40035D0F5 /* ChartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartButton.swift; sourceTree = "<group>"; };
 		89B6F5AD2ACC649800282BF7 /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
 		89BAF4BE2AF287E600622315 /* UIApplication.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.State.swift; sourceTree = "<group>"; };
 		89BAF4C02AF2880500622315 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		89BAF4C22AF2882100622315 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		89E1B8872B1D3FE9005D9631 /* BuyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyButton.swift; sourceTree = "<group>"; };
+		89E1B8892B1EDC46005D9631 /* StockGraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockGraphData.swift; sourceTree = "<group>"; };
 		89FB19162ACF370A0020E605 /* ButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsStackView.swift; sourceTree = "<group>"; };
+		BBF5390DFF96797470E0E34A /* Pods-StocksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.debug.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,17 +99,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930F2BDD10ED99C007B47250 /* Pods_StocksApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		063EC28DD060D6AAA339B1BD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BBF5390DFF96797470E0E34A /* Pods-StocksApp.debug.xcconfig */,
+				813184DD13B044CAA68C09CA /* Pods-StocksApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8902CBEF2A78FB4C00EFFE5F = {
 			isa = PBXGroup;
 			children = (
 				8902CBFA2A78FB4C00EFFE5F /* StocksApp */,
 				8902CBF92A78FB4C00EFFE5F /* Products */,
+				063EC28DD060D6AAA339B1BD /* Pods */,
+				AC470A73CF40CD2AF6E1D14A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,7 +138,6 @@
 			children = (
 				8902CBFB2A78FB4C00EFFE5F /* AppDelegate.swift */,
 				891723AD2AFCD2ED009E1464 /* Modules */,
-				891723AF2AFCD45A009E1464 /* Detailes View Controller */,
 				89B6F5AA2ACC5FDE00282BF7 /* Fonts */,
 				89BAF4BD2AF287CE00622315 /* Extensions */,
 				8902CC042A78FB4D00EFFE5F /* Assets.xcassets */,
@@ -119,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				8902CBFF2A78FB4C00EFFE5F /* StocksViewController.swift */,
-				891723BA2AFF4FF0009E1464 /* OldStocksViewController.swift */,
 				891723B42AFCD95D009E1464 /* StocksViewControllerOutput.swift */,
 			);
 			path = Controllers;
@@ -144,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				8902CC162A78FF5400EFFE5F /* StockData.swift */,
-				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
 				89876D962A7E266C007DD43D /* StockDataManager.swift */,
 				8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */,
 				891723B32AFCD6C6009E1464 /* Core Data Entities */,
@@ -156,7 +185,9 @@
 		891723AD2AFCD2ED009E1464 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				89E1B88B2B205505005D9631 /* NetworkingServices */,
 				891723AE2AFCD442009E1464 /* Stocks View Controller */,
+				891723AF2AFCD45A009E1464 /* Detailes View Controller */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -175,8 +206,13 @@
 		891723AF2AFCD45A009E1464 /* Detailes View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				89A0668D2B189C190035D0F5 /* Presenter */,
+				89A0668E2B189C1F0035D0F5 /* Controllers */,
+				89A0668F2B189C250035D0F5 /* Views */,
+				89A066902B189C2A0035D0F5 /* Model */,
 			);
-			path = "Detailes View Controller";
+			name = "Detailes View Controller";
+			path = "../Detailes View Controller";
 			sourceTree = "<group>";
 		};
 		891723B02AFCD48D009E1464 /* Presenter */ = {
@@ -200,6 +236,43 @@
 			path = "Core Data Entities";
 			sourceTree = "<group>";
 		};
+		89A0668D2B189C190035D0F5 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				89A066932B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift */,
+				89A066972B18A2470035D0F5 /* DetailsPageViewControllerInput.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		89A0668E2B189C1F0035D0F5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				89A066912B189C5D0035D0F5 /* DetailsPageViewController.swift */,
+				89A066952B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		89A0668F2B189C250035D0F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				89A0669B2B18C8AA0035D0F5 /* ChartView.swift */,
+				89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */,
+				89A0669F2B18CCE40035D0F5 /* ChartButton.swift */,
+				89E1B8872B1D3FE9005D9631 /* BuyButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		89A066902B189C2A0035D0F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				89E1B8892B1EDC46005D9631 /* StockGraphData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		89B6F5AA2ACC5FDE00282BF7 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +292,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		89E1B88B2B205505005D9631 /* NetworkingServices */ = {
+			isa = PBXGroup;
+			children = (
+				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
+			);
+			path = NetworkingServices;
+			sourceTree = "<group>";
+		};
+		AC470A73CF40CD2AF6E1D14A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				446F44D1CC84957CEB1FAC01 /* Pods_StocksApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -226,9 +315,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8902CC0C2A78FB4D00EFFE5F /* Build configuration list for PBXNativeTarget "StocksApp" */;
 			buildPhases = (
+				428C21AF78B3F75CBD15389A /* [CP] Check Pods Manifest.lock */,
 				8902CBF42A78FB4C00EFFE5F /* Sources */,
 				8902CBF52A78FB4C00EFFE5F /* Frameworks */,
 				8902CBF62A78FB4C00EFFE5F /* Resources */,
+				0B11106681A6E187D0B1BD28 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -285,6 +376,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0B11106681A6E187D0B1BD28 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StocksApp/Pods-StocksApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StocksApp/Pods-StocksApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StocksApp/Pods-StocksApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		428C21AF78B3F75CBD15389A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StocksApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8902CBF42A78FB4C00EFFE5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,13 +427,14 @@
 				89BAF4C12AF2880500622315 /* Array.swift in Sources */,
 				891723AC2AFCD03B009E1464 /* ShowMoreView.swift in Sources */,
 				891723B72AFCD968009E1464 /* StocksViewControllerInput.swift in Sources */,
-				891723BB2AFF4FF0009E1464 /* OldStocksViewController.swift in Sources */,
 				8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */,
 				899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */,
 				89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */,
 				8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */,
+				89A066982B18A2470035D0F5 /* DetailsPageViewControllerInput.swift in Sources */,
 				891723AA2AFBAE0A009E1464 /* UIColor.swift in Sources */,
 				891723B52AFCD95D009E1464 /* StocksViewControllerOutput.swift in Sources */,
+				89A066A02B18CCE40035D0F5 /* ChartButton.swift in Sources */,
 				8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */,
 				89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,
@@ -310,13 +444,20 @@
 				890388422AB31F2600E9A814 /* RequestView.swift in Sources */,
 				8902CBFC2A78FB4C00EFFE5F /* AppDelegate.swift in Sources */,
 				899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */,
+				89A066922B189C5D0035D0F5 /* DetailsPageViewController.swift in Sources */,
+				89E1B88A2B1EDC46005D9631 /* StockGraphData.swift in Sources */,
 				892332282AB1D896005299B3 /* RequestButton.swift in Sources */,
+				89A0669C2B18C8AA0035D0F5 /* ChartView.swift in Sources */,
+				89A066942B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift in Sources */,
 				8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */,
 				89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */,
 				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
+				89E1B8882B1D3FE9005D9631 /* BuyButton.swift in Sources */,
+				89A0669E2B18CA190035D0F5 /* ChartButtonStackView.swift in Sources */,
 				89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */,
 				89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */,
 				89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */,
+				89A066962B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +500,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -420,7 +561,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -441,6 +582,7 @@
 		};
 		8902CC0D2A78FB4D00EFFE5F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BBF5390DFF96797470E0E34A /* Pods-StocksApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -468,6 +610,7 @@
 		};
 		8902CC0E2A78FB4D00EFFE5F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 813184DD13B044CAA68C09CA /* Pods-StocksApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

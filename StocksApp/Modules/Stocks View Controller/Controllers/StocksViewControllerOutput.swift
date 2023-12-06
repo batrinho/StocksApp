@@ -24,6 +24,8 @@ protocol StocksViewControllerOutput {
     
     func handleShowMoreButtonTap()
     
+    func handleCellSelection(at indexPath: IndexPath)
+    
     func displayStocks()
     
     func displayFavorites()
