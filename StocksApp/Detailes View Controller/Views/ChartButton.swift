@@ -20,8 +20,14 @@ final class ChartButton: UIButton {
         }
     }
     
+    var labelText: String? {
+        get {
+            return label.text
+        }
+    }
+    
     // MARK: - UI
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black

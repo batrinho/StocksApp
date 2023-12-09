@@ -12,15 +12,16 @@ final class DetailsPageViewControllerPresenter {
     private enum Constants {
         static let yellowStar = UIImage(named: "star.yellow.fill")!
         static let grayStar = UIImage(named: "star.gray.fill")!
+        static let buttonNames: [String] = ["D", "W", "M", "6M", "1Y", "All"]
     }
     
-    enum State {
-        case d
-        case w
-        case m
-        case hy
-        case y
-        case all
+    enum State: String {
+        case day = "D"
+        case week = "W"
+        case month = "M"
+        case sixMonths = "6M"
+        case year = "1Y"
+        case all = "All"
     }
     
     weak var input: DetailsPageViewControllerInput?
@@ -28,13 +29,13 @@ final class DetailsPageViewControllerPresenter {
     private var state: State = .all {
         didSet {
             print("details page state changed from \(oldValue) to \(state)")
+            updateGraphData()
             input?.stateChangedTo(state)
         }
     }
     private let networkingService: NetworkingServiceProtocol
     private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol
     private let stock: Stock
-    private let names: [String] = ["D", "W", "M", "6M", "1Y", "All"]
     
     init(networkingService: NetworkingServiceProtocol, coreDataDatabaseManager: CoreDataDatabaseManagerProtocol, stock: Stock) {
         self.networkingService = networkingService
@@ -45,8 +46,7 @@ final class DetailsPageViewControllerPresenter {
 
 extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
     func viewIsReady() {
-        state = .d
-        updateGraphData(with: "D")
+        state = .day
     }
     
     private func fillEntriesArray(with data: [String: StockGraphDatum]) -> [ChartDataEntry] {
@@ -56,17 +56,18 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
             var breakpoint: Int = -1
             entries.append(ChartDataEntry(x: Double(index), y: closeValue))
             switch state {
-            case .d:
+            case .day:
                 breakpoint = 47
-            case .w:
+            case .week:
                 breakpoint = 7
-            case .m:
+            case .month:
                 breakpoint = 30
-            case .hy:
+            case .sixMonths:
                 breakpoint = 24
-            case .y:
+            case .year:
                 breakpoint = 48
-            default: print("OK")
+            default:
+                break
             }
             if index == breakpoint {
                 break
@@ -75,37 +76,30 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
         return entries
     }
     
-    func updateGraphData(with time: String) {
+    func updateGraphData() {
         Task {
             do {
-                guard let stockGraphData = try await networkingService.fetchGraphData(with: stock.ticker, time: time) else {
+                guard let stockGraphData = try await networkingService.fetchGraphData(stockTicker: stock.ticker, state: state) else {
                     return
                 }
                 DispatchQueue.main.async {
                     var entries = [ChartDataEntry]()
                     var data: [String: StockGraphDatum]?
-                    switch time {
-                    case "D":
+                    switch self.state {
+                    case .day:
                         data = stockGraphData.intraDaySeriesData
-                    case "W", "M":
+                    case .week, .month:
                         data = stockGraphData.dailySeriesData
-                    case "6M":
-                        data = stockGraphData.weeklySeriesData
-                    case "1Y":
+                    case .sixMonths, .year:
                         data = stockGraphData.weeklySeriesData
                     default:
-                        data = stockGraphData.monthlySeriesData
+                        data = stockGraphData.intraDaySeriesData
                     }
                     guard let data else { return }
                     entries = self.fillEntriesArray(with: data)
                     entries.reverse()
-                    let line1 = LineChartDataSet(entries: entries)
-                    line1.colors = [NSUIColor.black]
-                    line1.drawCirclesEnabled = false
-                    line1.mode = .cubicBezier
-                    line1.drawValuesEnabled = false
-                    let chartData = LineChartData()
-                    chartData.dataSets.append(line1)
+                    let chartData = LineChartData(dataSet: self.makeLineDataSet(entries: entries))
+                    chartData.setDrawValues(false)
                     self.input?.updateGraph(with: chartData)
                 }
             } catch {
@@ -114,8 +108,18 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
         }
     }
     
+    private func makeLineDataSet(entries: [ChartDataEntry]) -> LineChartDataSet {
+        let dataSet = LineChartDataSet(entries: entries)
+        dataSet.colors = [NSUIColor.black]
+        dataSet.lineWidth = 3
+        dataSet.mode = .cubicBezier
+        dataSet.drawCirclesEnabled = false
+        dataSet.setDrawHighlightIndicators(true)
+        return dataSet
+    }
+    
     func getButtonNames() -> [String] {
-        return names
+        return Constants.buttonNames
     }
     
     func backButtonPressed() {
@@ -133,18 +137,17 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
     }
     
     func handleChartButtonTap(name: String) {
-        updateGraphData(with: name)
         switch name {
         case "D":
-            state = .d
+            state = .day
         case "W":
-            state = .w
+            state = .week
         case "M":
-            state = .m
+            state = .month
         case "6M":
-            state = .hy
+            state = .sixMonths
         case "1Y":
-            state = .y
+            state = .year
         default:
             state = .all
         }

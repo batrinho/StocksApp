@@ -29,7 +29,7 @@ final class SearchBarView: UIView {
         return textField
     } ()
     
-    let button: UIButton = {
+    private let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)

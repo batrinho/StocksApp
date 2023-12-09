@@ -10,16 +10,16 @@ import UIKit
 protocol NetworkingServiceProtocol {
     func fetchStockInformation(with stockModel: StockModel) async throws -> Stock?
     func stockDataFromLocalFile(with name: String) -> [StockModel]
-    func fetchGraphData(with stockTicker: String, time: String) async throws -> StockGraphData?
+    func fetchGraphData(stockTicker: String, state: DetailsPageViewControllerPresenter.State) async throws -> StockGraphData?
 }
 
 final class NetworkingService: NetworkingServiceProtocol {
-    private let yellowStar = UIImage(named: "star.yellow.fill")
-    private let grayStar = UIImage(named: "star.gray.fill")
     enum Constants {
-        static let baseUrlString = "https://finnhub.io/api/v1/quote"
-        static let finnhubApiKey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
+        static let alphaBaseUrlString = "https://www.alphavantage.co/query?function=TIME_SERIES_"
         static let alphaApiKey = "5422CWLSP5CA6FQ1"
+//        static let alphaApiKey = "6NE10AW81HBQ8JV5"
+        static let finnhubBaseUrlString = "https://finnhub.io/api/v1/quote"
+        static let finnhubApiKey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
     }
     
     func stockDataFromLocalFile(with name: String) -> [StockModel] {
@@ -55,18 +55,26 @@ final class NetworkingService: NetworkingServiceProtocol {
         )
     }
     
-    func fetchGraphData(with stockTicker: String, time: String) async throws -> StockGraphData? {
+    func fetchGraphData(
+        stockTicker: String,
+        state: DetailsPageViewControllerPresenter.State
+    ) async throws -> StockGraphData? {
         do {
-            var urlString = String()
-            switch time {
-            case "D": urlString =             "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=\(stockTicker)&interval=30min&apikey=\(Constants.alphaApiKey)"
-            case "W": urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
-            case "M": urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
-            case "6M": urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
-            case "1Y": urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
-            case "All": urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
-            default: break
+            var urlString = Constants.alphaBaseUrlString
+            
+            switch state {
+            case .day:
+                urlString += "INTRADAY&interval=30min"
+            case .week, .month:
+                urlString += "DAILY"
+            case .sixMonths, .year:
+                urlString += "WEEKLY"
+            case .all:
+                urlString += "MONTHLY"
             }
+            
+            urlString += "&symbol=\(stockTicker)&apikey=\(Constants.alphaApiKey)"
+            
             guard let url = URL(string: urlString) else { return nil }
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
@@ -94,7 +102,7 @@ final class NetworkingService: NetworkingServiceProtocol {
                 "symbol": stockTicker,
                 "token": Constants.finnhubApiKey
             ]
-            var urlComponents = URLComponents(string: Constants.baseUrlString)
+            var urlComponents = URLComponents(string: Constants.finnhubBaseUrlString)
             urlComponents?.queryItems = queryParameters.map { key, value in
                 URLQueryItem(name: key, value: value)
             }

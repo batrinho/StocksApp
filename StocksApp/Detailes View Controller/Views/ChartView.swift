@@ -12,15 +12,11 @@ final class ChartView: UIView, ChartViewDelegate {
     private let chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.xAxis.drawGridLinesEnabled = false
-        chartView.leftAxis.drawGridLinesEnabled = false
-        chartView.rightAxis.drawGridLinesEnabled = false
-        
-        chartView.xAxis.drawLabelsEnabled = false
-        chartView.leftAxis.drawLabelsEnabled = false
-        chartView.rightAxis.drawLabelsEnabled = false
-
-        chartView.marker = nil
+        chartView.rightAxis.enabled = false
+        chartView.leftAxis.enabled = false
+        chartView.xAxis.enabled = false
+        chartView.drawBordersEnabled = false
+        chartView.animate(xAxisDuration: 2.5)
         return chartView
     }()
     
@@ -54,6 +50,8 @@ final class ChartView: UIView, ChartViewDelegate {
     func updateGraph(with data: LineChartData) {
         chartView.data = data
     }
-
-
+    
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        print(entry)
+    }
 }

@@ -135,6 +135,7 @@ final class DetailsPageViewController: UIViewController {
     func favoriteButtonPressed() {
         presenter.favoriteButtonPressed()
     }
+    
 }
 
 // MARK: - ChartButtonStackViewDelegate
@@ -147,9 +148,8 @@ extension DetailsPageViewController: ChartButtonStackViewDelegate {
 extension DetailsPageViewController: DetailsPageViewControllerInput {
     func stateChangedTo(_ state: DetailsPageViewControllerPresenter.State) {
         for case let chartButton as ChartButton in chartButtonStackView.subviews {
-            if (chartButton.label.text?.lowercased() == String(describing: state)) ||
-                (chartButton.label.text?.lowercased() == "6m" && state == .hy) ||
-                (chartButton.label.text?.lowercased() == "1y" && state == .y) {
+            guard let chartButtonLabelText = chartButton.labelText else { return }
+            if chartButtonLabelText == state.rawValue {
                 chartButton.backgroundColor = .black
             } else {
                 chartButton.backgroundColor = UIColor.backgroundGray

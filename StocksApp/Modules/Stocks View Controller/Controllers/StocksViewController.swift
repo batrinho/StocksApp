@@ -54,8 +54,8 @@ final class StocksViewController: UIViewController {
         presenter.viewIsReady()
     }
     
-    override func viewIsAppearing(_ animated: Bool) {
-        presenter.viewIsReady()
+    override func viewDidAppear(_ animated: Bool) {
+        updateUI()
     }
     
     private func configure() {
