@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import DGCharts
 
 protocol DetailsPageViewControllerOutput {
     func handleChartButtonTap(name: String)
+    
+    func handleBuyButtonTap(price: String)
     
     func backButtonPressed()
     

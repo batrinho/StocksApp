@@ -17,7 +17,6 @@ final class NetworkingService: NetworkingServiceProtocol {
     enum Constants {
         static let alphaBaseUrlString = "https://www.alphavantage.co/query?function=TIME_SERIES_"
         static let alphaApiKey = "5422CWLSP5CA6FQ1"
-//        static let alphaApiKey = "6NE10AW81HBQ8JV5"
         static let finnhubBaseUrlString = "https://finnhub.io/api/v1/quote"
         static let finnhubApiKey = "cj4ed09r01qlttl4q5bgcj4ed09r01qlttl4q5c0"
     }

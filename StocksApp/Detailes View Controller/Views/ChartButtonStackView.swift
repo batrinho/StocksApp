@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChartButtonStackViewDelegate: AnyObject {
-    func handleChartButtonTap(name: String)
+    func handleChartButtonTap(name: String?)
 }
 
 final class ChartButtonStackView: UIStackView {
@@ -39,13 +39,10 @@ final class ChartButtonStackView: UIStackView {
             addArrangedSubview(button)
         }
     }
-    
-    func changeBackgroundColorOfButton(with name: String) {
-    }
 }
 
 extension ChartButtonStackView: ChartButtonDelegate {
-    func handleChartButtonTap(name: String) {
+    func handleChartButtonTap(name: String?) {
         delegate?.handleChartButtonTap(name: name)
     }
 }

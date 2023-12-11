@@ -8,14 +8,14 @@
 import UIKit
 
 protocol BuyButtonDelegate: AnyObject {
-    func handleBuyButtonTap(name: String)
+    func handleBuyButtonTap(price: String?)
 }
 
 final class BuyButton: UIButton {
     weak var delegate: BuyButtonDelegate?
     
     // MARK: - UI
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
@@ -61,6 +61,6 @@ final class BuyButton: UIButton {
     
     @objc
     private func buttonPressed() {
-        delegate?.handleBuyButtonTap(name: label.text ?? "")
+        delegate?.handleBuyButtonTap(price: label.text)
     }
 }

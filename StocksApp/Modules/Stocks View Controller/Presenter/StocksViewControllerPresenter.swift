@@ -85,7 +85,8 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
         case .displayingFavorites:
             displayStocks()
             input?.switchButtonsDominance(isStocksPrior: true)
-        default: break
+        default: 
+            break
         }
     }
     

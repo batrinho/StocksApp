@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChartButtonDelegate: AnyObject {
-    func handleChartButtonTap(name: String)
+    func handleChartButtonTap(name: String?)
 }
 
 final class ChartButton: UIButton {
@@ -74,6 +74,6 @@ final class ChartButton: UIButton {
     
     @objc
     private func buttonPressed() {
-        delegate?.handleChartButtonTap(name: label.text ?? "")
+        delegate?.handleChartButtonTap(name: label.text)
     }
 }

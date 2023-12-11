@@ -97,8 +97,8 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
                     }
                     guard let data else { return }
                     entries = self.fillEntriesArray(with: data)
-                    entries.reverse()
-                    let chartData = LineChartData(dataSet: self.makeLineDataSet(entries: entries))
+                    let chartData = LineChartData()
+                    chartData.dataSets.append(self.makeLineDataSet(entries: entries))
                     chartData.setDrawValues(false)
                     self.input?.updateGraph(with: chartData)
                 }
@@ -151,5 +151,9 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
         default:
             state = .all
         }
+    }
+    
+    func handleBuyButtonTap(price: String) {
+        input?.presentPurchaseAlertViewController(price: price)
     }
 }

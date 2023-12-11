@@ -16,5 +16,7 @@ protocol DetailsPageViewControllerInput: AnyObject {
     func updateFavoriteButtonImage(with image: UIImage)
     
     func popViewController()
+    
+    func presentPurchaseAlertViewController(price: String)
 }
 

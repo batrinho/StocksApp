@@ -7,11 +7,11 @@
 
 import UIKit
 import DGCharts
+import StoreKit
 
 final class DetailsPageViewController: UIViewController {
     private let presenter: DetailsPageViewControllerOutput
     
-    // MARK: - UI
     private let backButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +97,7 @@ final class DetailsPageViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favoriteButton)
         chartButtonStackView.delegate = self
+        buyButton.delegate = self
     }
     
     private func addSubviews() {
@@ -135,16 +136,25 @@ final class DetailsPageViewController: UIViewController {
     func favoriteButtonPressed() {
         presenter.favoriteButtonPressed()
     }
-    
 }
 
 // MARK: - ChartButtonStackViewDelegate
 extension DetailsPageViewController: ChartButtonStackViewDelegate {
-    func handleChartButtonTap(name: String) {
+    func handleChartButtonTap(name: String?) {
+        guard let name else { return }
         presenter.handleChartButtonTap(name: name)
     }
 }
 
+// MARK: - BuyButtonDelegate
+extension DetailsPageViewController: BuyButtonDelegate {
+    func handleBuyButtonTap(price: String?) {
+        guard let price else { return }
+        presenter.handleBuyButtonTap(price: price)
+    }
+}
+
+// MARK: - DetailsPageViewControllerInput
 extension DetailsPageViewController: DetailsPageViewControllerInput {
     func stateChangedTo(_ state: DetailsPageViewControllerPresenter.State) {
         for case let chartButton as ChartButton in chartButtonStackView.subviews {
@@ -167,5 +177,21 @@ extension DetailsPageViewController: DetailsPageViewControllerInput {
     
     func updateFavoriteButtonImage(with image: UIImage) {
         favoriteButton.setImage(image, for: .normal)
+    }
+    
+    func presentPurchaseAlertViewController(price: String) {
+        let alertController = UIAlertController(
+            title: "\(price)?",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        let purchaseAction = UIAlertAction(title: "Yes", style: .default)
+        alertController.addAction(purchaseAction)
+        
+        present(alertController, animated: true)
     }
 }

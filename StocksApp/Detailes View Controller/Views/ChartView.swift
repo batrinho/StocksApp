@@ -12,17 +12,29 @@ final class ChartView: UIView, ChartViewDelegate {
     private let chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.translatesAutoresizingMaskIntoConstraints = false
+        
         chartView.rightAxis.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
         chartView.drawBordersEnabled = false
-        chartView.animate(xAxisDuration: 2.5)
+        chartView.leftAxis.inverted = true
+        chartView.xAxis.drawGridLinesEnabled = false
+        chartView.leftAxis.drawGridLinesEnabled = false
+        chartView.drawGridBackgroundEnabled = false
+        chartView.rightAxis.drawGridLinesEnabled = false
+        
+        let marker = PriceMarkerView()
+        marker.frame = CGRect(x: 0, y: 0, width: 70, height: 50)
+        marker.chartView = chartView
+        chartView.marker = marker
+        
         return chartView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        chartView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,10 +60,7 @@ final class ChartView: UIView, ChartViewDelegate {
     }
     
     func updateGraph(with data: LineChartData) {
+        chartView.animate(xAxisDuration: 2.5)
         chartView.data = data
-    }
-    
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print(entry)
     }
 }
