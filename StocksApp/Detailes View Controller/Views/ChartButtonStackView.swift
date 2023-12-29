@@ -8,15 +8,15 @@
 import UIKit
 
 protocol ChartButtonStackViewDelegate: AnyObject {
-    func handleChartButtonTap(name: String?)
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State)
 }
 
 final class ChartButtonStackView: UIStackView {
     weak var delegate: ChartButtonStackViewDelegate?
-    private var names: [String]
+    private var buttons: [DetailsPageViewControllerPresenter.State]
     
-    init(frame: CGRect, names: [String]) {
-        self.names = names
+    init(frame: CGRect, buttons: [DetailsPageViewControllerPresenter.State]) {
+        self.buttons = buttons
         super.init(frame: frame)
         setupView()
     }
@@ -34,7 +34,7 @@ final class ChartButtonStackView: UIStackView {
     
     private func addSubviews() {
         for i in 0...5 {
-            let button = ChartButton(frame: .zero, name: names[i])
+            let button = ChartButton(frame: .zero, state: buttons[i])
             button.delegate = self
             addArrangedSubview(button)
         }
@@ -42,7 +42,7 @@ final class ChartButtonStackView: UIStackView {
 }
 
 extension ChartButtonStackView: ChartButtonDelegate {
-    func handleChartButtonTap(name: String?) {
-        delegate?.handleChartButtonTap(name: name)
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State) {
+        delegate?.handleChartButtonTap(state: state)
     }
 }

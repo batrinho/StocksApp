@@ -7,7 +7,6 @@
 
 import UIKit
 import DGCharts
-import StoreKit
 
 final class DetailsPageViewController: UIViewController {
     private let presenter: DetailsPageViewControllerOutput
@@ -18,13 +17,11 @@ final class DetailsPageViewController: UIViewController {
         button.setImage(UIImage(named: "returnIcon"), for: .normal)
         return button
     }()
-    
     private let favoriteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     private let stockCompanyName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,17 +44,19 @@ final class DetailsPageViewController: UIViewController {
         stackView.spacing = 7.5
         return stackView
     }()
-    
     private let chartView: ChartView = {
         let view = ChartView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    private let bubbleView: BubbleView = {
+        let view = BubbleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private let buyButton: BuyButton
-    
     private lazy var chartButtonStackView: ChartButtonStackView = {
-        let view = ChartButtonStackView(frame: .zero, names: presenter.getButtonNames())
+        let view = ChartButtonStackView(frame: .zero, buttons: presenter.getButtons())
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -96,6 +95,7 @@ final class DetailsPageViewController: UIViewController {
         navigationItem.titleView = labelStackView
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favoriteButton)
+        chartView.delegate = self
         chartButtonStackView.delegate = self
         buyButton.delegate = self
     }
@@ -104,16 +104,18 @@ final class DetailsPageViewController: UIViewController {
         view.addSubview(chartView)
         view.addSubview(chartButtonStackView)
         view.addSubview(buyButton)
+        view.addSubview(bubbleView)
         labelStackView.addArrangedSubview(stockCompanyTicker)
         labelStackView.addArrangedSubview(stockCompanyName)
+        bubbleView.isHidden = true
     }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            chartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 10),
+            chartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            chartView.heightAnchor.constraint(equalToConstant: 500),
+            chartView.heightAnchor.constraint(equalToConstant: 400),
             
             chartButtonStackView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 30),
             chartButtonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (view.frame.width - 330)/2),
@@ -124,6 +126,9 @@ final class DetailsPageViewController: UIViewController {
             buyButton.leadingAnchor.constraint(equalTo: chartButtonStackView.leadingAnchor),
             buyButton.widthAnchor.constraint(equalToConstant: 330),
             buyButton.heightAnchor.constraint(equalToConstant: 56),
+            
+            bubbleView.heightAnchor.constraint(equalToConstant: 70),
+            bubbleView.widthAnchor.constraint(equalToConstant: 90),
         ])
     }
     
@@ -140,9 +145,8 @@ final class DetailsPageViewController: UIViewController {
 
 // MARK: - ChartButtonStackViewDelegate
 extension DetailsPageViewController: ChartButtonStackViewDelegate {
-    func handleChartButtonTap(name: String?) {
-        guard let name else { return }
-        presenter.handleChartButtonTap(name: name)
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State) {
+        presenter.handleChartButtonTap(state: state)
     }
 }
 
@@ -151,6 +155,17 @@ extension DetailsPageViewController: BuyButtonDelegate {
     func handleBuyButtonTap(price: String?) {
         guard let price else { return }
         presenter.handleBuyButtonTap(price: price)
+    }
+}
+
+// MARK: - StocksChartViewDelegate
+extension DetailsPageViewController: StocksChartViewDelegate {
+    func chartValueSelected(at position: CGPoint, entry: ChartDataEntry) {
+        presenter.chartValueSelected(at: position, entry: entry)
+    }
+    
+    func chartValueNotSelected() {
+        bubbleView.isHidden = true
     }
 }
 
@@ -179,19 +194,25 @@ extension DetailsPageViewController: DetailsPageViewControllerInput {
         favoriteButton.setImage(image, for: .normal)
     }
     
+    func moveBubbleViewTo(x: CGFloat, y: CGFloat, price: String, date: String) {
+        bubbleView.isHidden = false
+        print(x)
+        print(chartView.bounds.width)
+        print(chartView.frame.width)
+        bubbleView.transform = CGAffineTransform(translationX: min(max(0, x - 45), chartView.frame.width - 90), y: y + 90)
+        bubbleView.changeLabels(price: price, date: date)
+    }
+    
     func presentPurchaseAlertViewController(price: String) {
         let alertController = UIAlertController(
             title: "\(price)?",
             message: nil,
             preferredStyle: .alert
         )
-        
         let cancelAction = UIAlertAction(title: "No", style: .cancel)
         alertController.addAction(cancelAction)
-        
         let purchaseAction = UIAlertAction(title: "Yes", style: .default)
         alertController.addAction(purchaseAction)
-        
         present(alertController, animated: true)
     }
 }

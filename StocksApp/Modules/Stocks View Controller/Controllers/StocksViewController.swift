@@ -55,7 +55,7 @@ final class StocksViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateUI()
+        presenter.viewDidAppear()
     }
     
     private func configure() {
@@ -214,17 +214,15 @@ extension StocksViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         cell.delegate = self
-        DispatchQueue.main.async {
-            cell.configure(
-                ticker: stock.ticker,
-                name: stock.name,
-                color: (indexPath.row % 2 == 0) ? UIColor.backgroundGray : .clear,
-                logo: stock.logo,
-                favoriteButtonImage: self.presenter.buttonImageForStock(with: stock.ticker),
-                currentPrice: stock.currentPrice,
-                changePrice: stock.changePrice
-            )
-        }
+        cell.configure(
+            ticker: stock.ticker,
+            name: stock.name,
+            color: (indexPath.row % 2 == 0) ? UIColor.backgroundGray : .clear,
+            logo: stock.logo,
+            favoriteButtonImage: self.presenter.buttonImageForStock(with: stock.ticker),
+            currentPrice: stock.currentPrice,
+            changePrice: stock.changePrice
+        )
         return cell
     }
 }

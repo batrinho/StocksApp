@@ -18,5 +18,7 @@ protocol DetailsPageViewControllerInput: AnyObject {
     func popViewController()
     
     func presentPurchaseAlertViewController(price: String)
+    
+    func moveBubbleViewTo(x: CGFloat, y: CGFloat, price: String, date: String)
 }
 

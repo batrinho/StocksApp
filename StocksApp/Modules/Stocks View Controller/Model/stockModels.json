@@ -2,8 +2,7 @@
     "name": "Waters Corp",
     "logo": "https://finnhub.io/api/logo?symbol=WAT",
     "ticker": "WAT"
-}
-    ,
+},
     {
         "name": "American Airlines Group Inc",
         "logo": "https://finnhub.io/api/logo?symbol=AAL",
@@ -24,5 +23,30 @@
         "name": "Abbott Laboratories",
         "logo": "https://finnhub.io/api/logo?symbol=ABT",
         "ticker": "ABT"
-    }
-]
+    },
+    {
+        "name": "Accenture PLC",
+        "logo": "https://finnhub.io/api/logo?symbol=ACN",
+        "ticker": "ACN"
+    },
+    {
+        "name": "Adobe Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=ADBE",
+        "ticker": "ADBE"
+    },
+    {
+        "name": "Ameren Corp",
+        "logo": "https://finnhub.io/api/logo?symbol=AEE",
+        "ticker": "AEE"
+    },
+    {
+        "name": "AES Corp",
+        "logo": "https://finnhub.io/api/logo?symbol=AES",
+        "ticker": "AES"
+    },
+    {
+        "name": "Aflac Inc",
+        "logo": "https://finnhub.io/api/logo?symbol=AFL",
+        "ticker": "AFL"
+    },
+    ]

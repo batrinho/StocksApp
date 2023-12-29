@@ -9,12 +9,6 @@ import UIKit
 import DGCharts
 
 final class DetailsPageViewControllerPresenter {
-    private enum Constants {
-        static let yellowStar = UIImage(named: "star.yellow.fill")!
-        static let grayStar = UIImage(named: "star.gray.fill")!
-        static let buttonNames: [String] = ["D", "W", "M", "6M", "1Y", "All"]
-    }
-    
     enum State: String {
         case day = "D"
         case week = "W"
@@ -24,20 +18,43 @@ final class DetailsPageViewControllerPresenter {
         case all = "All"
     }
     
+    private enum Constants {
+        static let yellowStar = UIImage(named: "star.yellow.fill")!
+        static let grayStar = UIImage(named: "star.gray.fill")!
+        static let buttons: [State] = [.day, .week, .month, .sixMonths, .year, .all]
+    }
+    
     weak var input: DetailsPageViewControllerInput?
     
+    private var data: [String: StockGraphDatum]?
+    private var breakpoint: Int?
     private var state: State = .all {
         didSet {
-            print("details page state changed from \(oldValue) to \(state)")
             updateGraphData()
             input?.stateChangedTo(state)
+            switch state {
+            case .day:
+                self.breakpoint = 47
+            case .week:
+                self.breakpoint = 7
+            case .month:
+                self.breakpoint = 30
+            case .sixMonths:
+                self.breakpoint = 24
+            default:
+                self.breakpoint = 48
+            }
         }
     }
     private let networkingService: NetworkingServiceProtocol
     private let coreDataDatabaseManager: CoreDataDatabaseManagerProtocol
     private let stock: Stock
     
-    init(networkingService: NetworkingServiceProtocol, coreDataDatabaseManager: CoreDataDatabaseManagerProtocol, stock: Stock) {
+    init(
+        networkingService: NetworkingServiceProtocol,
+        coreDataDatabaseManager: CoreDataDatabaseManagerProtocol,
+        stock: Stock
+    ) {
         self.networkingService = networkingService
         self.coreDataDatabaseManager = coreDataDatabaseManager
         self.stock = stock
@@ -46,34 +63,7 @@ final class DetailsPageViewControllerPresenter {
 
 extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
     func viewIsReady() {
-        state = .day
-    }
-    
-    private func fillEntriesArray(with data: [String: StockGraphDatum]) -> [ChartDataEntry] {
-        var entries = [ChartDataEntry]()
-        for (index, entry) in data.enumerated() {
-            let closeValue = Double(entry.value.close)!
-            var breakpoint: Int = -1
-            entries.append(ChartDataEntry(x: Double(index), y: closeValue))
-            switch state {
-            case .day:
-                breakpoint = 47
-            case .week:
-                breakpoint = 7
-            case .month:
-                breakpoint = 30
-            case .sixMonths:
-                breakpoint = 24
-            case .year:
-                breakpoint = 48
-            default:
-                break
-            }
-            if index == breakpoint {
-                break
-            }
-        }
-        return entries
+        state = .all
     }
     
     func updateGraphData() {
@@ -83,22 +73,21 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
                     return
                 }
                 DispatchQueue.main.async {
-                    var entries = [ChartDataEntry]()
-                    var data: [String: StockGraphDatum]?
                     switch self.state {
                     case .day:
-                        data = stockGraphData.intraDaySeriesData
+                        self.data = stockGraphData.intraDaySeriesData
                     case .week, .month:
-                        data = stockGraphData.dailySeriesData
+                        self.data = stockGraphData.dailySeriesData
                     case .sixMonths, .year:
-                        data = stockGraphData.weeklySeriesData
+                        self.data = stockGraphData.weeklySeriesData
                     default:
-                        data = stockGraphData.intraDaySeriesData
+                        self.data = stockGraphData.monthlySeriesData
                     }
-                    guard let data else { return }
-                    entries = self.fillEntriesArray(with: data)
+                    guard let selfData = self.data else { return }
                     let chartData = LineChartData()
-                    chartData.dataSets.append(self.makeLineDataSet(entries: entries))
+                    chartData.dataSets.append(
+                        self.makeLineDataSet(entries: self.fillEntriesArray(with: selfData) as [ChartDataEntry])
+                    )
                     chartData.setDrawValues(false)
                     self.input?.updateGraph(with: chartData)
                 }
@@ -107,19 +96,35 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
             }
         }
     }
-    
+
+    private func fillEntriesArray(with data: [String: StockGraphDatum]) -> [ChartDataEntry] {
+        var entries = [ChartDataEntry]()
+        let sortedKeys = data.keys.sorted { $0 < $1 }
+        for (index, key) in sortedKeys.enumerated() {
+            guard let stockGraphDatum = data[key] else { return [] }
+            let chartDataEntry = ChartDataEntry(x: Double(index), y: Double(stockGraphDatum.close)!)
+            entries.append(chartDataEntry)
+        }
+        return entries.suffix(breakpoint!)
+    }
+
     private func makeLineDataSet(entries: [ChartDataEntry]) -> LineChartDataSet {
         let dataSet = LineChartDataSet(entries: entries)
         dataSet.colors = [NSUIColor.black]
-        dataSet.lineWidth = 3
+        dataSet.lineWidth = 1.75
         dataSet.mode = .cubicBezier
         dataSet.drawCirclesEnabled = false
-        dataSet.setDrawHighlightIndicators(true)
+        dataSet.setDrawHighlightIndicators(false)
+        let gradientColors = [UIColor.darkGray.cgColor, UIColor.clear.cgColor] as CFArray
+        let colorLocations:[CGFloat] = [1.0, 0.0]
+        let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations)
+        dataSet.fill = LinearGradientFill(gradient: gradient!, angle: 90.0)
+        dataSet.drawFilledEnabled = true
         return dataSet
     }
     
-    func getButtonNames() -> [String] {
-        return Constants.buttonNames
+    func getButtons() -> [State] {
+        return Constants.buttons
     }
     
     func backButtonPressed() {
@@ -136,24 +141,47 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
         input?.updateFavoriteButtonImage(with: !isFavorite ? Constants.yellowStar : Constants.grayStar)
     }
     
-    func handleChartButtonTap(name: String) {
-        switch name {
-        case "D":
-            state = .day
-        case "W":
-            state = .week
-        case "M":
-            state = .month
-        case "6M":
-            state = .sixMonths
-        case "1Y":
-            state = .year
-        default:
-            state = .all
-        }
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State) {
+        self.state = state
     }
     
     func handleBuyButtonTap(price: String) {
         input?.presentPurchaseAlertViewController(price: price)
+    }
+    
+    func chartValueSelected(at position: CGPoint, entry: ChartDataEntry) {        
+        input?.moveBubbleViewTo(
+            x: position.x,
+            y: position.y,
+            price: String("$\(entry.y)"),
+            date: formattedDateForPriceMarker(atIndex: Int(entry.x))!
+        )
+    }
+    
+    func formattedDateForPriceMarker(atIndex index: Int) -> String? {
+        guard let data = data else { return nil }
+        let sortedKeys = data.keys.sorted {$0 < $1}
+        let dateString: String = sortedKeys.suffix(breakpoint!)[index]
+        switch state {
+        case .day:
+            return String(dateString.suffix(8))
+        default:
+            return formatDate(inputDateString: dateString, state: state)
+        }
+    }
+    
+    private func formatDate(inputDateString: String, state: State) -> String? {
+        let dateFormatterInput = DateFormatter()
+        dateFormatterInput.dateFormat = "yyyy-MM-dd"
+        guard let date = dateFormatterInput.date(from: inputDateString) else {
+            return nil
+        }
+        let dateFormatterOutput = DateFormatter()
+        dateFormatterOutput.dateFormat = "d MMMM yyyy"
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMMM"
+        let month = monthFormatter.string(from: date)
+        let formattedDate = dateFormatterOutput.string(from: date)
+        return formattedDate.replacingOccurrences(of: month, with: month.prefix(3).lowercased())
     }
 }

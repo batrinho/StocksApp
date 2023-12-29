@@ -9,7 +9,7 @@ import UIKit
 import DGCharts
 
 protocol DetailsPageViewControllerOutput {
-    func handleChartButtonTap(name: String)
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State)
     
     func handleBuyButtonTap(price: String)
     
@@ -17,7 +17,11 @@ protocol DetailsPageViewControllerOutput {
     
     func favoriteButtonPressed()
     
-    func getButtonNames() -> [String]
+    func getButtons() -> [DetailsPageViewControllerPresenter.State]
+    
+    func formattedDateForPriceMarker(atIndex index: Int) -> String?
+    
+    func chartValueSelected(at position: CGPoint, entry: ChartDataEntry)
     
     func viewIsReady()
 }

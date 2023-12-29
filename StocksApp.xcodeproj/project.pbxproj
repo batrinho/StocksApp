@@ -25,13 +25,14 @@
 		892947062B14980000A1136D /* stockModels.json in Resources */ = {isa = PBXBuildFile; fileRef = 892947052B14980000A1136D /* stockModels.json */; };
 		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
 		89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */; };
+		897A13512B31D9EA00B36E1D /* CircleMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897A13502B31D9EA00B36E1D /* CircleMarker.swift */; };
+		897A13532B31EDA700B36E1D /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897A13522B31EDA700B36E1D /* BubbleView.swift */; };
 		89876D972A7E266C007DD43D /* StockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89876D962A7E266C007DD43D /* StockDataManager.swift */; };
 		89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */; };
 		899816852A8D0FE000AC822D /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */; };
 		899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */; };
 		899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */; };
 		8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */; };
-		899BFE5F2B26332A0004CA2C /* PriceMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899BFE5E2B26332A0004CA2C /* PriceMarkerView.swift */; };
 		89A066922B189C5D0035D0F5 /* DetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066912B189C5D0035D0F5 /* DetailsPageViewController.swift */; };
 		89A066942B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066932B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift */; };
 		89A066962B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A066952B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift */; };
@@ -72,13 +73,14 @@
 		892947052B14980000A1136D /* stockModels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockModels.json; sourceTree = "<group>"; };
 		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
 		89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		897A13502B31D9EA00B36E1D /* CircleMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMarker.swift; sourceTree = "<group>"; };
+		897A13522B31EDA700B36E1D /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		89876D962A7E266C007DD43D /* StockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataManager.swift; sourceTree = "<group>"; };
 		89950F3C2AC6A3F900CCA2EE /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		899816842A8D0FE000AC822D /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		899816862A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataClass.swift"; sourceTree = "<group>"; };
 		899816872A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStock+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8998168A2A8D10A700AC822D /* CoreDataDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabaseManager.swift; sourceTree = "<group>"; };
-		899BFE5E2B26332A0004CA2C /* PriceMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceMarkerView.swift; sourceTree = "<group>"; };
 		89A066912B189C5D0035D0F5 /* DetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewController.swift; sourceTree = "<group>"; };
 		89A066932B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewControllerPresenter.swift; sourceTree = "<group>"; };
 		89A066952B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewControllerOutput.swift; sourceTree = "<group>"; };
@@ -263,7 +265,8 @@
 				89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */,
 				89A0669F2B18CCE40035D0F5 /* ChartButton.swift */,
 				89E1B8872B1D3FE9005D9631 /* BuyButton.swift */,
-				899BFE5E2B26332A0004CA2C /* PriceMarkerView.swift */,
+				897A13502B31D9EA00B36E1D /* CircleMarker.swift */,
+				897A13522B31EDA700B36E1D /* BubbleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				89A066A02B18CCE40035D0F5 /* ChartButton.swift in Sources */,
 				8998168B2A8D10A700AC822D /* CoreDataDatabaseManager.swift in Sources */,
 				89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */,
+				897A13532B31EDA700B36E1D /* BubbleView.swift in Sources */,
 				8902CC002A78FB4C00EFFE5F /* StocksViewController.swift in Sources */,
 				891723B22AFCD4E1009E1464 /* StocksViewControllerPresenter.swift in Sources */,
 				899816892A8D105B00AC822D /* FavoriteStock+CoreDataProperties.swift in Sources */,
@@ -454,8 +458,8 @@
 				89A066942B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift in Sources */,
 				8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */,
 				89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */,
-				899BFE5F2B26332A0004CA2C /* PriceMarkerView.swift in Sources */,
 				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
+				897A13512B31D9EA00B36E1D /* CircleMarker.swift in Sources */,
 				89E1B8882B1D3FE9005D9631 /* BuyButton.swift in Sources */,
 				89A0669E2B18CA190035D0F5 /* ChartButtonStackView.swift in Sources */,
 				89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */,

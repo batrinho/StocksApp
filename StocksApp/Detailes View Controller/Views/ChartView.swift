@@ -8,26 +8,26 @@
 import UIKit
 import DGCharts
 
+protocol StocksChartViewDelegate: AnyObject {
+    func chartValueSelected(at position: CGPoint, entry: ChartDataEntry)
+    func chartValueNotSelected()
+}
+
 final class ChartView: UIView, ChartViewDelegate {
+    weak var delegate: StocksChartViewDelegate?
+    
+    private let marker = CircleMarker(fillColor: .black, borderColor: .white)
     private let chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.translatesAutoresizingMaskIntoConstraints = false
-        
         chartView.rightAxis.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
         chartView.drawBordersEnabled = false
-        chartView.leftAxis.inverted = true
         chartView.xAxis.drawGridLinesEnabled = false
         chartView.leftAxis.drawGridLinesEnabled = false
         chartView.drawGridBackgroundEnabled = false
         chartView.rightAxis.drawGridLinesEnabled = false
-        
-        let marker = PriceMarkerView()
-        marker.frame = CGRect(x: 0, y: 0, width: 70, height: 50)
-        marker.chartView = chartView
-        chartView.marker = marker
-        
         return chartView
     }()
     
@@ -42,6 +42,8 @@ final class ChartView: UIView, ChartViewDelegate {
     }
     
     private func setupView() {
+        marker.chartView = chartView
+        chartView.marker = marker
         addSubviews()
         addConstraints()
     }
@@ -60,7 +62,17 @@ final class ChartView: UIView, ChartViewDelegate {
     }
     
     func updateGraph(with data: LineChartData) {
-        chartView.animate(xAxisDuration: 2.5)
+        chartView.animate(xAxisDuration: 1.5)
         chartView.data = data
+    }
+    
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        let position = CGPointMake(highlight.xPx, highlight.yPx)
+        let superViewPosition = chartView.convert(position, to: chartView.superview)
+        delegate?.chartValueSelected(at: superViewPosition, entry: entry)
+    }
+    
+    func chartValueNothingSelected(_ chartView: ChartViewBase) {
+        delegate?.chartValueNotSelected()
     }
 }

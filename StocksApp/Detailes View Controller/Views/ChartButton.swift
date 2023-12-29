@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChartButtonDelegate: AnyObject {
-    func handleChartButtonTap(name: String?)
+    func handleChartButtonTap(state: DetailsPageViewControllerPresenter.State)
 }
 
 final class ChartButton: UIButton {
@@ -26,17 +26,20 @@ final class ChartButton: UIButton {
         }
     }
     
+    private let buttonState: DetailsPageViewControllerPresenter.State
+    
     // MARK: - UI
-    private let label: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = UIFont(name: "Montserrat-Medium", size: 12)
+        label.text = buttonState.rawValue
         return label
     }()
-    
-    init(frame: CGRect, name: String) {
-        self.label.text = name
+        
+    init(frame: CGRect, state: DetailsPageViewControllerPresenter.State) {
+        self.buttonState = state
         super.init(frame: frame)
         configure()
     }
@@ -74,6 +77,6 @@ final class ChartButton: UIButton {
     
     @objc
     private func buttonPressed() {
-        delegate?.handleChartButtonTap(name: label.text)
+        delegate?.handleChartButtonTap(state: buttonState)
     }
 }
