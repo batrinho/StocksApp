@@ -41,7 +41,7 @@ final class RequestButton: UIButton {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         sizeToFit()
-        layer.cornerRadius = 22.5
+        layer.cornerRadius = 20
         layer.masksToBounds = true
         backgroundColor = UIColor.backgroundGray
         

@@ -166,7 +166,7 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
     }
     
     private func getStocks() {
-        networkingService.fetchStocksGCD { [weak self] stocks in
+        networkingService.fetchStocks { [weak self] stocks in
             guard let self else {
                 return
             }

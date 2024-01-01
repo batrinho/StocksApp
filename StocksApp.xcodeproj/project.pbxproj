@@ -13,7 +13,7 @@
 		8902CC112A78FE1300EFFE5F /* StocksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC102A78FE1300EFFE5F /* StocksTableView.swift */; };
 		8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */; };
 		8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC162A78FF5400EFFE5F /* StockData.swift */; };
-		8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC1A2A79314300EFFE5F /* NetworkingService.swift */; };
+		8902CC1B2A79314300EFFE5F /* GCDNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8902CC1A2A79314300EFFE5F /* GCDNetworkingService.swift */; };
 		890388422AB31F2600E9A814 /* RequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890388412AB31F2600E9A814 /* RequestView.swift */; };
 		891723AA2AFBAE0A009E1464 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723A92AFBAE0A009E1464 /* UIColor.swift */; };
 		891723AC2AFCD03B009E1464 /* ShowMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723AB2AFCD03B009E1464 /* ShowMoreView.swift */; };
@@ -40,6 +40,9 @@
 		89A0669C2B18C8AA0035D0F5 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669B2B18C8AA0035D0F5 /* ChartView.swift */; };
 		89A0669E2B18CA190035D0F5 /* ChartButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */; };
 		89A066A02B18CCE40035D0F5 /* ChartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0669F2B18CCE40035D0F5 /* ChartButton.swift */; };
+		89B055602B4138CA00E9A75F /* NetworkingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B0555F2B4138CA00E9A75F /* NetworkingServiceProtocol.swift */; };
+		89B055622B41B07A00E9A75F /* AsyncNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B055612B41B07A00E9A75F /* AsyncNetworkingService.swift */; };
+		89B055642B42B14D00E9A75F /* OperationNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B055632B42B14D00E9A75F /* OperationNetworkingService.swift */; };
 		89B6F5AE2ACC649800282BF7 /* static in Resources */ = {isa = PBXBuildFile; fileRef = 89B6F5AD2ACC649800282BF7 /* static */; };
 		89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4BE2AF287E600622315 /* UIApplication.State.swift */; };
 		89BAF4C12AF2880500622315 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAF4C02AF2880500622315 /* Array.swift */; };
@@ -61,7 +64,7 @@
 		8902CC102A78FE1300EFFE5F /* StocksTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableView.swift; sourceTree = "<group>"; };
 		8902CC142A78FEFA00EFFE5F /* StocksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTableViewCell.swift; sourceTree = "<group>"; };
 		8902CC162A78FF5400EFFE5F /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
-		8902CC1A2A79314300EFFE5F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		8902CC1A2A79314300EFFE5F /* GCDNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDNetworkingService.swift; sourceTree = "<group>"; };
 		890388412AB31F2600E9A814 /* RequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestView.swift; sourceTree = "<group>"; };
 		891723A92AFBAE0A009E1464 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		891723AB2AFCD03B009E1464 /* ShowMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreView.swift; sourceTree = "<group>"; };
@@ -88,6 +91,9 @@
 		89A0669B2B18C8AA0035D0F5 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		89A0669D2B18CA190035D0F5 /* ChartButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartButtonStackView.swift; sourceTree = "<group>"; };
 		89A0669F2B18CCE40035D0F5 /* ChartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartButton.swift; sourceTree = "<group>"; };
+		89B0555F2B4138CA00E9A75F /* NetworkingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceProtocol.swift; sourceTree = "<group>"; };
+		89B055612B41B07A00E9A75F /* AsyncNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncNetworkingService.swift; sourceTree = "<group>"; };
+		89B055632B42B14D00E9A75F /* OperationNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationNetworkingService.swift; sourceTree = "<group>"; };
 		89B6F5AD2ACC649800282BF7 /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
 		89BAF4BE2AF287E600622315 /* UIApplication.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.State.swift; sourceTree = "<group>"; };
 		89BAF4C02AF2880500622315 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -301,7 +307,10 @@
 		89E1B88B2B205505005D9631 /* NetworkingServices */ = {
 			isa = PBXGroup;
 			children = (
-				8902CC1A2A79314300EFFE5F /* NetworkingService.swift */,
+				8902CC1A2A79314300EFFE5F /* GCDNetworkingService.swift */,
+				89B055612B41B07A00E9A75F /* AsyncNetworkingService.swift */,
+				89B055632B42B14D00E9A75F /* OperationNetworkingService.swift */,
+				89B0555F2B4138CA00E9A75F /* NetworkingServiceProtocol.swift */,
 			);
 			path = NetworkingServices;
 			sourceTree = "<group>";
@@ -432,6 +441,7 @@
 				8902CC152A78FEFA00EFFE5F /* StocksTableViewCell.swift in Sources */,
 				89BAF4C12AF2880500622315 /* Array.swift in Sources */,
 				891723AC2AFCD03B009E1464 /* ShowMoreView.swift in Sources */,
+				89B055602B4138CA00E9A75F /* NetworkingServiceProtocol.swift in Sources */,
 				891723B72AFCD968009E1464 /* StocksViewControllerInput.swift in Sources */,
 				8902CC172A78FF5400EFFE5F /* StockData.swift in Sources */,
 				899816882A8D105B00AC822D /* FavoriteStock+CoreDataClass.swift in Sources */,
@@ -456,15 +466,17 @@
 				892332282AB1D896005299B3 /* RequestButton.swift in Sources */,
 				89A0669C2B18C8AA0035D0F5 /* ChartView.swift in Sources */,
 				89A066942B189C700035D0F5 /* DetailsPageViewControllerPresenter.swift in Sources */,
-				8902CC1B2A79314300EFFE5F /* NetworkingService.swift in Sources */,
+				8902CC1B2A79314300EFFE5F /* GCDNetworkingService.swift in Sources */,
 				89BAF4C32AF2882100622315 /* UIStackView.swift in Sources */,
 				89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */,
 				897A13512B31D9EA00B36E1D /* CircleMarker.swift in Sources */,
 				89E1B8882B1D3FE9005D9631 /* BuyButton.swift in Sources */,
 				89A0669E2B18CA190035D0F5 /* ChartButtonStackView.swift in Sources */,
+				89B055642B42B14D00E9A75F /* OperationNetworkingService.swift in Sources */,
 				89BAF4BF2AF287E600622315 /* UIApplication.State.swift in Sources */,
 				89FB19172ACF370A0020E605 /* ButtonsStackView.swift in Sources */,
 				89950F3D2AC6A3FA00CCA2EE /* SearchBarView.swift in Sources */,
+				89B055622B41B07A00E9A75F /* AsyncNetworkingService.swift in Sources */,
 				89A066962B18A23A0035D0F5 /* DetailsPageViewControllerOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

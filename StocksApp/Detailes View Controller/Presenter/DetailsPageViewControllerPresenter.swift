@@ -67,33 +67,33 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
     }
     
     func updateGraphData() {
-        Task {
-            do {
-                guard let stockGraphData = try await networkingService.fetchGraphData(stockTicker: stock.ticker, state: state) else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    switch self.state {
-                    case .day:
-                        self.data = stockGraphData.intraDaySeriesData
-                    case .week, .month:
-                        self.data = stockGraphData.dailySeriesData
-                    case .sixMonths, .year:
-                        self.data = stockGraphData.weeklySeriesData
-                    default:
-                        self.data = stockGraphData.monthlySeriesData
-                    }
-                    guard let selfData = self.data else { return }
-                    let chartData = LineChartData()
-                    chartData.dataSets.append(
-                        self.makeLineDataSet(entries: self.fillEntriesArray(with: selfData) as [ChartDataEntry])
-                    )
-                    chartData.setDrawValues(false)
-                    self.input?.updateGraph(with: chartData)
-                }
-            } catch {
-                print("Error in fetching graph data: \(error)")
+        networkingService.fetchGraphData(stockTicker: stock.ticker, state: state) { [weak self] data in
+            guard let data, let self else {
+                return
             }
+            DispatchQueue.main.async { 
+                self.data = self.dataForState(self.state, data: data)
+                guard let selfData = self.data else { return }
+                let chartData = LineChartData()
+                chartData.dataSets.append(
+                    self.makeLineDataSet(entries: self.fillEntriesArray(with: selfData) as [ChartDataEntry])
+                )
+                chartData.setDrawValues(false)
+                self.input?.updateGraph(with: chartData)
+            }
+        }
+    }
+    
+    private func dataForState(_ state: State, data: StockGraphData) -> [String: StockGraphDatum]? {
+        switch state {
+        case .day:
+            return data.intraDaySeriesData
+        case .week, .month:
+            return data.dailySeriesData
+        case .sixMonths, .year:
+            return data.weeklySeriesData
+        default:
+            return data.monthlySeriesData
         }
     }
 
