@@ -15,7 +15,7 @@ final class ButtonsStackView: UIStackView {
     weak var delegate: ButtonsStackViewProtocol?
     
     // MARK: - UI
-    let stocksButton: UIButton = {
+    private let stocksButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Stocks", for: .normal)
@@ -24,7 +24,7 @@ final class ButtonsStackView: UIStackView {
         return button
     } ()
     
-    let favoritesButton: UIButton = {
+    private let favoritesButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Favorites", for: .normal)

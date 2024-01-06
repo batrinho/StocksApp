@@ -54,6 +54,10 @@ final class StocksViewController: UIViewController {
         presenter.viewIsReady()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        presenter.viewDidAppear()
+    }
+    
     private func configure() {
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
@@ -68,10 +72,11 @@ final class StocksViewController: UIViewController {
         view.backgroundColor = .systemBackground
         addSubviews()
         addConstraints()
+        navigationItem.titleView = searchBarView
+        stocksTableView.contentInsetAdjustmentBehavior = .automatic
     }
     
     private func addSubviews() {
-        view.addSubview(searchBarView)
         view.addSubview(showMoreView)
         view.addSubview(buttonsStackView)
         view.addSubview(stocksTableView)
@@ -80,30 +85,28 @@ final class StocksViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            searchBarView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchBarView.heightAnchor.constraint(equalToConstant: 48),
+            searchBarView.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
             
-            showMoreView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 5),
+            showMoreView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 5),
             showMoreView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             showMoreView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             showMoreView.heightAnchor.constraint(equalToConstant: 40),
             
-            buttonsStackView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 5),
+            buttonsStackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 5),
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -160),
             buttonsStackView.heightAnchor.constraint(equalToConstant: 40),
 
-            stocksTableView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 50),
+            stocksTableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
             stocksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stocksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             stocksTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            requestsView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 5),
+            requestsView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 5),
             requestsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             requestsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            requestsView.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 340),
+            requestsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 340),
         ])
     }
 }
@@ -175,6 +178,10 @@ extension StocksViewController: StocksViewControllerInput {
             self.stocksTableView.reloadData()
         }
     }
+    
+    func displaySecondViewController(_ secondVC: UIViewController) {
+        navigationController?.pushViewController(secondVC, animated: true)
+    }
 }
 
 // MARK: - Stocks Table View Cell Delegate
@@ -186,6 +193,11 @@ extension StocksViewController: StocksTableViewCellDelegate {
 
 // MARK: - Table View DataSource
 extension StocksViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.handleCellSelection(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.getStocksCount()
     }
@@ -202,17 +214,15 @@ extension StocksViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         cell.delegate = self
-        DispatchQueue.main.async {
-            cell.configure(
-                ticker: stock.ticker,
-                name: stock.name,
-                color: (indexPath.row % 2 == 0) ? UIColor.backgroundGray : .clear,
-                logo: stock.logo,
-                favoriteButtonImage: self.presenter.buttonImageForStock(with: stock.ticker),
-                currentPrice: stock.currentPrice,
-                changePrice: stock.changePrice
-            )
-        }
+        cell.configure(
+            ticker: stock.ticker,
+            name: stock.name,
+            color: (indexPath.row % 2 == 0) ? UIColor.backgroundGray : .clear,
+            logo: stock.logo,
+            favoriteButtonImage: self.presenter.buttonImageForStock(with: stock.ticker),
+            currentPrice: stock.currentPrice,
+            changePrice: stock.changePrice
+        )
         return cell
     }
 }

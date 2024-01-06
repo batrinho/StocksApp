@@ -14,8 +14,6 @@ protocol SearchBarViewDelegate: AnyObject {
 }
 
 final class SearchBarView: UIView {
-    private var isSearching: Bool = false
-    private var isTyping: Bool = false
     weak var delegate: SearchBarViewDelegate?
     
     // MARK: - UI
@@ -31,7 +29,7 @@ final class SearchBarView: UIView {
         return textField
     } ()
     
-    let button: UIButton = {
+    private let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -56,7 +54,7 @@ final class SearchBarView: UIView {
     }
     
     private func setupView() {
-        layer.cornerRadius = 25
+        layer.cornerRadius = 22.5
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.black.cgColor
         addSubviews()

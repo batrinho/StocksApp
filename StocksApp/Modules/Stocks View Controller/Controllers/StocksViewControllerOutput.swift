@@ -10,6 +10,8 @@ import UIKit
 protocol StocksViewControllerOutput {
     func viewIsReady()
     
+    func viewDidAppear()
+    
     func startedEditingTextField(with searchText: String)
     
     func handleButtonStackViewTap()
@@ -23,6 +25,8 @@ protocol StocksViewControllerOutput {
     func handleEnter(text: String)
     
     func handleShowMoreButtonTap()
+    
+    func handleCellSelection(at indexPath: IndexPath)
     
     func displayStocks()
     
