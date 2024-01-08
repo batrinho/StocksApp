@@ -115,6 +115,7 @@ extension DetailsPageViewControllerPresenter: DetailsPageViewControllerOutput {
         dataSet.mode = .cubicBezier
         dataSet.drawCirclesEnabled = false
         dataSet.setDrawHighlightIndicators(false)
+        dataSet.label = nil
         let gradientColors = [UIColor.darkGray.cgColor, UIColor.clear.cgColor] as CFArray
         let colorLocations:[CGFloat] = [1.0, 0.0]
         let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations)

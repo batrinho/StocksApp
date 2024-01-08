@@ -26,7 +26,7 @@ final class DetailsPageViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont(name: "Montserrat-Bold", size: 12)
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 12)
         return label
     }()
     private let stockCompanyTicker: UILabel = {
@@ -41,9 +41,10 @@ final class DetailsPageViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 7.5
+        stackView.spacing = 4
         return stackView
     }()
+    private let priceStackView: PriceStackView
     private let chartView: ChartView = {
         let view = ChartView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -66,12 +67,13 @@ final class DetailsPageViewController: UIViewController {
         stockCompanyName: String,
         stockCompanyTicker: String,
         favoriteButtonImage: UIImage,
-        stockCurrentPrice: String
+        priceModel: StockPriceModel
     ) {
         self.presenter = presenter
         self.stockCompanyName.text = stockCompanyName
         self.stockCompanyTicker.text = stockCompanyTicker
-        self.buyButton = BuyButton(frame: .zero, price: stockCurrentPrice)
+        self.buyButton = BuyButton(frame: .zero, price: "$\(priceModel.c)")
+        self.priceStackView = PriceStackView(frame: .zero, currentPrice: priceModel.c, changePrice: priceModel.d)
         self.favoriteButton.setImage(favoriteButtonImage, for: .normal)
         super.init(nibName: nil, bundle: nil)
     }
@@ -101,6 +103,7 @@ final class DetailsPageViewController: UIViewController {
     }
     
     private func addSubviews() {
+        view.addSubview(priceStackView)
         view.addSubview(chartView)
         view.addSubview(chartButtonStackView)
         view.addSubview(buyButton)
@@ -112,10 +115,15 @@ final class DetailsPageViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            chartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100),
+            priceStackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 25),
+            priceStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            priceStackView.heightAnchor.constraint(equalToConstant: 50),
+            
+            chartView.topAnchor.constraint(equalTo: priceStackView.bottomAnchor, constant: 120),
             chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            chartView.heightAnchor.constraint(equalToConstant: 400),
+            chartView.heightAnchor.constraint(equalToConstant: 320),
             
             chartButtonStackView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 30),
             chartButtonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (view.frame.width - 330)/2),
@@ -196,10 +204,7 @@ extension DetailsPageViewController: DetailsPageViewControllerInput {
     
     func moveBubbleViewTo(x: CGFloat, y: CGFloat, price: String, date: String) {
         bubbleView.isHidden = false
-        print(x)
-        print(chartView.bounds.width)
-        print(chartView.frame.width)
-        bubbleView.transform = CGAffineTransform(translationX: min(max(0, x - 45), chartView.frame.width - 90), y: y + 90)
+        bubbleView.transform = CGAffineTransform(translationX: min(max(0, x - 45), chartView.frame.width - 90), y: y + 160)
         bubbleView.changeLabels(price: price, date: date)
     }
     

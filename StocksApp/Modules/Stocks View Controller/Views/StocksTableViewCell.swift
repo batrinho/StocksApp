@@ -104,7 +104,6 @@ final class StocksTableViewCell: UITableViewCell {
     }
     
     private func setupView () {
-//        translatesAutoresizingMaskIntoConstraints = false
         selectedBackgroundView?.layer.cornerRadius = 25
         addSubviews()
         addConstraints()

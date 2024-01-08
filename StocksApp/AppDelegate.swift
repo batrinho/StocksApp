@@ -19,16 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case background
     }
     
-    private var state: AppState = .notRunning {
-        didSet {
-            print("Application moved from \(oldValue) to \(state)")
-        }
-    }
+    private var state: AppState = .notRunning
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let networkingService: NetworkingServiceProtocol = OperationNetworkingService()
+        let networkingService: NetworkingServiceProtocol = AsyncNetworkingService()
         let coreDataDatabaseManager = CoreDataDatabaseManager()
         
         let stocksVCPresenter = StocksViewControllerPresenter(

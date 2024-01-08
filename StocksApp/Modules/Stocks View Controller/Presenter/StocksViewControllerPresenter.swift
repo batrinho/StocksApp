@@ -145,7 +145,7 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
             stockCompanyName: selectedStock.name,
             stockCompanyTicker: selectedStock.ticker,
             favoriteButtonImage: buttonImageForStock(with: selectedStock.ticker),
-            stockCurrentPrice: "$\(selectedStock.currentPrice)"
+            priceModel: StockPriceModel(c: selectedStock.currentPrice, d: selectedStock.changePrice)
         )
         secondVCPresenter.input = secondVC
         input?.displaySecondViewController(secondVC)
