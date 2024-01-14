@@ -13,7 +13,6 @@ final class StocksViewControllerPresenter {
         static let grayStar = UIImage(named: "star.gray.fill")!
         static let magnifyingGlass = UIImage(systemName: "magnifyingglass")!
         static let backArrow = UIImage(named: "returnIcon")!
-        static let fileName = "stockModels"
         static let heightForCell: Double = 90.0
     }
     
@@ -25,7 +24,7 @@ final class StocksViewControllerPresenter {
     }
     
     weak var input: StocksViewControllerInput?
-    
+    private var lastTextInput: String?
     private var previousState: State = .displayingStocks
     private var state: State = .displayingStocks {
         didSet {
@@ -55,11 +54,17 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
         displayStocks()
     }
     
+    func viewDidAppear() {
+        filterStocks(with: lastTextInput)
+        input?.updateUI()
+    }
+    
     func getHeightForCell() -> Double {
         return Constants.heightForCell
     }
     
     func startedEditingTextField(with searchText: String) {
+        lastTextInput = searchText
         if searchText.isEmpty {
             state = .searching
         } else {
@@ -85,11 +90,13 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
         case .displayingFavorites:
             displayStocks()
             input?.switchButtonsDominance(isStocksPrior: true)
-        default: break
+        default: 
+            break
         }
     }
     
     func handleTextFieldButtonTap() {
+        lastTextInput = nil
         switch previousState {
         case .displayingStocks:
             displayStocks()
@@ -126,39 +133,48 @@ extension StocksViewControllerPresenter: StocksViewControllerOutput {
         input?.addRequestToStackView(request: text, upper: recentRequests.count % 2 == 0)
     }
     
+    func handleCellSelection(at indexPath: IndexPath) {
+        let selectedStock = filteredStocks[indexPath.row]
+        let secondVCPresenter = DetailsPageViewControllerPresenter(
+            networkingService: networkingService,
+            coreDataDatabaseManager: coreDataDatabaseManager,
+            stock: selectedStock
+        )
+        let secondVC = DetailsPageViewController(
+            presenter: secondVCPresenter,
+            stockCompanyName: selectedStock.name,
+            stockCompanyTicker: selectedStock.ticker,
+            favoriteButtonImage: buttonImageForStock(with: selectedStock.ticker),
+            priceModel: StockPriceModel(c: selectedStock.currentPrice, d: selectedStock.changePrice)
+        )
+        secondVCPresenter.input = secondVC
+        input?.displaySecondViewController(secondVC)
+    }
+    
     func displayStocks() {
         state = .displayingStocks
         guard stocks.isEmpty else {
             filterStocks()
             return
         }
-        let stockModels = networkingService.stockDataFromLocalFile(with: Constants.fileName)
-        let group = DispatchGroup()
-        for stockModel in stockModels {
-            group.enter()
-            Task {
-                do {
-                    guard let stock = try await networkingService.fetchStockInformation(with: stockModel) else {
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        self.stocks.append(stock)
-                        self.filteredStocks = self.stocks
-                    }
-                } catch {
-                    print("Error in openStocks: \(error)")
-                }
-                group.leave()
-            }
-        }
-        group.notify(queue: .main) {
-            self.input?.updateUI()
-        }
+        getStocks()
     }
     
     func displayFavorites() {
         state = .displayingFavorites
         filterStocks()
+    }
+    
+    private func getStocks() {
+        networkingService.fetchStocks { [weak self] stocks in
+            guard let self else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.stocks = stocks
+                self.filterStocks()
+            }
+        }
     }
     
     func getStockInformation(with id: Int) -> Stock? {

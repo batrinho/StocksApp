@@ -15,7 +15,7 @@ final class RequestButton: UIButton {
     weak var delegate: RequestButtonDelegate?
     
     // MARK: - UI
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -41,7 +41,7 @@ final class RequestButton: UIButton {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         sizeToFit()
-        layer.cornerRadius = 22.5
+        layer.cornerRadius = 20
         layer.masksToBounds = true
         backgroundColor = UIColor.backgroundGray
         
