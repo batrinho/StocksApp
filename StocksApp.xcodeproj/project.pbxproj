@@ -23,6 +23,12 @@
 		891723B92AFCFEA4009E1464 /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891723B82AFCFEA4009E1464 /* RequestsView.swift */; };
 		892332282AB1D896005299B3 /* RequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892332272AB1D896005299B3 /* RequestButton.swift */; };
 		892947062B14980000A1136D /* stockModels.json in Resources */ = {isa = PBXBuildFile; fileRef = 892947052B14980000A1136D /* stockModels.json */; };
+		892AD8F82B53E4BF0013B65C /* photo_2024-01-14 15.00.02.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F22B53E4BF0013B65C /* photo_2024-01-14 15.00.02.jpeg */; };
+		892AD8F92B53E4BF0013B65C /* photo_2024-01-14 15.00.03.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F32B53E4BF0013B65C /* photo_2024-01-14 15.00.03.jpeg */; };
+		892AD8FA2B53E4BF0013B65C /* photo_2024-01-14 15.00.04.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F42B53E4BF0013B65C /* photo_2024-01-14 15.00.04.jpeg */; };
+		892AD8FB2B53E4BF0013B65C /* photo_2024-01-14 15.00.01.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F52B53E4BF0013B65C /* photo_2024-01-14 15.00.01.jpeg */; };
+		892AD8FC2B53E4BF0013B65C /* photo_2024-01-14 15.00.00.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F62B53E4BF0013B65C /* photo_2024-01-14 15.00.00.jpeg */; };
+		892AD8FD2B53E4BF0013B65C /* photo_2024-01-14 14.59.59.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 892AD8F72B53E4BF0013B65C /* photo_2024-01-14 14.59.59.jpeg */; };
 		89326B4A2ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */; };
 		89326B4B2ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */; };
 		8966A0D62B4BE0030068C749 /* PriceStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966A0D52B4BE0030068C749 /* PriceStackView.swift */; };
@@ -75,6 +81,12 @@
 		891723B82AFCFEA4009E1464 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
 		892332272AB1D896005299B3 /* RequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestButton.swift; sourceTree = "<group>"; };
 		892947052B14980000A1136D /* stockModels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockModels.json; sourceTree = "<group>"; };
+		892AD8F22B53E4BF0013B65C /* photo_2024-01-14 15.00.02.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 15.00.02.jpeg"; sourceTree = "<group>"; };
+		892AD8F32B53E4BF0013B65C /* photo_2024-01-14 15.00.03.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 15.00.03.jpeg"; sourceTree = "<group>"; };
+		892AD8F42B53E4BF0013B65C /* photo_2024-01-14 15.00.04.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 15.00.04.jpeg"; sourceTree = "<group>"; };
+		892AD8F52B53E4BF0013B65C /* photo_2024-01-14 15.00.01.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 15.00.01.jpeg"; sourceTree = "<group>"; };
+		892AD8F62B53E4BF0013B65C /* photo_2024-01-14 15.00.00.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 15.00.00.jpeg"; sourceTree = "<group>"; };
+		892AD8F72B53E4BF0013B65C /* photo_2024-01-14 14.59.59.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2024-01-14 14.59.59.jpeg"; sourceTree = "<group>"; };
 		89326B482ABC3ADE00E610E8 /* RecentRequest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataClass.swift"; sourceTree = "<group>"; };
 		89326B492ABC3ADE00E610E8 /* RecentRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8966A0D52B4BE0030068C749 /* PriceStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceStackView.swift; sourceTree = "<group>"; };
@@ -152,6 +164,7 @@
 				891723AD2AFCD2ED009E1464 /* Modules */,
 				89B6F5AA2ACC5FDE00282BF7 /* Fonts */,
 				89BAF4BD2AF287CE00622315 /* Extensions */,
+				892AD8F12B53E4AB0013B65C /* Screenshots */,
 				8902CC042A78FB4D00EFFE5F /* Assets.xcassets */,
 				8902CC092A78FB4D00EFFE5F /* Info.plist */,
 			);
@@ -246,6 +259,19 @@
 				899816832A8D0FE000AC822D /* DataModel.xcdatamodeld */,
 			);
 			path = "Core Data Entities";
+			sourceTree = "<group>";
+		};
+		892AD8F12B53E4AB0013B65C /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				892AD8F72B53E4BF0013B65C /* photo_2024-01-14 14.59.59.jpeg */,
+				892AD8F62B53E4BF0013B65C /* photo_2024-01-14 15.00.00.jpeg */,
+				892AD8F52B53E4BF0013B65C /* photo_2024-01-14 15.00.01.jpeg */,
+				892AD8F22B53E4BF0013B65C /* photo_2024-01-14 15.00.02.jpeg */,
+				892AD8F32B53E4BF0013B65C /* photo_2024-01-14 15.00.03.jpeg */,
+				892AD8F42B53E4BF0013B65C /* photo_2024-01-14 15.00.04.jpeg */,
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 		89A0668D2B189C190035D0F5 /* Presenter */ = {
@@ -386,9 +412,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				892AD8FD2B53E4BF0013B65C /* photo_2024-01-14 14.59.59.jpeg in Resources */,
 				892947062B14980000A1136D /* stockModels.json in Resources */,
+				892AD8FA2B53E4BF0013B65C /* photo_2024-01-14 15.00.04.jpeg in Resources */,
+				892AD8FB2B53E4BF0013B65C /* photo_2024-01-14 15.00.01.jpeg in Resources */,
 				89B6F5AE2ACC649800282BF7 /* static in Resources */,
 				8902CC052A78FB4D00EFFE5F /* Assets.xcassets in Resources */,
+				892AD8FC2B53E4BF0013B65C /* photo_2024-01-14 15.00.00.jpeg in Resources */,
+				892AD8F82B53E4BF0013B65C /* photo_2024-01-14 15.00.02.jpeg in Resources */,
+				892AD8F92B53E4BF0013B65C /* photo_2024-01-14 15.00.03.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
