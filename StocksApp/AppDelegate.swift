@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let networkingService: NetworkingServiceProtocol = AsyncNetworkingService()
+        let networkingService: NetworkingServiceProtocol = GCDNetworkingService()
         let coreDataDatabaseManager = CoreDataDatabaseManager()
         
         let stocksVCPresenter = StocksViewControllerPresenter(

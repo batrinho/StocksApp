@@ -38,7 +38,7 @@ final class StocksViewController: UIViewController {
             recentRequestsArray: presenter.getRecentRequestsArray()
         )
     }()
-    
+
     init(presenter: StocksViewControllerOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
