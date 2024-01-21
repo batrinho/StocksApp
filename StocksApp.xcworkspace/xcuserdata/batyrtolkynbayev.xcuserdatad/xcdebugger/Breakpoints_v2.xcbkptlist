@@ -3,4 +3,86 @@
    uuid = "C2DF967E-244C-45EB-AB78-79C070B78456"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09E50069-9AA5-4D08-B28F-BB35F0A95C3D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StocksApp/NetworkingServices/AsyncNetworkingService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "fetchStocks(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "09E50069-9AA5-4D08-B28F-BB35F0A95C3D - bbb1ef498aeac842"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StocksApp.AsyncNetworkingService.fetchStocks(completion: (Swift.Array&lt;StocksApp.Stock&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StocksApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/batyrtolkynbayev/Desktop/the%20folder/iOS%20Development/Adlet%20Abi%20Tasks/StocksApp/StocksApp/NetworkingServices/AsyncNetworkingService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86"
+                  offsetFromSymbolStart = "684">
+               </Location>
+               <Location
+                  uuid = "09E50069-9AA5-4D08-B28F-BB35F0A95C3D - a77fc41d34076a4d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StocksApp.AsyncNetworkingService.fetchStocks(completion: (Swift.Array&lt;StocksApp.Stock&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StocksApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/batyrtolkynbayev/Desktop/the%20folder/iOS%20Development/Adlet%20Abi%20Tasks/StocksApp/StocksApp/NetworkingServices/AsyncNetworkingService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "938BF116-4F40-4423-BE24-18E2DAC71B39"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StocksApp/NetworkingServices/GCDNetworkingService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "fetchStocks(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA2622BF-EC70-4544-AA52-B9F338738AD5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StocksApp/NetworkingServices/GCDNetworkingService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "fetchStocks(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
