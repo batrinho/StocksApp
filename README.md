@@ -10,4 +10,7 @@ ____
 * Created a custom, movable **BubbleView** that shows the price and the date for the selected price in the chart.
 * Learned a lot about **Swift** and **iOS development**.
 
+
+https://github.com/batrinho/StocksApp/assets/57932259/0e717666-0157-483a-abf6-a4433fa92c14
+
 <img width="200" alt="photo_2024-01-14 15.00.02.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2015.00.02.jpeg">   <img width="200" alt="photo_2024-01-14 15.00.04.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2015.00.04.jpeg">   <img width="200" alt="photo_2024-01-14 15.00.01.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2015.00.01.jpeg">   <img width="200" alt="photo_2024-01-14 14.59.59.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2014.59.59.jpeg">   <img width="200" alt="photo_2024-01-14 15.00.03.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2015.00.03.jpeg">   <img width="200" alt="photo_2024-01-14 15.00.00.jpeg" src="https://github.com/batrinho/StocksApp/blob/main/StocksApp/Screenshots/photo_2024-01-14%2015.00.00.jpeg">
